@@ -1,0 +1,24 @@
+imports:
+    - vendor/sylius/sylius/behat.yml.dist
+    - tests/Behat/Resources/suites.yml
+
+default:
+    extensions:
+        FriendsOfBehat\ContextServiceExtension:
+            imports:
+                - vendor/sylius/sylius/src/Sylius/Behat/Resources/config/services.xml
+                - tests/Behat/Resources/services.xml
+
+        FriendsOfBehat\SymfonyExtension:
+            kernel:
+                class: \App\Kernel
+                path: tests/Application/src/Kernel.php
+                bootstrap: vendor/autoload.php
+
+        Lakion\Behat\MinkDebugExtension:
+            directory: etc/build
+            clean_start: false
+            screenshot: true
+
+        Behat\MinkExtension:
+            base_url: "http://nginx"

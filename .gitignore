@@ -1,0 +1,17 @@
+
+/vendor/
+/node_modules/
+/composer.lock
+
+/etc/build/*
+!/etc/build/.gitkeep
+
+/tests/Application/yarn.lock
+
+docker-compose.override.yaml
+docker-compose.override.dist.yaml
+docker-compose.yaml
+/bin-docker/
+/deploy/
+/docker/
+/etc/

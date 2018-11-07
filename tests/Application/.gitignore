@@ -1,0 +1,26 @@
+
+###> symfony/framework-bundle ###
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> symfony/web-server-bundle ###
+/.web-server-pid
+###< symfony/web-server-bundle ###
+
+.env
+/node_modules/
+
+/public/*
+!/public/assets/.gitkeep
+!/public/bundles/.gitkeep
+!/public/media/image/.gitkeep
+!/public/app.php
+!/public/app_dev.php
+!/public/app_test.php

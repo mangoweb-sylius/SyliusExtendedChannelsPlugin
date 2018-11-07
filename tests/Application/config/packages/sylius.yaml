@@ -1,0 +1,20 @@
+imports:
+    - { resource: "@SyliusCoreBundle/Resources/config/app/config.yml" }
+    - { resource: "@SyliusAdminBundle/Resources/config/app/config.yml" }
+    - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
+    - { resource: "@SyliusAdminApiBundle/Resources/config/app/config.yml" }
+
+parameters:
+    secret: '%kernel.secret%'
+
+liip_imagine:
+    loaders:
+        default:
+            filesystem:
+                data_root: "%kernel.project_dir%/public/media/image"
+
+knp_gaufrette:
+    adapters:
+        sylius_image:
+            local:
+                directory: "%kernel.project_dir%/public/media/image"

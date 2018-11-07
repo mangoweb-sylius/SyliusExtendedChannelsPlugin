@@ -1,0 +1,45 @@
+services:
+    _defaults:
+        autowire: false
+        autoconfigure: false
+        public: false
+
+    MangoSylius\ExtendedChannelsPlugin\Service\SwiftMailerAdapter:
+        decorates: sylius.email_sender.adapter.swiftmailer
+        arguments:
+            $dispatcher: '@event_dispatcher'
+            $mailer: '@mailer'
+            $logger: '@logger'
+
+    MangoSylius\ExtendedChannelsPlugin\Service\OrderEmailManager:
+        arguments:
+            $emailSender: '@sylius.email_sender'
+            $channelContext: '@sylius.context.channel'
+
+
+    MangoSylius\ExtendedChannelsPlugin\Form\Extension\ExtendedChannelExtension:
+        tags:
+            - name: form.type_extension
+              extended_type: Sylius\Bundle\ChannelBundle\Form\Type\ChannelType
+
+    sylius.email_manager.order: '@MangoSylius\ExtendedChannelsPlugin\Service\OrderEmailManager'
+    Sylius\Bundle\ShopBundle\EmailManager\OrderEmailManagerInterface: '@MangoSylius\ExtendedChannelsPlugin\Service\OrderEmailManager'
+
+    MangoSylius\ExtendedChannelsPlugin\Command\UpdateProductPriceByExchangeRatesCommand:
+        tags:
+            - name: 'console.command'
+        arguments:
+            $entityManager: '@doctrine.orm.default_entity_manager'
+            $logger: '@sylius_fixtures.logger'
+            $exchangeRateRepository: '@sylius.repository.exchange_rate'
+            $productVariantRepository: '@sylius.repository.product_variant'
+            $channelRepository: '@sylius.repository.channel'
+            $currencyConverter: '@sylius.currency_converter'
+
+    MangoSylius\ExtendedChannelsPlugin\Command\UpdateExchangeRatesCommand:
+        tags:
+            - name: 'console.command'
+        arguments:
+            $entityManager: '@doctrine.orm.default_entity_manager'
+            $logger: '@sylius_fixtures.logger'
+            $exchangeRateRepository: '@sylius.repository.exchange_rate'

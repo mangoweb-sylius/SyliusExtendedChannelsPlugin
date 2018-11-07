@@ -1,0 +1,7 @@
+mango-sylius:
+    admin:
+        form:
+            channel:
+                bccEmail: BCC email
+                contactPhone: Telefon
+                timezone: Časové pásmo

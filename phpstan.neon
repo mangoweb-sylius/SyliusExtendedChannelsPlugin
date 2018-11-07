@@ -1,0 +1,15 @@
+includes:
+    - vendor/phpstan/phpstan-doctrine/extension.neon
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/phpstan/phpstan-webmozart-assert/extension.neon
+
+parameters:
+    symfony:
+        container_xml_path: tests/Application/var/cache/test/srcTestDebugProjectContainer.xml
+
+    excludes_analyse:
+        # Too slow
+        - 'src/DependencyInjection/Configuration.php'
+
+        # Test dependencies
+        - '*/tests/Application/var/*'
