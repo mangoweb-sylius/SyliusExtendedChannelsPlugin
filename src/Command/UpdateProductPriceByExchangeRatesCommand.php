@@ -16,6 +16,7 @@ use Sylius\Component\Currency\Repository\ExchangeRateRepositoryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -63,6 +64,7 @@ class UpdateProductPriceByExchangeRatesCommand extends Command
 			->setName('mango:product:update-price')
 			->addArgument('sourceChannel', InputArgument::REQUIRED, 'Source Channel')
 			->addArgument('targetChannel', InputArgument::REQUIRED, 'Target Channel')
+			->addOption('round', 'r', InputOption::VALUE_OPTIONAL, 'Decimals (allowed values 0, 1 or 2) default 2')
 			->setDescription('Update product prices by exchange rates.');
 	}
 
@@ -73,6 +75,19 @@ class UpdateProductPriceByExchangeRatesCommand extends Command
 
 		$sourceChannelParam = $input->getArgument('sourceChannel');
 		$targetChannelParam = $input->getArgument('targetChannel');
+
+		$round = $input->getOption('round');
+		if ($round !== null && is_string($round)) {
+			$decimals = (int) $round;
+		} else {
+			$decimals = 2;
+		}
+
+		if (!in_array($decimals, [0, 1, 2], true)) {
+			$io->error('Option round has allowed values 0, 1 or 2');
+
+			return;
+		}
 
 		assert(is_string($sourceChannelParam));
 		assert(is_string($targetChannelParam));
@@ -122,9 +137,9 @@ class UpdateProductPriceByExchangeRatesCommand extends Command
 
 		$variantsCount = count($productVariants);
 
+		$io->newLine(1);
+		$io->progressStart($variantsCount);
 		foreach ($productVariants as $variant) {
-			$io->newLine(1);
-			$io->progressStart($variantsCount);
 			$io->progressAdvance();
 
 			assert($variant instanceof ProductVariantInterface);
@@ -141,22 +156,40 @@ class UpdateProductPriceByExchangeRatesCommand extends Command
 				continue;
 			}
 			assert($sourcePricing->getPrice() !== null);
-			$targetPricing->setPrice($this->currencyConverter->convert(
+			$targetPricing->setPrice($this->roundPrice($this->currencyConverter->convert(
 				$sourcePricing->getPrice(), $sourceCurrency, $targetCurrency
-				));
+			), $decimals));
 			if ($sourcePricing->getOriginalPrice() !== null && $sourcePricing->getOriginalPrice() > 0) {
-				$targetPricing->setOriginalPrice($this->currencyConverter->convert(
+				$targetPricing->setOriginalPrice($this->roundPrice($this->currencyConverter->convert(
 					$sourcePricing->getOriginalPrice(), $sourceCurrency, $targetCurrency
-				));
+				), $decimals));
 			}
 
 			$this->entityManager->persist($variant);
 		}
+		$io->progressFinish();
+
 		$this->entityManager->flush();
 
 		$io->newLine(3);
 		$io->success(
 			$this->getName() . ' at ' . date('Y-m-d H:i:s')
 		);
+	}
+
+	private function roundPrice(int $price, int $decimals): int
+	{
+		if (in_array($decimals, [0, 1], true)) {
+			$price = (float) number_format(
+				$price / 100,
+				$decimals,
+				'.',
+				''
+			);
+
+			return (int) ($price * 100);
+		}
+
+		return $price;
 	}
 }

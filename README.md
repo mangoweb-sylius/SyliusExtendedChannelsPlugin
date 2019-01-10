@@ -18,7 +18,7 @@
 1. Run `$ composer require mangoweb-sylius/sylius-extended-channels`.
 2. Register `\MangoSylius\ExtendedChannelsPlugin\MangoSyliusExtendedChannelsPlugin` in your Kernel.
 3. Your Entity `Channel` has to implement `\MangoSylius\ExtendedChannelsPlugin\Model\ExtendedChannelInterface`. You can use Trait `MangoSylius\ExtendedChannelsPlugin\Model\ExtendedChannelTrait`.
-3. Include template `Resources/views/Channel/extendedChannelForm.html.twig` in `@SyliusAdmin/Channel/_form.html.twig`.
+4. Include template `Resources/views/Channel/extendedChannelForm.html.twig` in `@SyliusAdmin/Channel/_form.html.twig`.
 For guide to use your own entity see [Sylius docs - Customizing Models](https://docs.sylius.com/en/1.3/customization/model.html)
 
 ### Optional
