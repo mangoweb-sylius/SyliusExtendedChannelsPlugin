@@ -13,6 +13,10 @@
 * Send copy of order mail to custom email address per channel
 * When SMTP is unavailable, it prevents error 500 on order submit but logs the error and submits the order
 
+<p align="center">
+	<img src="https://raw.githubusercontent.com/mangoweb-sylius/SyliusExtendedChannelsPlugin/master/doc/admin.png"/>
+</p>
+
 ## Installation
 
 1. Run `$ composer require mangoweb-sylius/sylius-extended-channels`.
