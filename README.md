@@ -44,6 +44,17 @@ Run `src/Migrations/basic-data/timezones-data.sql` for load the timezones table.
    ```bash
    mango:product:update-price sourceChannel targetChannel
    ```
+
+
+* Removes order that have been unpaid for a configured period and for shipping methods. Configuration parameters:
+    * sylius_order.order_expiration_period
+    * sylius_order.expiration_method_codes
+    
+
+   ```bash
+   mango:cancel-unpaid-orders
+   ```
+
 ## Development
 
 ### Usage

@@ -43,3 +43,16 @@ services:
             $entityManager: '@doctrine.orm.default_entity_manager'
             $logger: '@sylius_fixtures.logger'
             $exchangeRateRepository: '@sylius.repository.exchange_rate'
+
+    MangoSylius\ExtendedChannelsPlugin\Service\MangoUnpaidOrdersStateUpdater:
+        arguments:
+            $orderRepository: '@sylius.repository.order'
+            $stateMachineFactory: '@sm.factory'
+            $expirationPeriod: '%sylius_order.order_expiration_period%'
+            $expirationMethodCodes: '%sylius_order.expiration_method_codes%'
+
+    MangoSylius\ExtendedChannelsPlugin\Command\MangoCancelUnpaidOrdersCommand:
+        tags:
+            - name: 'console.command'
+        arguments:
+            $unpaidCartsStateUpdater: '@MangoSylius\ExtendedChannelsPlugin\Service\MangoUnpaidOrdersStateUpdater'
