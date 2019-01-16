@@ -12,6 +12,7 @@
 * Set channel timezone
 * Send copy of order mail to custom email address per channel
 * When SMTP is unavailable, it prevents error 500 on order submit but logs the error and submits the order
+* Cancel unpaid orders for certain shipping method
 
 <p align="center">
 	<img src="https://raw.githubusercontent.com/mangoweb-sylius/SyliusExtendedChannelsPlugin/master/doc/admin.png"/>
@@ -39,16 +40,16 @@ Run `src/Migrations/basic-data/timezones-data.sql` for load the timezones table.
   ```
 
 
-* Update Product prices by exchange rates, from sourceChannel (primary value, won't be changed) to targetChannel. You can run this after the previous command to update by downloaded rates or you can run it without the previous one to update the prices with your custom exchange rates set in Sylius admin.
+* Update Product prices by exchange rates, from `sourceChannel` (primary value, won't be changed) to `targetChannel`. You can run this after the previous command to update by downloaded rates or you can run it without the previous one to update the prices with your custom exchange rates set in Sylius admin.
 
    ```bash
    mango:product:update-price sourceChannel targetChannel
    ```
 
 
-* Removes order that have been unpaid for a configured period and for shipping methods. Configuration parameters:
-    * sylius_order.order_expiration_period
-    * sylius_order.expiration_method_codes
+* Remove orders that are not paid for a configured period and for certain shipping methods. This allows to keep unpaid orders which are e.g. to be paid at personal pickup, therefore needs to stay unpaid for a couple of hours / days. Configuration parameters:
+    * `sylius_order.order_expiration_period`
+    * `sylius_order.expiration_method_codes`
     
 
    ```bash
