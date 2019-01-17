@@ -5,3 +5,7 @@ mango-sylius:
                 bccEmail: BCC email
                 contactPhone: Phone
                 timezone: Timezone
+        order:
+            resend_email_confirmation: Resend order confirmation
+            successEmailResend: Email sucessfully sent
+            confirmEmailResend: Do you really want to resend email?

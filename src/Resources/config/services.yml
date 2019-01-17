@@ -56,3 +56,18 @@ services:
             - name: 'console.command'
         arguments:
             $unpaidCartsStateUpdater: '@MangoSylius\ExtendedChannelsPlugin\Service\MangoUnpaidOrdersStateUpdater'
+
+    MangoSylius\ExtendedChannelsPlugin\Menu\AdminMenuListener:
+        tags:
+            - name: kernel.event_listener
+              event: sylius.menu.admin.order.show
+              method: addButtonsToOrder
+
+    MangoSylius\ExtendedChannelsPlugin\Controller\ResendOrderConfirmation:
+        public: true
+        arguments:
+            $router: '@router'
+            $flashBag: '@session.flash_bag'
+            $translator: '@translator'
+            $emailSender: '@sylius.email_sender'
+            $orderRepository: '@sylius.repository.order'
