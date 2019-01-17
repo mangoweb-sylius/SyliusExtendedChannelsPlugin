@@ -13,10 +13,14 @@
 * Send copy of order mail to custom email address per channel
 * When SMTP is unavailable, it prevents error 500 on order submit but logs the error and submits the order
 * Cancel unpaid orders for certain shipping method
-* Resend order email confirmation
+* Resend order confirmation email
 
 <p align="center">
 	<img src="https://raw.githubusercontent.com/mangoweb-sylius/SyliusExtendedChannelsPlugin/master/doc/admin.png"/>
+</p>
+
+<p align="center">
+	<img src="https://raw.githubusercontent.com/mangoweb-sylius/SyliusExtendedChannelsPlugin/master/doc/resend.png"/>
 </p>
 
 ## Installation
