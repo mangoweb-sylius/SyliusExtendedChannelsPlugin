@@ -6,12 +6,13 @@ namespace MangoSylius\ExtendedChannelsPlugin\Service;
 
 use Doctrine\ORM\EntityRepository;
 use SM\Factory\Factory;
+use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Core\OrderCheckoutStates;
 use Sylius\Component\Core\OrderPaymentStates;
 use Sylius\Component\Core\OrderShippingStates;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\Component\Core\Updater\UnpaidOrdersStateUpdaterInterface;
-use Sylius\Component\Order\Model\OrderInterface;
 use Sylius\Component\Order\OrderTransitions;
 
 class MangoUnpaidOrdersStateUpdater implements UnpaidOrdersStateUpdaterInterface
@@ -66,7 +67,15 @@ class MangoUnpaidOrdersStateUpdater implements UnpaidOrdersStateUpdaterInterface
 
 		foreach ($expiredUnpaidOrders as $expiredUnpaidOrder) {
 			assert($expiredUnpaidOrder instanceof OrderInterface);
-			$this->cancelOrder($expiredUnpaidOrder);
+
+			$lastPayment = $expiredUnpaidOrder->getLastPayment();
+			if ($lastPayment !== null) {
+				$paymentMethod = $lastPayment->getMethod();
+				assert($paymentMethod instanceof PaymentMethodInterface);
+				if (in_array($paymentMethod->getCode(), $this->expirationMethodCodes)) {
+					$this->cancelOrder($expiredUnpaidOrder);
+				}
+			}
 		}
 	}
 
