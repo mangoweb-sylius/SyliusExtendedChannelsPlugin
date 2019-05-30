@@ -3,9 +3,13 @@ imports:
     - { resource: "@SyliusAdminBundle/Resources/config/app/config.yml" }
     - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
     - { resource: "@SyliusAdminApiBundle/Resources/config/app/config.yml" }
+    - { resource: "@MangoSyliusExtendedChannelsPlugin/Resources/config/resources.yml" }
 
 parameters:
     secret: '%kernel.secret%'
+    sylius_core.public_dir: '%kernel.project_dir%/public'
+    sylius_order.order_expiration_period: '2 days'
+    sylius_order.expiration_method_codes: ['PM_CSOB']
 
 liip_imagine:
     loaders:
@@ -18,3 +22,9 @@ knp_gaufrette:
         sylius_image:
             local:
                 directory: "%kernel.project_dir%/public/media/image"
+
+sylius_channel:
+    resources:
+        channel:
+            classes:
+                model: App\Entity\Channel

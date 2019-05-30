@@ -12,6 +12,7 @@ services:
             $logger: '@logger'
 
     MangoSylius\ExtendedChannelsPlugin\Service\OrderEmailManager:
+        decorates: sylius.email_manager.order
         arguments:
             $emailSender: '@sylius.email_sender'
             $channelContext: '@sylius.context.channel'
@@ -56,6 +57,9 @@ services:
             - name: 'console.command'
         arguments:
             $unpaidCartsStateUpdater: '@MangoSylius\ExtendedChannelsPlugin\Service\MangoUnpaidOrdersStateUpdater'
+            $entityManager: '@doctrine.orm.default_entity_manager'
+            $expirationPeriod: '%sylius_order.order_expiration_period%'
+            $expirationMethodCodes: '%sylius_order.expiration_method_codes%'
 
     MangoSylius\ExtendedChannelsPlugin\Menu\AdminMenuListener:
         tags:

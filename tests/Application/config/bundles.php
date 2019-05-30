@@ -59,4 +59,6 @@ return [
 	Sylius\Bundle\ShopBundle\SyliusShopBundle::class => ['all' => true],
 	FOS\OAuthServerBundle\FOSOAuthServerBundle::class => ['all' => true], // Required by SyliusApiBundle
 	Sylius\Bundle\AdminApiBundle\SyliusAdminApiBundle::class => ['all' => true],
+
+	MangoSylius\ExtendedChannelsPlugin\MangoSyliusExtendedChannelsPlugin::class => ['all' => true],
 ];

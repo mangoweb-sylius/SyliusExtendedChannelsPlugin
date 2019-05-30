@@ -10,9 +10,10 @@
 * Download current exchange rates
 * Update product prices using downloaded or custom exchange rates
 * Set channel timezone
+* Set channel phone
 * Send copy of order mail to custom email address per channel
 * When SMTP is unavailable, it prevents error 500 on order submit but logs the error and submits the order
-* Cancel unpaid orders for certain shipping method
+* Cancel unpaid orders for certain payment method
 * Resend order confirmation email
 
 <p align="center">
@@ -82,6 +83,10 @@ After your changes you must ensure that the tests are still passing.
 * PHPStan
   ```bash
   bin/phpstan.sh
+  ```
+* Behat
+  ```bash
+  bin/behat
   ```
 License
 -------

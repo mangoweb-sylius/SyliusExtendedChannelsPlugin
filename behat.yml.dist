@@ -15,10 +15,6 @@ default:
                 path: tests/Application/src/Kernel.php
                 bootstrap: vendor/autoload.php
 
-        Lakion\Behat\MinkDebugExtension:
-            directory: etc/build
-            clean_start: false
-            screenshot: true
-
         Behat\MinkExtension:
-            base_url: "http://nginx"
+            base_url: "http://localhost:8000/"
+            default_session: symfony

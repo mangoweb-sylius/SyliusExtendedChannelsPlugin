@@ -82,7 +82,7 @@ class MangoUnpaidOrdersStateUpdater implements UnpaidOrdersStateUpdaterInterface
 				assert($lastPayment instanceof PaymentInterface);
 				$paymentMethod = $lastPayment->getMethod();
 				assert($paymentMethod instanceof PaymentMethodInterface);
-				if (in_array($paymentMethod->getCode(), $this->expirationMethodCodes)) {
+				if (in_array($paymentMethod->getCode(), $this->expirationMethodCodes, true)) {
 					$this->cancelOrder($expiredUnpaidOrder);
 				}
 			}

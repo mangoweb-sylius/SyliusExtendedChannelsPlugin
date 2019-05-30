@@ -4,22 +4,43 @@ declare(strict_types=1);
 
 namespace MangoSylius\ExtendedChannelsPlugin\Command;
 
+use Doctrine\ORM\EntityManagerInterface;
 use MangoSylius\ExtendedChannelsPlugin\Service\MangoUnpaidOrdersStateUpdater;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MangoCancelUnpaidOrdersCommand extends ContainerAwareCommand
+class MangoCancelUnpaidOrdersCommand extends Command
 {
-	/** @var MangoUnpaidOrdersStateUpdater */
+	/**
+	 * @var MangoUnpaidOrdersStateUpdater
+	 */
 	private $unpaidCartsStateUpdater;
+	/**
+	 * @var EntityManagerInterface
+	 */
+	private $entityManager;
+	/**
+	 * @var array
+	 */
+	private $expirationMethodCodes;
+	/**
+	 * @var string
+	 */
+	private $expirationPeriod;
 
 	public function __construct(
-		MangoUnpaidOrdersStateUpdater $unpaidCartsStateUpdater
+		MangoUnpaidOrdersStateUpdater $unpaidCartsStateUpdater,
+		EntityManagerInterface $entityManager,
+		string $expirationPeriod,
+		array $expirationMethodCodes
 	) {
-		$this->unpaidCartsStateUpdater = $unpaidCartsStateUpdater;
-
 		parent::__construct();
+
+		$this->unpaidCartsStateUpdater = $unpaidCartsStateUpdater;
+		$this->entityManager = $entityManager;
+		$this->expirationMethodCodes = $expirationMethodCodes;
+		$this->expirationPeriod = $expirationPeriod;
 	}
 
 	/**
@@ -39,8 +60,8 @@ class MangoCancelUnpaidOrdersCommand extends ContainerAwareCommand
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output): void
 	{
-		$expirationTime = $this->getContainer()->getParameter('sylius_order.order_expiration_period');
-		$methodCodes = $this->getContainer()->getParameter('sylius_order.expiration_method_codes');
+		$expirationTime = $this->expirationPeriod;
+		$methodCodes = $this->expirationMethodCodes;
 
 		$output->writeln(sprintf(
 			'Command will cancel orders that have been unpaid for <info>%s</info> for payment method with codes <info>%s</info>.',
@@ -50,6 +71,6 @@ class MangoCancelUnpaidOrdersCommand extends ContainerAwareCommand
 
 		$this->unpaidCartsStateUpdater->cancel();
 
-		$this->getContainer()->get('sylius.manager.order')->flush();
+		$this->entityManager->flush();
 	}
 }

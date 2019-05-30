@@ -47,9 +47,4 @@ final class OrderEmailManager implements OrderEmailManagerInterface
 			);
 		}
 	}
-
-	public function sendConfirmationEmailForInvalidOrder(OrderInterface $order): void
-	{
-		$this->sendConfirmationEmail($order);
-	}
 }

@@ -9,6 +9,7 @@ use Psr\Log\LoggerInterface;
 use Sylius\Component\Currency\Model\ExchangeRateInterface;
 use Sylius\Component\Currency\Repository\ExchangeRateRepositoryInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -42,6 +43,7 @@ class UpdateExchangeRatesCommand extends Command
 	{
 		$this
 			->setName('mango:exchange-rates:update')
+			->addArgument('exchangeratesUrl', InputArgument::OPTIONAL, 'URL', 'https://api.exchangeratesapi.io/latest?base=%currency%')
 			->setDescription('Update exchange rates.');
 	}
 
@@ -58,9 +60,12 @@ class UpdateExchangeRatesCommand extends Command
 			$currencies[] = $exchangeRate->getSourceCurrency()->getCode();
 		}
 
+		$exchangeRatesUrl = $input->getArgument('exchangeratesUrl');
+		assert(is_string($exchangeRatesUrl));
+
 		$exchangeRatesJsons = [];
 		foreach ($currencies as $currency) {
-			$json = file_get_contents('https://api.exchangeratesapi.io/latest?base=' . $currency);
+			$json = file_get_contents(str_replace('%currency%', $currency, $exchangeRatesUrl));
 			if ($json === false) {
 				$errorMsg = 'Missing source JSON for ' . $currency;
 				$io->warning($errorMsg);

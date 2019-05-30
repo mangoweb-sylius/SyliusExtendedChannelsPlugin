@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace MangoSylius\ExtendedChannelsPlugin\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * @ORM\Table(name="mango_timezone")
  * @ORM\Entity
  */
-class TimezoneEntity
+class TimezoneEntity implements ResourceInterface
 {
 	/**
 	 * @var int
@@ -26,6 +27,11 @@ class TimezoneEntity
 	 * @ORM\Column(type="string", name="timezone_title")
 	 */
 	private $timezoneTitle;
+
+	public function __construct(string $timezoneTitle)
+	{
+		$this->timezoneTitle = $timezoneTitle;
+	}
 
 	public function getId(): int
 	{

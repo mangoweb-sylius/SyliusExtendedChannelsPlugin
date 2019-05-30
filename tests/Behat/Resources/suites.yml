@@ -1,10 +1,7 @@
-# Put your Behat suites definitions here
-
-default:
-    suites:
-        greeting_customer:
-            contexts_services:
-                - acme_sylius_example.context.ui.shop.welcome
-
-            filters:
-                tags: "@greeting_customer"
+imports:
+    - suites/managing_channel.yml
+    - suites/resending_order_email_to_customer.yml
+    - suites/send_order_email_to_bcc_email.yml
+    - suites/cancel_unpaid_orders_for_certain_payment_method.yml
+    - suites/update_product_prices_using_exchange_rates.yml
+    - suites/download_current_exchange_rates.yml
