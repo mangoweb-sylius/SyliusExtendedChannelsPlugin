@@ -1,8 +1,8 @@
 @managing_channel
-Feature: Set bcc email to channel
-	Add a bcc email to the channel in administration for email send copy of email to it.
+Feature: Set bcc email for channel
+	In order to add a bcc email to channel settings in admin panel
 	As an Administrator
-	I want to set bcc email to the channel
+	I want to set the bcc email on the channel details page
 
 	Background:
 		Given the store operates on a channel named "Mango Channel"

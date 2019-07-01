@@ -25,9 +25,9 @@ final class CommandContext implements Context
 	}
 
 	/**
-	 * @Given I run command to update product prices on channels :arg1 and :arg2
+	 * @Given I update product prices on channels :arg1 and :arg2
 	 */
-	public function iRunCommandToUpdateProductPricesOnChannelsAnd(string $arg1, string $arg2)
+	public function iUpdateProductPricesOnChannelsAnd(string $arg1, string $arg2)
 	{
 		$application = new Application($this->kernel);
 		$application->add(new InstallSampleDataCommand());
@@ -40,9 +40,9 @@ final class CommandContext implements Context
 	}
 
 	/**
-	 * @Given I run command to cancellation orders
+	 * @Given I cancel orders
 	 */
-	public function iRunCommandToCancellationOrders()
+	public function iCancelOrders()
 	{
 		$application = new Application($this->kernel);
 		$application->add(new InstallSampleDataCommand());
@@ -52,9 +52,9 @@ final class CommandContext implements Context
 	}
 
 	/**
-	 * @Given I run command to update exchange rates
+	 * @Given I update exchange rates
 	 */
-	public function iRunCommandToUpdateExchangeRates()
+	public function iUpdateExchangeRates()
 	{
 		$application = new Application($this->kernel);
 		$application->add(new InstallSampleDataCommand());

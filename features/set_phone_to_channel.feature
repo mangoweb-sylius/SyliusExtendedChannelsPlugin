@@ -1,8 +1,8 @@
 @managing_channel
-Feature: Set phone number to channel
-	Add a phone number to the channel in administration (for email, footer, etc.)
+Feature: Set phone number for channel
+	In order to add a phone number to channel settings in admin panel
 	As an Administrator
-	I want to set a phone number to the channel
+	I want to set the phone number on the channel details page
 
 	Background:
 		Given the store operates on a channel named "Mango Channel"

@@ -1,6 +1,7 @@
 
 ###> symfony/framework-bundle ###
 /public/bundles/
+/public/assets/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
@@ -17,10 +18,4 @@
 .env
 /node_modules/
 
-/public/*
-!/public/assets/.gitkeep
-!/public/bundles/.gitkeep
 !/public/media/image/.gitkeep
-!/public/app.php
-!/public/app_dev.php
-!/public/app_test.php
