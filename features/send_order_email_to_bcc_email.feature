@@ -1,8 +1,8 @@
 @send_order_email_to_bcc_email
 Feature: Send an order email to bcc email
-	In order to be able to send an order email to bcc email
-	As a Administrator
-	I want to receive an order email when customer finish order
+	In order to be able to send an copy of order email to bcc email
+	As an Administrator
+	I want to receive an copy of order email when customer finish order
 
 	Background:
 		Given the store operates on a single channel in "United States"

@@ -76,18 +76,15 @@ Run `src/Migrations/basic-data/timezones-data.sql` for load the timezones table.
 ### Testing
 
 After your changes you must ensure that the tests are still passing.
-* Easy Coding Standard
-  ```bash
-  bin/ecs.sh
-  ```
-* PHPStan
-  ```bash
-  bin/phpstan.sh
-  ```
-* Behat
-  ```bash
-  bin/behat
-  ```
+
+```bash
+$ composer install
+$ bin/console doctrine:schema:create -e test
+$ bin/behat
+$ bin/phpstan.sh
+$ bin/ecs.sh
+```
+
 License
 -------
 This library is under the MIT license.

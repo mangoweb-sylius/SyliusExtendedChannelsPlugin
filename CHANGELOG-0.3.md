@@ -5,3 +5,10 @@
 #### Details
 
 - Behat tests
+
+## v0.3.1 (2019-07-02)
+
+#### Details
+
+- Better tests
+

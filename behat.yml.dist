@@ -14,6 +14,7 @@ default:
                 class: \App\Kernel
                 path: tests/Application/src/Kernel.php
                 bootstrap: vendor/autoload.php
+                env: test
 
         Behat\MinkExtension:
             base_url: "http://localhost:8000/"

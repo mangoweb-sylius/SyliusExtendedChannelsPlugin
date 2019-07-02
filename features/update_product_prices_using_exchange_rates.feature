@@ -1,7 +1,8 @@
 @update_product_prices_using_exchange_rates
-Feature: Update product prices using exchange rates
-	As a administrator / cron
-	Update product prices using exchange rates
+Feature: Update product prices on another channel using exchange rates
+	In order to update product price on another channel using exchange rates
+	As an Administrator
+	I want to be able to update product prices using exchange rates
 
 	Background:
 		Given the store has currency "EUR"
@@ -15,6 +16,6 @@ Feature: Update product prices using exchange rates
 
 	@ui
 	Scenario: Run comman and check prices
-		Given I run command to update product prices on channels "Web-EU" and "Web-GB"
-		And check that the product "Screwdriver" has price "€10.00" on channel "Web-EU"
+		Given I update product prices on channels "Web-EU" and "Web-GB"
+		Then check that the product "Screwdriver" has price "€10.00" on channel "Web-EU"
 		And check that the product "Screwdriver" has price "€12.00" on channel "Web-GB"

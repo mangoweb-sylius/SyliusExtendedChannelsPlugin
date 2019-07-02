@@ -13,3 +13,6 @@ parameters:
 
         # Test dependencies
         - '*/tests/Application/var/*'
+
+        - 'src/Service/SwiftMailerAdapter.php'
+        - 'tests/Behat/Context/Ui/Shop/OrderContext.php'

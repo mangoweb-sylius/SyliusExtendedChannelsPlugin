@@ -1,8 +1,8 @@
 @managing_channel
-Feature: Set timezone to channel
-	Add a timezone to the channel in administration.
+Feature: Set timezone for channel
+	In order to add a timezone to channel settings in admin panel
 	As an Administrator
-	I want to set timezone to the channel
+	I want to set the timezone on the channel details page
 
 	Background:
 		Given the store operates on a channel named "Mango Channel"
