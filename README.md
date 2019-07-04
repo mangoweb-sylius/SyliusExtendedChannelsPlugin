@@ -3,7 +3,19 @@
         <img src="https://avatars0.githubusercontent.com/u/38423357?s=200&v=4"/>
     </a>
 </p>
-<h1 align="center">Extended Channels Plugin</h1>
+<h1 align="center">
+Extended Channels Plugin
+<br />
+    <a href="https://packagist.org/packages/mangoweb-sylius/sylius-extended-channels" title="License" target="_blank">
+        <img src="https://img.shields.io/packagist/l/mangoweb-sylius/sylius-extended-channels.svg" />
+    </a>
+    <a href="https://packagist.org/packages/mangoweb-sylius/sylius-extended-channels" title="Version" target="_blank">
+        <img src="https://img.shields.io/packagist/v/mangoweb-sylius/sylius-extended-channels.svg" />
+    </a>
+    <a href="http://travis-ci.org/mangoweb-sylius/SyliusExtendedChannelsPlugin" title="Build status" target="_blank">
+        <img src="https://img.shields.io/travis/mangoweb-sylius/SyliusExtendedChannelsPlugin/master.svg" />
+    </a>
+</h1>
 
 ## Features
 

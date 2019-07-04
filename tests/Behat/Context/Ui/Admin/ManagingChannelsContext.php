@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Admin;
 
-use App\Entity\Channel;
 use Behat\Behat\Context\Context;
 use Doctrine\ORM\EntityManagerInterface;
 use MangoSylius\ExtendedChannelsPlugin\Entity\TimezoneEntity;
 use Sylius\Behat\Service\SharedStorageInterface;
+use Tests\MangoSylius\ExtendedChannelsPlugin\Application\Entity\Channel;
 use Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Channel\UpdatePageInterface;
 use Webmozart\Assert\Assert;
 

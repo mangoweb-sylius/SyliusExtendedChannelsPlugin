@@ -1,21 +1,28 @@
 imports:
-    - vendor/sylius/sylius/behat.yml.dist
+    - vendor/sylius/sylius/src/Sylius/Behat/Resources/config/suites.yml
     - tests/Behat/Resources/suites.yml
 
 default:
     extensions:
-        FriendsOfBehat\ContextServiceExtension:
-            imports:
-                - vendor/sylius/sylius/src/Sylius/Behat/Resources/config/services.xml
-                - tests/Behat/Resources/services.xml
-
-        FriendsOfBehat\SymfonyExtension:
-            kernel:
-                class: \App\Kernel
-                path: tests/Application/src/Kernel.php
-                bootstrap: vendor/autoload.php
-                env: test
+        Lakion\Behat\MinkDebugExtension:
+            directory: etc/build
+            clean_start: false
+            screenshot: true
 
         Behat\MinkExtension:
-            base_url: "http://localhost:8000/"
+            base_url: "http://localhost:8080/"
             default_session: symfony
+            sessions:
+                symfony:
+                    symfony: ~
+
+        FriendsOfBehat\SymfonyExtension:
+            bootstrap: tests/Application/config/bootstrap.php
+            kernel:
+                class: Tests\MangoSylius\ExtendedChannelsPlugin\Application\Kernel
+
+        FriendsOfBehat\VariadicExtension: ~
+
+        FriendsOfBehat\SuiteSettingsExtension:
+            paths:
+                - "features"

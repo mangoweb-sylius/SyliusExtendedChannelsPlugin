@@ -7,10 +7,10 @@ parameters:
 
 doctrine:
     dbal:
-        # configure these for your database server
         driver: 'pdo_sqlite'
         path: "%kernel.project_dir%/var/db.sql"
         charset: UTF8
+
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
@@ -19,6 +19,6 @@ doctrine:
             App:
                 is_bundle: false
                 type: annotation
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
+                dir: '%kernel.project_dir%/Entity'
+                prefix: 'Tests\MangoSylius\ExtendedChannelsPlugin\Application\Entity'
                 alias: App

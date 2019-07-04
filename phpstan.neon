@@ -5,7 +5,7 @@ includes:
 
 parameters:
     symfony:
-        container_xml_path: tests/Application/var/cache/test/srcApp_KernelTestDebugContainer.xml
+        container_xml_path: tests/Application/var/cache/test/testContainer.xml
 
     excludes_analyse:
         # Too slow
@@ -15,4 +15,4 @@ parameters:
         - '*/tests/Application/var/*'
 
         - 'src/Service/SwiftMailerAdapter.php'
-        - 'tests/Behat/Context/Ui/Shop/OrderContext.php'
+        - 'tests'
