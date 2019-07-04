@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Setup;
 
-use App\Entity\Channel;
 use Behat\Behat\Context\Context;
 use Doctrine\Common\Persistence\ObjectManager;
 use Sylius\Behat\Service\SharedStorageInterface;
+use Tests\MangoSylius\ExtendedChannelsPlugin\Application\Entity\Channel;
 
 final class ChannelContext implements Context
 {

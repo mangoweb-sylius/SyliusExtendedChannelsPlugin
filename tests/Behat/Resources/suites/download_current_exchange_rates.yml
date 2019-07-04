@@ -1,7 +1,7 @@
 default:
     suites:
         download_current_exchange_rates:
-            contexts_services:
+            contexts:
                 - sylius.behat.context.hook.doctrine_orm
 
                 - sylius.behat.context.setup.channel

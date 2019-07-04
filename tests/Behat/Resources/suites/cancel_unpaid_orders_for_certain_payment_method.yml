@@ -1,7 +1,7 @@
 default:
     suites:
         cancel_unpaid_orders_for_certain_payment_method:
-            contexts_services:
+            contexts:
                 - sylius.behat.context.hook.doctrine_orm
 
                 - sylius.behat.context.setup.channel

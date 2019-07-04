@@ -1,0 +1,18 @@
+imports:
+    - { resource: "@SyliusCoreBundle/Resources/config/app/config.yml" }
+
+    - { resource: "@SyliusAdminBundle/Resources/config/app/config.yml" }
+    - { resource: "@SyliusAdminApiBundle/Resources/config/app/config.yml" }
+
+    - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
+
+parameters:
+    sylius_core.public_dir: '%kernel.project_dir%/public'
+    sylius_order.order_expiration_period: '2 days'
+    sylius_order.expiration_method_codes: ['PM_CSOB']
+
+sylius_channel:
+    resources:
+        channel:
+            classes:
+                model: Tests\MangoSylius\ExtendedChannelsPlugin\Application\Entity\Channel
