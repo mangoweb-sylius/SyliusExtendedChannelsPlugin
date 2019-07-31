@@ -1,7 +1,6 @@
 <p align="center">
     <a href="https://www.mangoweb.cz/en/" target="_blank">
         <img src="https://avatars0.githubusercontent.com/u/38423357?s=200&v=4"/>
-        <img src="https://sylius.com/assets/badge-approved-by-sylius.png" alt="Approved by Sylius" style="width: 100px;position: absolute;margin: 20px 0 0 -50px;transform: rotate(30deg);"/>
     </a>
 </p>
 <h1 align="center">
@@ -16,6 +15,8 @@ Extended Channels Plugin
     <a href="http://travis-ci.org/mangoweb-sylius/SyliusExtendedChannelsPlugin" title="Build status" target="_blank">
         <img src="https://img.shields.io/travis/mangoweb-sylius/SyliusExtendedChannelsPlugin/master.svg" />
     </a>
+    <br />
+    <img src="https://sylius.com/assets/badge-approved-by-sylius.png" alt="Approved by Sylius" width="120"/>
 </h1>
 
 ## Features
