@@ -12,7 +12,14 @@
 
 - Better tests
 
-## v0.3.2 (2019-10-04)
+## v0.4.0 (2019-07-04)
+
+#### Details
+
+- Travis CI
+- Approved by Sylius!
+
+## v0.4.1 (2019-10-04)
 
 #### Details
 
