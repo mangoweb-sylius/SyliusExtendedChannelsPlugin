@@ -12,3 +12,8 @@
 
 - Better tests
 
+## v0.3.2 (2019-10-04)
+
+#### Details
+
+- Add Sylius 1.6 to travis
