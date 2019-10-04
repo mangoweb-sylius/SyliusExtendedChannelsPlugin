@@ -1,4 +1,4 @@
-# CHANGELOG FOR `0.3.X`
+# CHANGELOG
 
 ## v0.3.0 (2019-06-03)
 
