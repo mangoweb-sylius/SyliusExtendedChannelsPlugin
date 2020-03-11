@@ -29,6 +29,8 @@ Extended Channels Plugin
 * When SMTP is unavailable, it prevents error 500 on order submit but logs the error and submits the order
 * Cancel unpaid orders for certain payment method
 * Resend order confirmation email
+* Duplicate product and product variant
+* Allows to change the code for the product and product variant
 
 <p align="center">
 	<img src="https://raw.githubusercontent.com/mangoweb-sylius/SyliusExtendedChannelsPlugin/master/doc/admin.png"/>
@@ -44,10 +46,11 @@ Extended Channels Plugin
 2. Register `\MangoSylius\ExtendedChannelsPlugin\MangoSyliusExtendedChannelsPlugin` in your Kernel.
 3. Your Entity `Channel` has to implement `\MangoSylius\ExtendedChannelsPlugin\Model\ExtendedChannelInterface`. You can use Trait `MangoSylius\ExtendedChannelsPlugin\Model\ExtendedChannelTrait`.
 4. Include template `Resources/views/Channel/extendedChannelForm.html.twig` in `@SyliusAdmin/Channel/_form.html.twig`.
-5. Import `@MangoSyliusExtendedChannelsPlugin/Resources/config/routing.yml` in the routing.yml.
+5. Import `@MangoSyliusExtendedChannelsPlugin/Resources/config/resources.yml` in the `_sylius.yml`.
+5. Import `@MangoSyliusExtendedChannelsPlugin/Resources/config/routing.yml` in the `routing.yml`.
 6. Rewrite in `@SyliusAdmin/Order/show.html.twig` row `{{ knp_menu_render(menu, {'template': '@SyliusUi/Menu/top.html.twig'}) }}` by `{{ knp_menu_render(menu, {'template': '@MangoSyliusExtendedChannelsPlugin/Menu/top.html.twig'}) }}`.
 
-For guide to use your own entity see [Sylius docs - Customizing Models](https://docs.sylius.com/en/1.3/customization/model.html)
+For guide to use your own entity see [Sylius docs - Customizing Models](https://docs.sylius.com/en/1.6/customization/model.html)
 
 ### Optional
 
@@ -78,6 +81,12 @@ Run `src/Migrations/basic-data/timezones-data.sql` for load the timezones table.
    ```bash
    mango:cancel-unpaid-orders
    ```
+
+* You can use events to modify an object when you duplicate it
+    * `mango-sylius-extended-channels.duplicate.product.before-persist`
+    * `mango-sylius-extended-channels.duplicate.product.after-persist`
+    * `mango-sylius-extended-channels.duplicate.product-variant.before-persist`
+    * `mango-sylius-extended-channels.duplicate.product-variant.after-persist`
 
 ## Development
 

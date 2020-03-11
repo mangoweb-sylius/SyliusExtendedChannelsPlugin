@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v0.4.0 (2020-xx-xx)
+
+#### Details
+
+- Duplicate product
+- Duplicate product variant
+
 ## v0.3.0 (2019-06-03)
 
 #### Details

@@ -21,8 +21,19 @@
 
 		<service id="sylius_extended_channels.context.ui.admin.order"
 				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Admin\ManagingOrderContext">
-			<argument type="service"
-					  id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Order\ShowPageInterface"/>
+			<argument type="service" id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Order\ShowPageInterface"/>
+			<argument type="service" id="sylius.behat.notification_checker"/>
+		</service>
+
+		<service id="sylius_extended_channels.context.ui.admin.product"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Admin\ManagingProductContext">
+			<argument type="service" id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Product\ShowPageInterface"/>
+			<argument type="service" id="sylius.behat.notification_checker"/>
+		</service>
+
+		<service id="sylius_extended_channels.context.ui.admin.product_variant"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Admin\ManagingProductVariantContext">
+			<argument type="service" id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\ProductVariant\ShowPageInterface"/>
 			<argument type="service" id="sylius.behat.notification_checker"/>
 		</service>
 
@@ -74,6 +85,18 @@
 
 		<service id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Order\ShowPageInterface"
 				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Order\ShowPage"
+				 parent="sylius.behat.symfony_page"
+				 public="true"
+		/>
+
+		<service id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Product\ShowPageInterface"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Product\ShowPage"
+				 parent="sylius.behat.symfony_page"
+				 public="true"
+		/>
+
+		<service id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\ProductVariant\ShowPageInterface"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\ProductVariant\ShowPage"
 				 parent="sylius.behat.symfony_page"
 				 public="true"
 		/>

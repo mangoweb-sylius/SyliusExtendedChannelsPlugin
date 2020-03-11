@@ -4,3 +4,20 @@ sylius_resource:
             driver: doctrine/orm
             classes:
                 model: MangoSylius\ExtendedChannelsPlugin\Entity\TimezoneEntity
+
+sylius_grid:
+    templates:
+        action:
+            duplicate: "@MangoSyliusExtendedChannelsPlugin/Grid/Action/duplicate.html.twig"
+    grids:
+        sylius_admin_product_variant:
+            actions:
+                item:
+                    duplicate:
+                        label: mango-sylius.admin.product_variant.duplicate
+                        type: duplicate
+                        options:
+                            link:
+                                route: mango_sylius_admin_duplicate_product_variant
+                                parameters:
+                                    id: resource.id

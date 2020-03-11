@@ -6,7 +6,7 @@
 	"require": {
 		"ext-json": "*",
 		"php": "^7.1",
-		"sylius/sylius": "^1.4"
+		"sylius/sylius": ">=1.5.0 <1.7.0"
 	},
 	"require-dev": {
 		"behat/behat": "^3.4",
@@ -50,10 +50,5 @@
 	},
 	"autoload-dev": {
 		"classmap": ["tests/Application/Kernel.php"]
-	},
-	"extra": {
-		"branch-alias": {
-			"dev-master": "1.5-dev"
-		}
 	}
 }

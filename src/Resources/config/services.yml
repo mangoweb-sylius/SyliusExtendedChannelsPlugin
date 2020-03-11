@@ -23,6 +23,16 @@ services:
             - name: form.type_extension
               extended_type: Sylius\Bundle\ChannelBundle\Form\Type\ChannelType
 
+    MangoSylius\ExtendedChannelsPlugin\Form\Extension\ProductExtension:
+        tags:
+            - name: form.type_extension
+              extended_type: Sylius\Bundle\ProductBundle\Form\Type\ProductType
+
+    MangoSylius\ExtendedChannelsPlugin\Form\Extension\ProductVariantExtension:
+        tags:
+            -   name: form.type_extension
+                extended_type: Sylius\Bundle\ProductBundle\Form\Type\ProductVariantType
+
     sylius.email_manager.order: '@MangoSylius\ExtendedChannelsPlugin\Service\OrderEmailManager'
     Sylius\Bundle\ShopBundle\EmailManager\OrderEmailManagerInterface: '@MangoSylius\ExtendedChannelsPlugin\Service\OrderEmailManager'
 
@@ -67,6 +77,10 @@ services:
               event: sylius.menu.admin.order.show
               method: addButtonsToOrder
 
+            - name: kernel.event_listener
+              event: sylius.menu.admin.product.update
+              method: addButtonsToProduct
+
     MangoSylius\ExtendedChannelsPlugin\Controller\ResendOrderConfirmation:
         public: true
         arguments:
@@ -75,3 +89,21 @@ services:
             $translator: '@translator'
             $emailSender: '@sylius.email_sender'
             $orderRepository: '@sylius.repository.order'
+
+    MangoSylius\ExtendedChannelsPlugin\Controller\DuplicateController:
+        public: true
+        arguments:
+            $eventDispatcher: '@event_dispatcher'
+            $router: '@router'
+            $flashBag: '@session.flash_bag'
+            $translator: '@translator'
+            $productRepository: '@sylius.repository.product'
+            $productVariantRepository: '@sylius.repository.product_variant'
+            $productDuplicator: '@MangoSylius\ExtendedChannelsPlugin\Service\ProductDuplicator'
+
+    MangoSylius\ExtendedChannelsPlugin\Service\ProductDuplicator:
+        arguments:
+            $imageUploader: '@sylius.image_uploader'
+            $productRepository: '@sylius.repository.product'
+            $productVariantRepository: '@sylius.repository.product_variant'
+            $dataManager: '@liip_imagine.data.manager'

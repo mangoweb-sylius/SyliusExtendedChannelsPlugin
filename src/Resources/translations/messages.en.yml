@@ -9,3 +9,9 @@ mango-sylius:
             resend_email_confirmation: Resend order confirmation
             successEmailResend: Email sucessfully sent
             confirmEmailResend: Do you really want to resend email?
+        product:
+            duplicate: Duplicate
+            success: The product was successfully duplicated
+        product_variant:
+            duplicate: Duplicate
+            success: The product variant was successfully duplicated

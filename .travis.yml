@@ -22,8 +22,6 @@ env:
 matrix:
     include:
         - env:
-            - SYLIUS_VERSION="1.4.*"
-        - env:
             - SYLIUS_VERSION="1.5.*"
         - env:
             - SYLIUS_VERSION="1.6.*"

@@ -12,6 +12,9 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 
+/**
+ * @method iterable getExtendedTypes()
+ */
 final class ExtendedChannelExtension extends AbstractTypeExtension
 {
 	public function buildForm(FormBuilderInterface $builder, array $options): void

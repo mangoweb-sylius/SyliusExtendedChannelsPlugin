@@ -5,3 +5,5 @@ imports:
     - suites/cancel_unpaid_orders_for_certain_payment_method.yml
     - suites/update_product_prices_using_exchange_rates.yml
     - suites/download_current_exchange_rates.yml
+    - suites/duplicate_product.yml
+    - suites/duplicate_product_variant.yml
