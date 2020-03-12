@@ -5,6 +5,17 @@ sylius_resource:
             classes:
                 model: MangoSylius\ExtendedChannelsPlugin\Entity\TimezoneEntity
 
+        mangoweb_extended_channels_plugin.hello_bar:
+            driver: doctrine/orm
+            classes:
+                model: MangoSylius\ExtendedChannelsPlugin\Entity\HelloBar
+                form: MangoSylius\ExtendedChannelsPlugin\Form\Type\HelloBarType
+                repository: MangoSylius\ExtendedChannelsPlugin\Repository\HelloBarRepository
+            translation:
+                classes:
+                    model: MangoSylius\ExtendedChannelsPlugin\Entity\HelloBarTranslation
+                    form: MangoSylius\ExtendedChannelsPlugin\Form\Type\HelloBarTranslationType
+
 sylius_grid:
     templates:
         action:
@@ -21,3 +32,30 @@ sylius_grid:
                                 route: mango_sylius_admin_duplicate_product_variant
                                 parameters:
                                     id: resource.id
+
+        mangoweb_extended_channels_plugin_hello_bar:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%mangoweb_extended_channels_plugin.model.hello_bar.class%"
+            fields:
+                messageType:
+                    type: string
+                    label: mango-sylius.admin.hello_bar.message_type
+                startsAt:
+                    type: datetime
+                    label: sylius.ui.from
+                    sortable: ~
+                endsAt:
+                    type: datetime
+                    label: sylius.ui.to
+                    sortable: ~
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update
+                    delete:
+                        type: delete

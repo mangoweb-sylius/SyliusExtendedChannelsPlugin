@@ -12,3 +12,19 @@ mango_sylius_admin_duplicate_product_variant:
     path: /duplicate-product-variant/{id}
     defaults:
         _controller: MangoSylius\ExtendedChannelsPlugin\Controller\DuplicateController::duplicateProductVariant
+
+mangoweb_extended_channels_plugin_hello_bar:
+    resource: |
+        alias: mangoweb_extended_channels_plugin.hello_bar
+        section: admin
+        path: hello_bar
+        templates: SyliusAdminBundle:Crud
+        redirect: update
+        grid: mangoweb_extended_channels_plugin_hello_bar
+        vars:
+            all:
+                header: mango-sylius.admin.hello_bar.header
+                subheader: mango-sylius.admin.hello_bar.subheader
+                templates:
+                    form: '@MangoSyliusExtendedChannelsPlugin/HelloBar/_form.html.twig'
+    type: sylius.resource

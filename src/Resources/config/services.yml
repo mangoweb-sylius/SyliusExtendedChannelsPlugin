@@ -1,3 +1,10 @@
+parameters:
+    mangoweb_sylius_extended_channels_hello_bar_types:
+        error: 'Error'
+        success: 'Success'
+        info: 'Info'
+        warning: 'Warning'
+
 services:
     _defaults:
         autowire: false
@@ -17,7 +24,6 @@ services:
             $emailSender: '@sylius.email_sender'
             $channelContext: '@sylius.context.channel'
 
-
     MangoSylius\ExtendedChannelsPlugin\Form\Extension\ExtendedChannelExtension:
         tags:
             - name: form.type_extension
@@ -30,8 +36,21 @@ services:
 
     MangoSylius\ExtendedChannelsPlugin\Form\Extension\ProductVariantExtension:
         tags:
-            -   name: form.type_extension
-                extended_type: Sylius\Bundle\ProductBundle\Form\Type\ProductVariantType
+            - name: form.type_extension
+              extended_type: Sylius\Bundle\ProductBundle\Form\Type\ProductVariantType
+
+    MangoSylius\ExtendedChannelsPlugin\Form\Type\HelloBarType:
+        tags:
+            - name: form.type
+        arguments:
+            - '%mangoweb_sylius_extended_channels_hello_bar_types%'
+            - '%mangoweb_extended_channels_plugin.model.hello_bar.class%'
+            - ['sylius']
+
+    MangoSylius\ExtendedChannelsPlugin\Form\Type\HelloBarTranslationType:
+        tags:
+            - name: form.type
+        arguments: ['%mangoweb_extended_channels_plugin.model.hello_bar_translation.class%', ['sylius']]
 
     sylius.email_manager.order: '@MangoSylius\ExtendedChannelsPlugin\Service\OrderEmailManager'
     Sylius\Bundle\ShopBundle\EmailManager\OrderEmailManagerInterface: '@MangoSylius\ExtendedChannelsPlugin\Service\OrderEmailManager'
@@ -81,6 +100,10 @@ services:
               event: sylius.menu.admin.product.update
               method: addButtonsToProduct
 
+            - name: kernel.event_listener
+              event: sylius.menu.admin.main
+              method: addAdminMenuItems
+
     MangoSylius\ExtendedChannelsPlugin\Controller\ResendOrderConfirmation:
         public: true
         arguments:
@@ -107,3 +130,10 @@ services:
             $productRepository: '@sylius.repository.product'
             $productVariantRepository: '@sylius.repository.product_variant'
             $dataManager: '@liip_imagine.data.manager'
+
+    MangoSylius\ExtendedChannelsPlugin\Twig\HelloBarExtension:
+        tags: ['twig.extension']
+        public: true
+        arguments:
+            $channelContext: '@sylius.context.channel.composite'
+            $helloBarRepository: '@mangoweb_extended_channels_plugin.repository.hello_bar'

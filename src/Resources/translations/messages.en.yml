@@ -15,3 +15,12 @@ mango-sylius:
         product_variant:
             duplicate: Duplicate
             success: The product variant was successfully duplicated
+        hello_bar:
+            menu: Hello Bars
+            header: Hello Bar
+            subheader: Manage Hello Bar
+            message_type: Message type
+
+mangoweb_extended_channels_plugin:
+    ui:
+        hello_bars: Hello Bar
