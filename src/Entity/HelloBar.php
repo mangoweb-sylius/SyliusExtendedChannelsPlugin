@@ -110,7 +110,10 @@ class HelloBar implements ResourceInterface, TranslatableInterface, HelloBarInte
 		return new HelloBarTranslation();
 	}
 
-	public function getChannels()
+	/**
+	 * @return Collection|ChannelInterface[]
+	 */
+	public function getChannels(): Collection
 	{
 		return $this->channels;
 	}

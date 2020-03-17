@@ -1,3 +1,6 @@
+sylius_mailer:
+    sender_adapter: mango_sylius.extended_channels.email_sender.adapter.custom
+
 sylius_resource:
     resources:
         mango_extended_channels_plugin.timezone_entity:

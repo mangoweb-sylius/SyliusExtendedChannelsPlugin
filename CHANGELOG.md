@@ -1,11 +1,16 @@
 # CHANGELOG
 
-## v0.4.0 (2020-xx-xx)
+## v1.0.0 (2020-03-xx)
 
 #### Details
 
-- Duplicate product
+- Update to Sylius ^1.7
+- Update to php ^7.3
+- Duplicate product with variants
 - Duplicate product variant
+- Allow change product and product variant code
+- Add Hello bar
+- Remove Resend order email
 
 ## v0.3.0 (2019-06-03)
 

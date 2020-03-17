@@ -6,20 +6,17 @@ Feature: Send an order email to bcc email
 
 	Background:
 		Given the store operates on a single channel in "United States"
+		And that channel allows to shop using "English (United States)" and "Polish (Poland)" locales
+		And the store has a product "Sig Sauer P226" priced at "$499.99"
+		And the store ships everywhere for free
+		And the store allows paying offline
 		And the channel has bcc email "sylius-bcc@mangoweb.cz"
-		And the store has "VAT" tax rate of 15% for "Tools" within the "US" zone
-		And the store has a product "Screwdriver" priced at "$8.00"
-		And it belongs to "Tools" tax category
-		And the store has "DHL" shipping method with "$5.00" fee
-		And the store allows paying with "Cash on Delivery"
-		And there is a customer "sylius@mangoweb.cz" that placed an order "#00000001"
-		And the customer bought 10 "Screwdriver" products
-		And the customer "Mango Web" addressed it to "Street", "12345" "Los Angeles" in the "United States"
-		And for the billing address of "Mango Web" in the "Street", "12345" "Los Angeles", "United States"
-		And the customer chose "DHL" shipping method with "Cash on Delivery" payment
 
 	@ui
 	Scenario: Send order email to customer and to bcc email after complete checkout
-		Given shop send an email after finished order
-		Then an email generated for order "00000001" should be sent to "sylius@mangoweb.cz"
-		And an email generated for order "00000001" should be sent to "sylius-bcc@mangoweb.cz"
+		Given I have product "Sig Sauer P226" in the cart
+		And I have completed addressing step with email "john@example.com" and "United States" based billing address
+		And I have proceeded order with "Free" shipping method and "Offline" payment
+		When I confirm my order
+		Then an email with the summary of order placed by "john@example.com" should be sent to him
+		And an email generated for order placed by "john@example.com" should be sent to "sylius-bcc@mangoweb.cz"

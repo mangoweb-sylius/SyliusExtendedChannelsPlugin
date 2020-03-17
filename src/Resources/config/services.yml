@@ -11,8 +11,12 @@ services:
         autoconfigure: false
         public: false
 
-    MangoSylius\ExtendedChannelsPlugin\Service\SwiftMailerAdapter:
-        decorates: sylius.email_sender.adapter.swiftmailer
+    mango_sylius.extended_channels.email_sender.adapter.custom:
+        autowire: false
+        autoconfigure: false
+        public: true
+        parent: sylius.email_sender.adapter.abstract
+        class: MangoSylius\ExtendedChannelsPlugin\Service\SwiftMailerAdapter
         arguments:
             $dispatcher: '@event_dispatcher'
             $mailer: '@mailer'
@@ -93,25 +97,12 @@ services:
     MangoSylius\ExtendedChannelsPlugin\Menu\AdminMenuListener:
         tags:
             - name: kernel.event_listener
-              event: sylius.menu.admin.order.show
-              method: addButtonsToOrder
-
-            - name: kernel.event_listener
               event: sylius.menu.admin.product.update
               method: addButtonsToProduct
 
             - name: kernel.event_listener
               event: sylius.menu.admin.main
               method: addAdminMenuItems
-
-    MangoSylius\ExtendedChannelsPlugin\Controller\ResendOrderConfirmation:
-        public: true
-        arguments:
-            $router: '@router'
-            $flashBag: '@session.flash_bag'
-            $translator: '@translator'
-            $emailSender: '@sylius.email_sender'
-            $orderRepository: '@sylius.repository.order'
 
     MangoSylius\ExtendedChannelsPlugin\Controller\DuplicateController:
         public: true

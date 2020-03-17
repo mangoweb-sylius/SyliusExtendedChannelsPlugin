@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace MangoSylius\ExtendedChannelsPlugin\Entity;
 
+use Doctrine\Common\Collections\Collection;
+use Sylius\Component\Core\Model\ChannelInterface;
+
 interface HelloBarInterface
 {
 	public function setTitle(?string $name): void;
@@ -22,7 +25,10 @@ interface HelloBarInterface
 
 	public function setEndsAt(?\DateTime $endsAt): void;
 
-	public function getChannels();
+	/**
+	 * @return Collection|ChannelInterface[]
+	 */
+	public function getChannels(): Collection;
 
 	public function setChannels($channels): void;
 

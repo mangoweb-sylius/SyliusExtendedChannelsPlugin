@@ -1,8 +1,3 @@
-mango_sylius_admin_resend_order_confirmation:
-    path: /resend-order-confirmation/{id}
-    defaults:
-        _controller: MangoSylius\ExtendedChannelsPlugin\Controller\ResendOrderConfirmation
-
 mango_sylius_admin_duplicate_product:
     path: /duplicate-product/{id}
     defaults:

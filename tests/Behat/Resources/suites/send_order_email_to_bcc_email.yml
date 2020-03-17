@@ -21,6 +21,7 @@ default:
                 - sylius.behat.context.setup.zone
                 - sylius.behat.context.setup.admin_user
                 - sylius.behat.context.setup.user
+                - sylius.behat.context.setup.locale
 
                 - sylius.behat.context.transform.address
                 - sylius.behat.context.transform.channel
@@ -51,7 +52,6 @@ default:
                 - sylius.behat.context.ui.shop.checkout.complete
                 - sylius.behat.context.ui.shop.currency
 
-                - sylius_extended_channels.context.ui.admin.order
                 - sylius_extended_channels.context.ui.shop.order
                 - sylius_extended_channels.context.domain.email
                 - sylius_extended_channels.context.setup.channel

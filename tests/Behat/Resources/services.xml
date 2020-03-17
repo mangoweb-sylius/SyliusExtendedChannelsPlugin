@@ -19,12 +19,6 @@
 			<argument type="service" id="doctrine.orm.entity_manager"/>
 		</service>
 
-		<service id="sylius_extended_channels.context.ui.admin.order"
-				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Admin\ManagingOrderContext">
-			<argument type="service" id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Order\ShowPageInterface"/>
-			<argument type="service" id="sylius.behat.notification_checker"/>
-		</service>
-
 		<service id="sylius_extended_channels.context.ui.admin.product"
 				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Admin\ManagingProductContext">
 			<argument type="service" id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Product\ShowPageInterface"/>

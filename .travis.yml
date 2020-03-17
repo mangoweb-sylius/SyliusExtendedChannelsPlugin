@@ -19,16 +19,6 @@ env:
 matrix:
     include:
         -
-            php: 7.2
-            env:
-                - SYLIUS_VERSION="1.5.*"
-
-        -
-            php: 7.2
-            env:
-                - SYLIUS_VERSION="1.6.*"
-
-        -
             php: 7.3
             env:
                 - SYLIUS_VERSION="1.7.*"

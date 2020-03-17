@@ -52,7 +52,6 @@ default:
                 - sylius.behat.context.ui.shop.checkout.complete
                 - sylius.behat.context.ui.shop.currency
 
-                - sylius_extended_channels.context.ui.admin.order
                 - sylius_extended_channels.context.domain.email
                 - sylius_extended_channels.context.ui.shop.order
                 - sylius_extended_channels.context.setup.order

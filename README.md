@@ -28,16 +28,12 @@ Extended Channels Plugin
 * Send copy of order mail to custom email address per channel
 * When SMTP is unavailable, it prevents error 500 on order submit but logs the error and submits the order
 * Cancel unpaid orders for certain payment method
-* Resend order confirmation email
 * Duplicate product and product variant
 * Allows to change the code for the product and product variant
+* Administration for Hello Bars (you can use your own types)
 
 <p align="center">
 	<img src="https://raw.githubusercontent.com/mangoweb-sylius/SyliusExtendedChannelsPlugin/master/doc/admin.png"/>
-</p>
-
-<p align="center">
-	<img src="https://raw.githubusercontent.com/mangoweb-sylius/SyliusExtendedChannelsPlugin/master/doc/resend.png"/>
 </p>
 
 ## Installation
@@ -48,7 +44,6 @@ Extended Channels Plugin
 4. Include template `Resources/views/Channel/extendedChannelForm.html.twig` in `@SyliusAdmin/Channel/_form.html.twig`.
 5. Import `@MangoSyliusExtendedChannelsPlugin/Resources/config/resources.yml` in the `_sylius.yml`.
 5. Import `@MangoSyliusExtendedChannelsPlugin/Resources/config/routing.yml` in the `routing.yml`.
-6. Rewrite in `@SyliusAdmin/Order/show.html.twig` row `{{ knp_menu_render(menu, {'template': '@SyliusUi/Menu/top.html.twig'}) }}` by `{{ knp_menu_render(menu, {'template': '@MangoSyliusExtendedChannelsPlugin/Menu/top.html.twig'}) }}`.
 
 For guide to use your own entity see [Sylius docs - Customizing Models](https://docs.sylius.com/en/1.6/customization/model.html)
 
@@ -87,6 +82,20 @@ Run `src/Migrations/basic-data/timezones-data.sql` for load the timezones table.
     * `mango-sylius-extended-channels.duplicate.product.after-persist`
     * `mango-sylius-extended-channels.duplicate.product-variant.before-persist`
     * `mango-sylius-extended-channels.duplicate.product-variant.after-persist`
+
+* You can change the types of Hello bars
+    ```yaml
+    parameters:
+        mangoweb_sylius_extended_channels_hello_bar_types:
+            error: 'Error'
+            success: 'Success'
+            info: 'Info'
+            warning: 'Warning'
+    ```
+  
+* Use the Twig function for listing Hello Bars 
+    * `mangoweb_sylius_available_hello_bars()`
+    * `mangoweb_sylius_available_hello_bars_by_type(type)`
 
 ## Development
 
