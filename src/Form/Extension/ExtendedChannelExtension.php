@@ -5,16 +5,12 @@ declare(strict_types=1);
 namespace MangoSylius\ExtendedChannelsPlugin\Form\Extension;
 
 use MangoSylius\ExtendedChannelsPlugin\Entity\TimezoneEntity;
-use Sylius\Bundle\ChannelBundle\Form\Type\ChannelType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 
-/**
- * @method iterable getExtendedTypes()
- */
 final class ExtendedChannelExtension extends AbstractTypeExtension
 {
 	public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -42,11 +38,11 @@ final class ExtendedChannelExtension extends AbstractTypeExtension
 			]);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getExtendedType(): string
+	/** @return array<int, string> */
+	public static function getExtendedTypes(): array
 	{
-		return ChannelType::class;
+		return [
+			\Sylius\Bundle\ChannelBundle\Form\Type\ChannelType::class,
+		];
 	}
 }
