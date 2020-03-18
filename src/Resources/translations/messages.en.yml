@@ -5,6 +5,8 @@ mango-sylius:
                 bccEmail: BCC email
                 contactPhone: Phone
                 timezone: Timezone
+            taxon:
+                externalLink: External Link
         product:
             duplicate: Duplicate
             success: The product was successfully duplicated

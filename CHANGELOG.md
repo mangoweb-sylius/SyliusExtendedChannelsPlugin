@@ -11,6 +11,7 @@
 - Allow change product and product variant code
 - Add Hello bar
 - Remove Resend order email
+- Add External Link checkbox to Taxon administration
 
 ## v0.3.0 (2019-06-03)
 

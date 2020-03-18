@@ -29,6 +29,11 @@ services:
             $emailSender: '@sylius.email_sender'
             $channelContext: '@sylius.context.channel'
 
+    MangoSylius\ExtendedChannelsPlugin\Form\Extension\TaxonTypeExtension:
+        tags:
+            -   name: form.type_extension
+                extended_type: Sylius\Bundle\TaxonomyBundle\Form\Type\TaxonType
+
     MangoSylius\ExtendedChannelsPlugin\Form\Extension\ExtendedChannelExtension:
         tags:
             - name: form.type_extension

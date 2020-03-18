@@ -6,6 +6,11 @@
 	<services>
 		<defaults public="true"/>
 
+		<service id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Taxon\UpdatePageInterface"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Taxon\UpdatePage" parent="sylius.behat.page.admin.crud.update" public="false">
+			<argument type="string">sylius_admin_taxon_update</argument>
+		</service>
+
 		<service id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Channel\UpdatePageInterface"
 				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Channel\UpdatePage" parent="sylius.behat.page.admin.crud.update" public="false">
 			<argument type="string">sylius_admin_channel_update</argument>
@@ -29,6 +34,11 @@
 				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Admin\ManagingProductVariantContext">
 			<argument type="service" id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\ProductVariant\ShowPageInterface"/>
 			<argument type="service" id="sylius.behat.notification_checker"/>
+		</service>
+
+		<service id="sylius_extended_channels.context.ui.admin.taxon"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Admin\ManagingTaxonContext">
+			<argument type="service" id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Taxon\UpdatePageInterface"/>
 		</service>
 
 		<service id="sylius_extended_channels.context.domain.email"
@@ -69,6 +79,11 @@
 			<argument type="service" id="sylius.factory.order"/>
 			<argument type="service" id="sm.factory"/>
 			<argument type="service" id="kernel"/>
+		</service>
+
+		<service id="sylius_extended_channels.context.setup.taxon"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Setup\TaxonContext">
+			<argument type="service" id="doctrine.orm.entity_manager"/>
 		</service>
 
 		<service id="sylius_extended_channels.context.ui.shop.order"

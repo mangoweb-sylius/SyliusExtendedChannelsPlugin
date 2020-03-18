@@ -31,6 +31,7 @@ Extended Channels Plugin
 * Duplicate product and product variant
 * Allows to change the code for the product and product variant
 * Administration for Hello Bars (you can use your own types)
+* Mark Taxon as external link
 
 <p align="center">
 	<img src="https://raw.githubusercontent.com/mangoweb-sylius/SyliusExtendedChannelsPlugin/master/doc/admin.png"/>
@@ -39,13 +40,37 @@ Extended Channels Plugin
 ## Installation
 
 1. Run `$ composer require mangoweb-sylius/sylius-extended-channels`.
-2. Register `\MangoSylius\ExtendedChannelsPlugin\MangoSyliusExtendedChannelsPlugin` in your Kernel.
-3. Your Entity `Channel` has to implement `\MangoSylius\ExtendedChannelsPlugin\Model\ExtendedChannelInterface`. You can use Trait `MangoSylius\ExtendedChannelsPlugin\Model\ExtendedChannelTrait`.
-4. Include template `{{ include('@MangoSyliusExtendedChannelsPlugin/Channel/extendedChannelForm.html.twig') }}` in `@SyliusAdmin/Channel/_form.html.twig`.
-5. Import `@MangoSyliusExtendedChannelsPlugin/Resources/config/resources.yml` in the `_sylius.yml`.
-5. Import `@MangoSyliusExtendedChannelsPlugin/Resources/config/routing.yml` in the `routing.yml`.
+1. Add plugin classes to your `config/bundles.php`:
+ 
+   ```php
+   return [
+      ...
+      MangoSylius\ExtendedChannelsPlugin\MangoSyliusExtendedChannelsPlugin::class => ['all' => true],
+   ];
+   ```
+   
+1. Your Entity `Channel` has to implement `\MangoSylius\ExtendedChannelsPlugin\Model\ExtendedChannelInterface`. You can use Trait `MangoSylius\ExtendedChannelsPlugin\Model\ExtendedChannelTrait`.
+1. Your Entity `Taxon` has to implement `\MangoSylius\ExtendedChannelsPlugin\Model\ExternalLinkTaxonInterface`. You can use Trait `MangoSylius\ExtendedChannelsPlugin\Model\ExternalLinkTaxonTrait`.
+1. Include template `{{ include('@MangoSyliusExtendedChannelsPlugin/Channel/extendedChannelForm.html.twig') }}` in `@SyliusAdmin/Channel/_form.html.twig`.
+1. Add `{{ form_row(form.externalLink) }}` to template in `@SyliusAdmin/Taxon/_form.html.twig`.
+1. Add resource to `config/packeges/_sylius.yaml`
 
-For guide to use your own entity see [Sylius docs - Customizing Models](https://docs.sylius.com/en/1.6/customization/model.html)
+    ```yaml
+    imports:
+         ...
+         - { resource: "@MangoSyliusExtendedChannelsPlugin/Resources/config/resources.yml" }
+    ```
+   
+1. Add routing to `config/_routes.yaml`
+
+    ```yaml
+    mango_sylius_extended_channels:
+        resource: '@MangoSyliusExtendedChannelsPlugin/Resources/config/routing.yml'
+        prefix: /admin
+    ```
+
+
+For guide to use your own entity see [Sylius docs - Customizing Models](https://docs.sylius.com/en/1.7/customization/model.html)
 
 ### Optional
 

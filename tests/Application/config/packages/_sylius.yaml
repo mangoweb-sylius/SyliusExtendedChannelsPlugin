@@ -17,3 +17,9 @@ sylius_channel:
         channel:
             classes:
                 model: Tests\MangoSylius\ExtendedChannelsPlugin\Application\Entity\Channel
+
+sylius_taxonomy:
+    resources:
+        taxon:
+            classes:
+                model: Tests\MangoSylius\ExtendedChannelsPlugin\Application\Entity\Taxon
