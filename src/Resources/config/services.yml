@@ -1,4 +1,5 @@
 parameters:
+    sylius_order.expiration_method_codes: []
     mangoweb_sylius_extended_channels_hello_bar_types:
         error: 'Error'
         success: 'Success'

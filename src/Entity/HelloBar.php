@@ -14,7 +14,7 @@ use Sylius\Component\Resource\Model\TranslationInterface;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="mangoweb_bello_bar")
+ * @ORM\Table(name="mangoweb_hello_bar")
  */
 class HelloBar implements ResourceInterface, TranslatableInterface, HelloBarInterface
 {
@@ -46,8 +46,8 @@ class HelloBar implements ResourceInterface, TranslatableInterface, HelloBarInte
 	/**
 	 * @var Collection|ChannelInterface[]
 	 * @ORM\ManyToMany(targetEntity="Sylius\Component\Core\Model\Channel")
-	 * @ORM\JoinTable(name="mangoweb_bello_bar_channel",
-	 *     joinColumns={@ORM\JoinColumn(name="mangoweb_bello_bar_id", referencedColumnName="id")},
+	 * @ORM\JoinTable(name="mangoweb_hello_bar_channel",
+	 *     joinColumns={@ORM\JoinColumn(name="mangoweb_hello_bar_id", referencedColumnName="id")},
 	 *     inverseJoinColumns={@ORM\JoinColumn(name="channel_id", referencedColumnName="id")}
 	 * )
 	 */

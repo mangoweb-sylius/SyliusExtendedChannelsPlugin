@@ -10,7 +10,7 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="mangoweb_bello_bar_translation")
+ * @ORM\Table(name="mangoweb_hello_bar_translation")
  */
 class HelloBarTranslation extends AbstractTranslation implements ResourceInterface, HelloBarTranslationInterface
 {
