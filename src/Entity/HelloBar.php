@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MangoSylius\ExtendedChannelsPlugin\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\ChannelInterface;
@@ -61,6 +62,7 @@ class HelloBar implements ResourceInterface, TranslatableInterface, HelloBarInte
 
 	public function __construct()
 	{
+		$this->channels = new ArrayCollection();
 		$this->initializeTranslationsCollection();
 	}
 
