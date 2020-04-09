@@ -76,7 +76,7 @@ class DuplicateController
 		assert($entity instanceof ProductInterface);
 		$clonedEntity = $this->productDuplicator->duplicateProduct($entity);
 
-		$event = new GenericEvent($clonedEntity);
+		$event = new GenericEvent($clonedEntity, ['oldEntity' => $entity]);
 		$this->eventDispatcher->dispatch('mango-sylius-extended-channels.duplicate.product.before-persist', $event);
 		$this->productRepository->add($clonedEntity);
 		$this->eventDispatcher->dispatch('mango-sylius-extended-channels.duplicate.product.after-persist', $event);
