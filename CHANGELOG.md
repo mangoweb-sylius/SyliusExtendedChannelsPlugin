@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## v1.0.0 (2020-03-xx)
+
+#### Details
+
+- Update to Sylius ^1.7
+- Update to php ^7.3
+- Duplicate product with variants
+- Duplicate product variant
+- Allow change product and product variant code
+- Add Hello bar
+- Remove Resend order email
+- Add External Link checkbox to Taxon administration
+
 ## v0.3.0 (2019-06-03)
 
 #### Details

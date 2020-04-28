@@ -5,6 +5,7 @@ imports:
     - { resource: "@SyliusAdminApiBundle/Resources/config/app/config.yml" }
 
     - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
+    - { resource: "@MangoSyliusExtendedChannelsPlugin/Resources/config/resources.yml" }
 
 parameters:
     sylius_core.public_dir: '%kernel.project_dir%/public'
@@ -16,3 +17,9 @@ sylius_channel:
         channel:
             classes:
                 model: Tests\MangoSylius\ExtendedChannelsPlugin\Application\Entity\Channel
+
+sylius_taxonomy:
+    resources:
+        taxon:
+            classes:
+                model: Tests\MangoSylius\ExtendedChannelsPlugin\Application\Entity\Taxon

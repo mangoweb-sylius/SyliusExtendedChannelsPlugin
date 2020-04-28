@@ -28,26 +28,49 @@ Extended Channels Plugin
 * Send copy of order mail to custom email address per channel
 * When SMTP is unavailable, it prevents error 500 on order submit but logs the error and submits the order
 * Cancel unpaid orders for certain payment method
-* Resend order confirmation email
+* Duplicate product and product variant
+* Allows to change the code for the product and product variant
+* Administration for Hello Bars (you can use your own types)
+* Mark Taxon as external link
 
 <p align="center">
 	<img src="https://raw.githubusercontent.com/mangoweb-sylius/SyliusExtendedChannelsPlugin/master/doc/admin.png"/>
 </p>
 
-<p align="center">
-	<img src="https://raw.githubusercontent.com/mangoweb-sylius/SyliusExtendedChannelsPlugin/master/doc/resend.png"/>
-</p>
-
 ## Installation
 
 1. Run `$ composer require mangoweb-sylius/sylius-extended-channels`.
-2. Register `\MangoSylius\ExtendedChannelsPlugin\MangoSyliusExtendedChannelsPlugin` in your Kernel.
-3. Your Entity `Channel` has to implement `\MangoSylius\ExtendedChannelsPlugin\Model\ExtendedChannelInterface`. You can use Trait `MangoSylius\ExtendedChannelsPlugin\Model\ExtendedChannelTrait`.
-4. Include template `Resources/views/Channel/extendedChannelForm.html.twig` in `@SyliusAdmin/Channel/_form.html.twig`.
-5. Import `@MangoSyliusExtendedChannelsPlugin/Resources/config/routing.yml` in the routing.yml.
-6. Rewrite in `@SyliusAdmin/Order/show.html.twig` row `{{ knp_menu_render(menu, {'template': '@SyliusUi/Menu/top.html.twig'}) }}` by `{{ knp_menu_render(menu, {'template': '@MangoSyliusExtendedChannelsPlugin/Menu/top.html.twig'}) }}`.
+1. Add plugin classes to your `config/bundles.php`:
+ 
+   ```php
+   return [
+      ...
+      MangoSylius\ExtendedChannelsPlugin\MangoSyliusExtendedChannelsPlugin::class => ['all' => true],
+   ];
+   ```
+   
+1. Your Entity `Channel` has to implement `\MangoSylius\ExtendedChannelsPlugin\Model\ExtendedChannelInterface`. You can use Trait `MangoSylius\ExtendedChannelsPlugin\Model\ExtendedChannelTrait`.
+1. Your Entity `Taxon` has to implement `\MangoSylius\ExtendedChannelsPlugin\Model\ExternalLinkTaxonInterface`. You can use Trait `MangoSylius\ExtendedChannelsPlugin\Model\ExternalLinkTaxonTrait`.
+1. Include template `{{ include('@MangoSyliusExtendedChannelsPlugin/Channel/extendedChannelForm.html.twig') }}` in `@SyliusAdmin/Channel/_form.html.twig`.
+1. Add `{{ form_row(form.externalLink) }}` to template in `@SyliusAdmin/Taxon/_form.html.twig`.
+1. Add resource to `config/packeges/_sylius.yaml`
 
-For guide to use your own entity see [Sylius docs - Customizing Models](https://docs.sylius.com/en/1.3/customization/model.html)
+    ```yaml
+    imports:
+         ...
+         - { resource: "@MangoSyliusExtendedChannelsPlugin/Resources/config/resources.yml" }
+    ```
+   
+1. Add routing to `config/_routes.yaml`
+
+    ```yaml
+    mango_sylius_extended_channels:
+        resource: '@MangoSyliusExtendedChannelsPlugin/Resources/config/routing.yml'
+        prefix: /admin
+    ```
+
+
+For guide to use your own entity see [Sylius docs - Customizing Models](https://docs.sylius.com/en/1.7/customization/model.html)
 
 ### Optional
 
@@ -78,6 +101,26 @@ Run `src/Migrations/basic-data/timezones-data.sql` for load the timezones table.
    ```bash
    mango:cancel-unpaid-orders
    ```
+
+* You can use events to modify an object when you duplicate it
+    * `mango-sylius-extended-channels.duplicate.product.before-persist`
+    * `mango-sylius-extended-channels.duplicate.product.after-persist`
+    * `mango-sylius-extended-channels.duplicate.product-variant.before-persist`
+    * `mango-sylius-extended-channels.duplicate.product-variant.after-persist`
+
+* You can change the types of Hello bars
+    ```yaml
+    parameters:
+        mangoweb_sylius_extended_channels_hello_bar_types:
+            error: 'Error'
+            success: 'Success'
+            info: 'Info'
+            warning: 'Warning'
+    ```
+  
+* Use the Twig function for listing Hello Bars 
+    * `mangoweb_sylius_available_hello_bars()`
+    * `mangoweb_sylius_available_hello_bars_by_type(type)`
 
 ## Development
 

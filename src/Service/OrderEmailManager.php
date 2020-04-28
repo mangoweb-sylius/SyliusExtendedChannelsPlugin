@@ -34,8 +34,13 @@ final class OrderEmailManager implements OrderEmailManagerInterface
 
 		if ($channel->getBccEmail() !== null) {
 			$this->emailSender->send(
-				Emails::ORDER_CONFIRMATION, [$channel->getBccEmail()],
-				['order' => $order]
+				Emails::ORDER_CONFIRMATION,
+				[$channel->getBccEmail()],
+				[
+					'order' => $order,
+					'channel' => $order->getChannel(),
+					'localeCode' => $order->getLocaleCode(),
+				]
 			);
 		}
 
@@ -43,7 +48,11 @@ final class OrderEmailManager implements OrderEmailManagerInterface
 			$this->emailSender->send(
 				Emails::ORDER_CONFIRMATION,
 				[$order->getCustomer()->getEmail()],
-				['order' => $order]
+				[
+					'order' => $order,
+					'channel' => $order->getChannel(),
+					'localeCode' => $order->getLocaleCode(),
+				]
 			);
 		}
 	}

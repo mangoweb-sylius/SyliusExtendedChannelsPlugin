@@ -6,6 +6,11 @@
 	<services>
 		<defaults public="true"/>
 
+		<service id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Taxon\UpdatePageInterface"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Taxon\UpdatePage" parent="sylius.behat.page.admin.crud.update" public="false">
+			<argument type="string">sylius_admin_taxon_update</argument>
+		</service>
+
 		<service id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Channel\UpdatePageInterface"
 				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Channel\UpdatePage" parent="sylius.behat.page.admin.crud.update" public="false">
 			<argument type="string">sylius_admin_channel_update</argument>
@@ -19,11 +24,21 @@
 			<argument type="service" id="doctrine.orm.entity_manager"/>
 		</service>
 
-		<service id="sylius_extended_channels.context.ui.admin.order"
-				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Admin\ManagingOrderContext">
-			<argument type="service"
-					  id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Order\ShowPageInterface"/>
+		<service id="sylius_extended_channels.context.ui.admin.product"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Admin\ManagingProductContext">
+			<argument type="service" id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Product\ShowPageInterface"/>
 			<argument type="service" id="sylius.behat.notification_checker"/>
+		</service>
+
+		<service id="sylius_extended_channels.context.ui.admin.product_variant"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Admin\ManagingProductVariantContext">
+			<argument type="service" id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\ProductVariant\ShowPageInterface"/>
+			<argument type="service" id="sylius.behat.notification_checker"/>
+		</service>
+
+		<service id="sylius_extended_channels.context.ui.admin.taxon"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Admin\ManagingTaxonContext">
+			<argument type="service" id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Taxon\UpdatePageInterface"/>
 		</service>
 
 		<service id="sylius_extended_channels.context.domain.email"
@@ -66,6 +81,11 @@
 			<argument type="service" id="kernel"/>
 		</service>
 
+		<service id="sylius_extended_channels.context.setup.taxon"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Setup\TaxonContext">
+			<argument type="service" id="doctrine.orm.entity_manager"/>
+		</service>
+
 		<service id="sylius_extended_channels.context.ui.shop.order"
 				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Shop\OrderContext">
 			<argument type="service" id="sylius.behat.shared_storage"/>
@@ -74,6 +94,18 @@
 
 		<service id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Order\ShowPageInterface"
 				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Order\ShowPage"
+				 parent="sylius.behat.symfony_page"
+				 public="true"
+		/>
+
+		<service id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Product\ShowPageInterface"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Product\ShowPage"
+				 parent="sylius.behat.symfony_page"
+				 public="true"
+		/>
+
+		<service id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\ProductVariant\ShowPageInterface"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\ProductVariant\ShowPage"
 				 parent="sylius.behat.symfony_page"
 				 public="true"
 		/>

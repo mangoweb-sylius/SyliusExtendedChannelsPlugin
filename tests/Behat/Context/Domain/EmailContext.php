@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Domain;
 
 use Behat\Behat\Context\Context;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Test\Services\EmailCheckerInterface;
 use Webmozart\Assert\Assert;
 
@@ -22,10 +23,10 @@ final class EmailContext implements Context
 	}
 
 	/**
-	 * @Then an email generated for order :arg1 should be sent to :arg2
+	 * @Then /^an email generated for (order placed by "[^"]+") should be sent to "([^"]+)"$/
 	 */
-	public function anEmailGeneratedForOrderShouldBeSentTo(string $arg1, string $arg2): void
+	public function anEmailGeneratedForOrderShouldBeSentTo(OrderInterface $order, string $arg2): void
 	{
-		Assert::true($this->emailChecker->hasMessageTo('Your order no. ' . $arg1 . ' has been successfully placed.', $arg2));
+		Assert::true($this->emailChecker->hasMessageTo('Your order no. ' . $order->getNumber() . ' has been successfully placed.', $arg2));
 	}
 }

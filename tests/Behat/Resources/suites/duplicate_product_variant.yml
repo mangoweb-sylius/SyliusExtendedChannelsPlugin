@@ -1,6 +1,6 @@
 default:
     suites:
-        resending_order_email_to_customer:
+        duplicate_product_variant:
             contexts:
                 - sylius.behat.context.hook.doctrine_orm
 
@@ -41,18 +41,10 @@ default:
 
                 - sylius.behat.context.transform.shared_storage
 
-                - sylius.behat.context.ui.admin.managing_orders
                 - sylius.behat.context.ui.admin.notification
+                - sylius.behat.context.ui.admin.browsing_product_variants
 
-                - sylius.behat.context.ui.email
-                - sylius.behat.context.ui.shop.cart
-                - sylius.behat.context.ui.shop.checkout
-                - sylius.behat.context.ui.shop.checkout.addressing
-                - sylius.behat.context.ui.shop.checkout.complete
-                - sylius.behat.context.ui.shop.currency
-
-                - sylius_extended_channels.context.ui.admin.order
-                - sylius_extended_channels.context.domain.email
+                - sylius_extended_channels.context.ui.admin.product_variant
 
             filters:
-                tags: "@resending_order_email_to_customer && @ui"
+                tags: "@duplicate_product_variant && @ui"

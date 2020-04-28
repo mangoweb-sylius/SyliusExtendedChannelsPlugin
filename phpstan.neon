@@ -7,12 +7,13 @@ parameters:
     symfony:
         container_xml_path: tests/Application/var/cache/test/testContainer.xml
 
+    ignoreErrors:
+        -  '#Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required.#'
+        -  '#Parameter \#1 \$event of method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) expects object, string given.#'
+
     excludes_analyse:
         # Too slow
         - 'src/DependencyInjection/Configuration.php'
-
         # Test dependencies
         - '*/tests/Application/var/*'
-
-        - 'src/Service/SwiftMailerAdapter.php'
         - 'tests'

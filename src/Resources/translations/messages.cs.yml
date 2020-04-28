@@ -5,7 +5,3 @@ mango-sylius:
                 bccEmail: BCC email
                 contactPhone: Telefon
                 timezone: Časové pásmo
-        order:
-            resend_email_confirmation: Znovu odeslat potvrzovací email
-            successEmailResend: Email byl úspěšně odeslán
-            confirmEmailResend: Opravdu chcete znovu odeslat email?

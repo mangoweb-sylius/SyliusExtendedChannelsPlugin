@@ -4,9 +4,6 @@ dist: trusty
 
 sudo: false
 
-php:
-    - 7.2
-
 cache:
     yarn: true
     directories:
@@ -21,12 +18,10 @@ env:
 
 matrix:
     include:
-        - env:
-            - SYLIUS_VERSION="1.4.*"
-        - env:
-            - SYLIUS_VERSION="1.5.*"
-        - env:
-            - SYLIUS_VERSION="1.6.*"
+        -
+            php: 7.3
+            env:
+                - SYLIUS_VERSION="1.7.*"
 
 before_install:
     - phpenv config-rm xdebug.ini

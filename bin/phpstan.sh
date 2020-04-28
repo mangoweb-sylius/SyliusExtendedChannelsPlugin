@@ -9,7 +9,7 @@ cd "$(dirname "$DIR")"
 set -x
 tests/Application/bin/console --env=test cache:warmup
 vendor/bin/phpstan analyse \
-	--level 7 \
+	--level max \
 	--memory-limit 2G \
 	--configuration phpstan.neon \
 	src tests
