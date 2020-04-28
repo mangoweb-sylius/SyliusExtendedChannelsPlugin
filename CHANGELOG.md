@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v1.0.0 (2020-03-xx)
+## v1.0.0 (2020-04-28)
 
 #### Details
 
@@ -10,20 +10,14 @@
 - Duplicate product variant
 - Allow change product and product variant code
 - Add Hello bar
-- Remove Resend order email
+- Remove Resend order email (because Sylius already knows this function)
 - Add External Link checkbox to Taxon administration
 
-## v0.3.0 (2019-06-03)
+## v0.4.1 (2019-10-04)
 
 #### Details
 
-- Behat tests
-
-## v0.3.1 (2019-07-02)
-
-#### Details
-
-- Better tests
+- Add Sylius 1.6 to travis
 
 ## v0.4.0 (2019-07-04)
 
@@ -32,8 +26,14 @@
 - Travis CI
 - Approved by Sylius!
 
-## v0.4.1 (2019-10-04)
+## v0.3.1 (2019-07-02)
 
 #### Details
 
-- Add Sylius 1.6 to travis
+- Better tests
+
+## v0.3.0 (2019-06-03)
+
+#### Details
+
+- Behat tests
