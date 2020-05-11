@@ -5,3 +5,5 @@ mango-sylius:
                 bccEmail: BCC email
                 contactPhone: Telefon
                 timezone: Časové pásmo
+        grid:
+            bulk_actions: Hromadné akce

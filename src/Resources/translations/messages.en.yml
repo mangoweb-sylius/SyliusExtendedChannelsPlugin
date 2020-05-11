@@ -18,6 +18,8 @@ mango-sylius:
             header: Hello Bar
             subheader: Manage Hello Bar
             message_type: Message type
+        grid:
+            bulk_actions: Bulk actions
 
 mangoweb_extended_channels_plugin:
     ui:
