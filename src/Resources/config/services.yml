@@ -62,6 +62,10 @@ services:
             - name: form.type
         arguments: ['%mangoweb_extended_channels_plugin.model.hello_bar_translation.class%', ['sylius']]
 
+    MangoSylius\ExtendedChannelsPlugin\Form\Type\BulkManageProductCategoriesType:
+        tags:
+            - name: form.type
+
     sylius.email_manager.order: '@MangoSylius\ExtendedChannelsPlugin\Service\OrderEmailManager'
     Sylius\Bundle\ShopBundle\EmailManager\OrderEmailManagerInterface: '@MangoSylius\ExtendedChannelsPlugin\Service\OrderEmailManager'
 
@@ -120,6 +124,16 @@ services:
             $productRepository: '@sylius.repository.product'
             $productVariantRepository: '@sylius.repository.product_variant'
             $productDuplicator: '@MangoSylius\ExtendedChannelsPlugin\Service\ProductDuplicator'
+
+    MangoSylius\ExtendedChannelsPlugin\Controller\ManageProductCategoriesController:
+        public: true
+        arguments:
+            $router: '@router'
+            $flashBag: '@session.flash_bag'
+            $translator: '@translator'
+            $productRepository: '@sylius.repository.product'
+            $templatingEngine: '@templating'
+            $taxonRepository: '@sylius.repository.taxon'
 
     MangoSylius\ExtendedChannelsPlugin\Service\ProductDuplicator:
         arguments:

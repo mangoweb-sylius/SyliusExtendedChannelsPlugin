@@ -10,6 +10,7 @@ mango-sylius:
         product:
             duplicate: Duplicate
             success: The product was successfully duplicated
+            manage_categories: Manage categories
         product_variant:
             duplicate: Duplicate
             success: The product variant was successfully duplicated
@@ -20,6 +21,8 @@ mango-sylius:
             message_type: Message type
         grid:
             bulk_actions: Bulk actions
+        manage_product_categories:
+            saved: The product categories were successfuly saved
 
 mangoweb_extended_channels_plugin:
     ui:

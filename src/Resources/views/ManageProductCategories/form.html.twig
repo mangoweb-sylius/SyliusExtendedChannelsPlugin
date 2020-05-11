@@ -1,0 +1,42 @@
+{% extends '@SyliusAdmin/layout.html.twig' %}
+
+{% block content %}
+	<form method="post">
+
+		<div>
+			<h3 class="ui top attached header">{{ 'sylius.ui.taxonomy'|trans }}</h3>
+
+			<div class="ui attached segment">
+				<div class="field"><label for="bulk_manage_product_categories_mainTaxon">{{ 'sylius.form.product.main_taxon'|trans }}</label>
+					<div
+						class="sylius-autocomplete ui fluid search selection dropdown"
+						data-url="/admin/ajax/taxons/search"
+						data-choice-name="fullname"
+						data-choice-value="code"
+						data-criteria-type="contains"
+						data-criteria-name="phrase"
+						data-load-edit-url="/admin/ajax/taxons/leaf"
+					><input type="hidden" id="bulk_manage_product_categories_mainTaxon" name="bulk_manage_product_categories[mainTaxon]"
+							class="autocomplete"/><i class="dropdown icon"></i>
+						<div class="default text"></div>
+						<div class="menu"></div>
+					</div>
+				</div>
+
+				<h4>{{ 'sylius.ui.product_taxon'|trans }}</h4>
+				<div id="sylius-product-taxonomy-tree"
+					 data-tree-root-nodes-url="{{ path('sylius_admin_ajax_taxon_root_nodes') }}"
+					 data-tree-leafs-url="{{ path('sylius_admin_ajax_taxon_leafs') }}"
+				>
+					{{ form_widget(form.productTaxons) }}
+					<div class="ui inverted dimmer">
+						<div class="ui loader"></div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<input type="hidden" name="bulkProductsIds" value="{{ productIds }}">
+		{% include '@SyliusUi/Form/Buttons/_update.html.twig' %}
+	</form>
+{% endblock content %}

@@ -23,3 +23,8 @@ mangoweb_extended_channels_plugin_hello_bar:
                 templates:
                     form: '@MangoSyliusExtendedChannelsPlugin/HelloBar/_form.html.twig'
     type: sylius.resource
+
+mangoweb_sylius_admin_bulk_manage_product_categories:
+    path: /bulkSetProductCategories/
+    defaults:
+        _controller: MangoSylius\ExtendedChannelsPlugin\Controller\ManageProductCategoriesController::bulkManageProductCategories

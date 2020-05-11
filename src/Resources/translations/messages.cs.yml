@@ -7,3 +7,7 @@ mango-sylius:
                 timezone: Časové pásmo
         grid:
             bulk_actions: Hromadné akce
+        product:
+            manage_categories: Spravovat kategorie
+        manage_product_categories:
+            saved: Nastavení kategorií bylo uloženo
