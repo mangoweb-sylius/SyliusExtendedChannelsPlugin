@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MangoSylius\ExtendedChannelsPlugin\Form\Type;
 
 use Sylius\Bundle\CoreBundle\Form\Type\Taxon\ProductTaxonAutocompleteChoiceType;

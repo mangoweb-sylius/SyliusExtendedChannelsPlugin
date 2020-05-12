@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace MangoSylius\ExtendedChannelsPlugin\Controller;
 
-use App\Entity\Product\Product;
 use MangoSylius\ExtendedChannelsPlugin\Form\Type\BulkManageProductCategoriesType;
+use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -70,7 +69,7 @@ class ManageProductCategoriesController extends Controller
 
 		if ($request->isMethod('POST')) {
 			foreach ($productIds as $productId) {
-				/** @var Product $product */
+				/** @var ProductInterface $product */
 				$product = $this->productRepository->find($productId);
 				$product->getProductTaxons()->clear();
 				$form = $this->createForm(BulkManageProductCategoriesType::class, $product);
@@ -82,12 +81,12 @@ class ManageProductCategoriesController extends Controller
 			$this->flashBag->add('success', $message);
 
 			return new RedirectResponse($this->router->generate('sylius_admin_product_index'));
-		} else {
-			/** @var Product $mainProduct */
-			$mainProduct = $this->productRepository->find(current($productIds));
-			$mainProduct->getProductTaxons()->clear();
-			$form = $this->createForm(BulkManageProductCategoriesType::class, $mainProduct);
 		}
+
+		/** @var ProductInterface $mainProduct */
+		$mainProduct = $this->productRepository->find(current($productIds));
+		$mainProduct->getProductTaxons()->clear();
+		$form = $this->createForm(BulkManageProductCategoriesType::class, $mainProduct);
 
 		return $this->templatingEngine->renderResponse('@MangoSyliusExtendedChannelsPlugin/ManageProductCategories/form.html.twig', [
 			'form' => $form->createView(),
