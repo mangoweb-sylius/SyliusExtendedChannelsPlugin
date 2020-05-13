@@ -22,7 +22,7 @@ mango-sylius:
         grid:
             bulk_actions: Bulk actions
         manage_product_categories:
-            saved: The product categories were successfuly saved
+            saved: The product categories were successfully saved
 
 mangoweb_extended_channels_plugin:
     ui:

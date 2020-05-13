@@ -12,9 +12,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
-/**
- * @method iterable getExtendedTypes()
- */
 final class BulkManageProductCategoriesType extends AbstractType
 {
 	/**

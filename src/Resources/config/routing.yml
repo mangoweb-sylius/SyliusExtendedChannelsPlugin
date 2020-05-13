@@ -25,6 +25,6 @@ mangoweb_extended_channels_plugin_hello_bar:
     type: sylius.resource
 
 mangoweb_sylius_admin_bulk_manage_product_categories:
-    path: /bulkSetProductCategories/
+    path: /bulk-set-product-categories/
     defaults:
         _controller: MangoSylius\ExtendedChannelsPlugin\Controller\ManageProductCategoriesController::bulkManageProductCategories

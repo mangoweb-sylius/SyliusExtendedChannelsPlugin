@@ -134,6 +134,8 @@ services:
             $productRepository: '@sylius.repository.product'
             $templatingEngine: '@templating'
             $taxonRepository: '@sylius.repository.taxon'
+            $entityManager: '@doctrine.orm.default_entity_manager'
+            $formFactory: '@form.factory'
 
     MangoSylius\ExtendedChannelsPlugin\Service\ProductDuplicator:
         arguments:

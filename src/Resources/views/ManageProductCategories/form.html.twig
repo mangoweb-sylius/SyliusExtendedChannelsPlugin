@@ -1,13 +1,14 @@
 {% extends '@SyliusAdmin/layout.html.twig' %}
 
 {% block content %}
+	{{ form_errors(form) }}
 	<form method="post">
 
 		<div>
 			<h3 class="ui top attached header">{{ 'sylius.ui.taxonomy'|trans }}</h3>
 
 			<div class="ui attached segment">
-				<div class="field"><label for="bulk_manage_product_categories_mainTaxon">{{ 'sylius.form.product.main_taxon'|trans }}</label>
+				<div class="field">{{ form_label(form.mainTaxon) }}
 					<div
 						class="sylius-autocomplete ui fluid search selection dropdown"
 						data-url="/admin/ajax/taxons/search"
@@ -37,6 +38,7 @@
 			</div>
 		</div>
 		<input type="hidden" name="bulkProductsIds" value="{{ productIds }}">
+		{% set paths = { 'calcel': path('sylius_admin_product_index') } %}
 		{% include '@SyliusUi/Form/Buttons/_update.html.twig' %}
 	</form>
 {% endblock content %}
