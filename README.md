@@ -32,6 +32,7 @@ Extended Channels Plugin
 * Allows to change the code for the product and product variant
 * Administration for Hello Bars (you can use your own types)
 * Mark Taxon as external link
+* Bulk action to set categories for products
 
 <p align="center">
 	<img src="https://raw.githubusercontent.com/mangoweb-sylius/SyliusExtendedChannelsPlugin/master/doc/admin.png"/>
@@ -53,6 +54,7 @@ Extended Channels Plugin
 1. Your Entity `Taxon` has to implement `\MangoSylius\ExtendedChannelsPlugin\Model\ExternalLinkTaxonInterface`. You can use Trait `MangoSylius\ExtendedChannelsPlugin\Model\ExternalLinkTaxonTrait`.
 1. Include template `{{ include('@MangoSyliusExtendedChannelsPlugin/Channel/extendedChannelForm.html.twig') }}` in `@SyliusAdmin/Channel/_form.html.twig`.
 1. Add `{{ form_row(form.externalLink) }}` to template in `@SyliusAdmin/Taxon/_form.html.twig`.
+1. Replace inner content of `<div class="sylius-grid-nav__bulk"> ... </div>` with `{{ include('@MangoSyliusExtendedChannelsPlugin/Grid/bulkActions.html.twig') }}` in `@SyliusAdmin/Grid/_default.html.twig`.
 1. Add resource to `config/packeges/_sylius.yaml`
 
     ```yaml

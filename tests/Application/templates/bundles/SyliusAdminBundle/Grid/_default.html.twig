@@ -1,5 +1,3 @@
-{# There are no block to be easily extended/overwritten - the only chnaged part is content of <div class="sylius-grid-nav__bulk"> #}
-
 {% import '@SyliusUi/Macro/pagination.html.twig' as pagination %}
 {% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
 {% import '@SyliusUi/Macro/messages.html.twig' as messages %}
@@ -39,16 +37,7 @@
     <div class="sylius-grid-nav">
         {% if data|length > 0 and definition.actionGroups.bulk is defined and definition.getEnabledActions('bulk')|length > 0 %}
             <div class="sylius-grid-nav__bulk">
-                <div class="ui labeled icon floating dropdown primary link button" tabindex="0">
-                    <i class="ellipsis vertical icon"></i><span class="text">{{ 'mango-sylius.admin.grid.bulk_actions'|trans }}</span>
-                    <div class="menu left transition hidden">
-                        {% for action in definition.getEnabledActions('bulk') %}
-                            <div class="item">
-                                {{ sylius_grid_render_bulk_action(grid, action, null) }}
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
+                {{ include('@MangoSyliusExtendedChannelsPlugin/Grid/bulkActions.html.twig') }}
             </div>
         {% endif %}
         <div class="sylius-grid-nav__pagination">

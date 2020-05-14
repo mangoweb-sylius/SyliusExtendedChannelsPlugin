@@ -1,0 +1,10 @@
+<div class="ui labeled icon floating dropdown primary link button" tabindex="0">
+	<i class="ellipsis vertical icon"></i><span class="text">{{ 'mango-sylius.admin.grid.bulk_actions'|trans }}</span>
+	<div class="menu left transition hidden">
+		{% for action in definition.getEnabledActions('bulk') %}
+			<div class="item">
+				{{ sylius_grid_render_bulk_action(grid, action, null) }}
+			</div>
+		{% endfor %}
+	</div>
+</div>
