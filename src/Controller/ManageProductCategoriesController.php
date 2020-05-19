@@ -70,7 +70,7 @@ class ManageProductCategoriesController
 	public function bulkManageProductCategories(Request $request): Response
 	{
 		$productIds = array_filter(explode(',', $request->get('bulkProductsIds')));
-		assert($productIds);
+		assert(count($productIds) > 0);
 
 		if ($request->isMethod('POST')) {
 			foreach ($productIds as $productId) {
