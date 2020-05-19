@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use MangoSylius\ExtendedChannelsPlugin\Form\Type\BulkManageProductCategoriesType;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
-use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -41,11 +40,6 @@ class ManageProductCategoriesController
 	private $templatingEngine;
 
 	/**
-	 * @var TaxonRepositoryInterface
-	 */
-	private $taxonRepository;
-
-	/**
 	 * @var EntityManagerInterface
 	 */
 	private $entityManager;
@@ -61,7 +55,6 @@ class ManageProductCategoriesController
 		RouterInterface $router,
 		ProductRepositoryInterface $productRepository,
 		EngineInterface $templatingEngine,
-		TaxonRepositoryInterface $taxonRepository,
 		EntityManagerInterface $entityManager,
 		FormFactoryInterface $formFactory
 	) {
@@ -70,7 +63,6 @@ class ManageProductCategoriesController
 		$this->translator = $translator;
 		$this->productRepository = $productRepository;
 		$this->templatingEngine = $templatingEngine;
-		$this->taxonRepository = $taxonRepository;
 		$this->entityManager = $entityManager;
 		$this->formFactory = $formFactory;
 	}
@@ -78,9 +70,7 @@ class ManageProductCategoriesController
 	public function bulkManageProductCategories(Request $request): Response
 	{
 		$productIds = array_filter(explode(',', $request->get('bulkProductsIds')));
-		if (!$productIds) {
-			return new RedirectResponse($this->router->generate('sylius_admin_product_index'));
-		}
+		assert($productIds);
 
 		if ($request->isMethod('POST')) {
 			foreach ($productIds as $productId) {

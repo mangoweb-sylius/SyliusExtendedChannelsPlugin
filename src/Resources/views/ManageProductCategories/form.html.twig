@@ -1,4 +1,5 @@
 {% extends '@SyliusAdmin/layout.html.twig' %}
+{% form_theme form '@SyliusAdmin/Form/theme.html.twig' %}
 
 {% block content %}
 	{{ form_errors(form) }}
@@ -8,21 +9,7 @@
 			<h3 class="ui top attached header">{{ 'sylius.ui.taxonomy'|trans }}</h3>
 
 			<div class="ui attached segment">
-				<div class="field">{{ form_label(form.mainTaxon) }}
-					<div
-						class="sylius-autocomplete ui fluid search selection dropdown"
-						data-url="/admin/ajax/taxons/search"
-						data-choice-name="fullname"
-						data-choice-value="code"
-						data-criteria-type="contains"
-						data-criteria-name="phrase"
-						data-load-edit-url="/admin/ajax/taxons/leaf"
-					><input type="hidden" id="bulk_manage_product_categories_mainTaxon" name="bulk_manage_product_categories[mainTaxon]"
-							class="autocomplete"/><i class="dropdown icon"></i>
-						<div class="default text"></div>
-						<div class="menu"></div>
-					</div>
-				</div>
+				{{ form_row(form.mainTaxon) }}
 
 				<h4>{{ 'sylius.ui.product_taxon'|trans }}</h4>
 				<div id="sylius-product-taxonomy-tree"
@@ -34,7 +21,6 @@
 						<div class="ui loader"></div>
 					</div>
 				</div>
-
 			</div>
 		</div>
 		<input type="hidden" name="bulkProductsIds" value="{{ productIds }}">
