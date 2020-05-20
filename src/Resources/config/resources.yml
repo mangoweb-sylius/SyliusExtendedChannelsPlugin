@@ -23,7 +23,19 @@ sylius_grid:
     templates:
         action:
             duplicate: "@MangoSyliusExtendedChannelsPlugin/Grid/Action/duplicate.html.twig"
+        bulk_action:
+            manage_categories: "@MangoSyliusExtendedChannelsPlugin/Grid/Action/manageCategories.html.twig"
     grids:
+        sylius_admin_product:
+            actions:
+                bulk:
+                    manage_categories:
+                        label: mango-sylius.admin.product.manage_categories
+                        type: manage_categories
+                        options:
+                            link:
+                                route: mangoweb_sylius_admin_bulk_manage_product_categories
+
         sylius_admin_product_variant:
             actions:
                 item:
