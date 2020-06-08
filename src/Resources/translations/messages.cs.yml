@@ -5,9 +5,25 @@ mango-sylius:
                 bccEmail: BCC email
                 contactPhone: Telefon
                 timezone: Časové pásmo
+            taxon:
+                externalLink: Externí odkaz
+        product:
+            duplicate: Duplikovat
+            success: Produkt byl zduplikován
+            manage_categories: Spravovat kategorie
+        product_variant:
+            duplicate: Duplikovat
+            success: Varianta produktu byla zduplikována
+        hello_bar:
+            menu: Hello Bars
+            header: Hello Bar
+            subheader: Spravovat Hello Bar
+            message_type: Typ zprávy
         grid:
             bulk_actions: Hromadné akce
-        product:
-            manage_categories: Spravovat kategorie
         manage_product_categories:
-            saved: Nastavení kategorií bylo uloženo
+            saved: Kategorie produktů byly uloženy
+
+mangoweb_extended_channels_plugin:
+    ui:
+        hello_bars: Hello Bar
