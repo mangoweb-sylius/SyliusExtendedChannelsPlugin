@@ -21,6 +21,9 @@ Extended Channels Plugin
 
 ## Features
 
+* Duplicate product and product variant
+* Bulk action to set categories for products
+* Mark Taxon as external link so taxonomy can be used for creating custom menus with links anywhere
 * Download current exchange rates
 * Update product prices using downloaded or custom exchange rates
 * Set channel timezone
@@ -28,11 +31,8 @@ Extended Channels Plugin
 * Send copy of order mail to custom email address per channel
 * When SMTP is unavailable, it prevents error 500 on order submit but logs the error and submits the order
 * Cancel unpaid orders for certain payment method
-* Duplicate product and product variant
 * Allows to change the code for the product and product variant
 * Administration for Hello Bars (you can use your own types)
-* Mark Taxon as external link
-* Bulk action to set categories for products
 
 <p align="center">
 	<img src="https://raw.githubusercontent.com/mangoweb-sylius/SyliusExtendedChannelsPlugin/master/doc/admin.png"/>
