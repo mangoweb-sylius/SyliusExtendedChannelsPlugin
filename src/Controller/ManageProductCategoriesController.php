@@ -9,6 +9,8 @@ use MangoSylius\ExtendedChannelsPlugin\Form\Type\BulkManageProductCategoriesType
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,6 +51,11 @@ class ManageProductCategoriesController
 	 */
 	private $formFactory;
 
+	/**
+	 * @var EventDispatcherInterface
+	 */
+	private $eventDispatcher;
+
 	public function __construct(
 		TranslatorInterface $translator,
 		FlashBagInterface $flashBag,
@@ -56,7 +63,8 @@ class ManageProductCategoriesController
 		ProductRepositoryInterface $productRepository,
 		EngineInterface $templatingEngine,
 		EntityManagerInterface $entityManager,
-		FormFactoryInterface $formFactory
+		FormFactoryInterface $formFactory,
+		EventDispatcherInterface $eventDispatcher
 	) {
 		$this->router = $router;
 		$this->flashBag = $flashBag;
@@ -65,6 +73,7 @@ class ManageProductCategoriesController
 		$this->templatingEngine = $templatingEngine;
 		$this->entityManager = $entityManager;
 		$this->formFactory = $formFactory;
+		$this->eventDispatcher = $eventDispatcher;
 	}
 
 	public function bulkManageProductCategories(Request $request): Response
@@ -84,6 +93,10 @@ class ManageProductCategoriesController
 
 			$message = $this->translator->trans('mango-sylius.admin.manage_product_categories.saved');
 			$this->flashBag->add('success', $message);
+
+			// Eg. for update products in elasticsearch
+			$event = new GenericEvent($productIds);
+			$this->eventDispatcher->dispatch('mango-sylius-extended-channels.products.after_bulk_categories', $event);
 
 			return new RedirectResponse($this->router->generate('sylius_admin_product_index'));
 		}

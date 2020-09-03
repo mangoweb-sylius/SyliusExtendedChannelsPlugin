@@ -109,6 +109,9 @@ Run `src/Migrations/basic-data/timezones-data.sql` for load the timezones table.
     * `mango-sylius-extended-channels.duplicate.product.after-persist`
     * `mango-sylius-extended-channels.duplicate.product-variant.before-persist`
     * `mango-sylius-extended-channels.duplicate.product-variant.after-persist`
+    
+* You can use event after bulk category assignment
+    * `mango-sylius-extended-channels.products.after_bulk_categories`
 
 * You can change the types of Hello bars
     ```yaml
