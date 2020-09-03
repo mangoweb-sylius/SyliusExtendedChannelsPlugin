@@ -135,6 +135,7 @@ services:
             $templatingEngine: '@templating'
             $entityManager: '@doctrine.orm.default_entity_manager'
             $formFactory: '@form.factory'
+            $eventDispatcher: '@event_dispatcher'
 
     MangoSylius\ExtendedChannelsPlugin\Service\ProductDuplicator:
         arguments:

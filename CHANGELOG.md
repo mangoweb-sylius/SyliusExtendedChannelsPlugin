@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## v1.2.0 (2020-09-03)
+
+#### Details
+
+- Add event after bulk category assignment. (Eg. for update products in elasticsearch)
+
+## v1.1.1 (2020-06-08)
+
+#### Details
+
+- CS translations
+
+## v1.1.0 (2020-06-08)
+
+#### Details
+
+- Batch assign categories to products
+
 ## v1.0.0 (2020-04-28)
 
 #### Details
