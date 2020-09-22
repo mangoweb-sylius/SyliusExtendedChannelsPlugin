@@ -1,5 +1,6 @@
 mango-sylius:
     admin:
+        selected_products_count: Vybrané produkty
         form:
             channel:
                 bccEmail: BCC email
@@ -10,7 +11,7 @@ mango-sylius:
         product:
             duplicate: Duplikovat
             success: Produkt byl zduplikován
-            manage_categories: Spravovat kategorie
+            manage_categories: Spravovat Taxony
         product_variant:
             duplicate: Duplikovat
             success: Varianta produktu byla zduplikována
@@ -22,7 +23,35 @@ mango-sylius:
         grid:
             bulk_actions: Hromadné akce
         manage_product_categories:
-            saved: Kategorie produktů byly uloženy
+            saved: Taxony produktů byly uloženy
+            main_taxon_actions_label: Akce
+            main_taxon_actions:
+                ignore: Ignorovat
+                replace: Změnit
+                add: Přidat
+                remove: Odebrat zvolené
+                remove_all: Odebrat vše
+            main_taxon_actions_help_title: Akce hlavního taxonu
+            main_taxon_actions_help:
+                ignore: Neudělá nic. Použijte, když je potřeba změnit pouze strom taxonů.
+                replace: Změní hlavní taxon bez ohledu na existující hodnotu.
+                add: Přidá zvolený taxon k produktům, které hlavní taxon nemají.
+                remove: Odebere hlavní taxon u produktů, kde je hlavní taxon stejný jako zvolený.
+                remove_all: Odebere hlavní taxon bez ohledu na existující nebo zvolený.
+            taxons_actions_label: Akce
+            taxons_actions:
+                ignore: Ignorovat
+                replace: Změnit
+                add: Přidat
+                remove: Odebrat zvolené
+                remove_all: Odebrat vše
+            taxons_actions_help_title: Akce taxonů
+            taxons_actions_help:
+                ignore: Neudělá nic. Použijte, když je potřeba změnit pouze hlavní taxon.
+                replace: Odebere všechny existující a přidá zvolené.
+                add: Přidá zvolené taxony a zachová ostatní existující.
+                remove: Odebere zvolené taxony, ostatní existující zachová.
+                remove_all: Odebere všechny taxony bez ohledu na vybrané.
 
 mangoweb_extended_channels_plugin:
     ui:

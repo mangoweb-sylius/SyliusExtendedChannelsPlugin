@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v1.3.0 (2020-09-22)
+
+#### Details
+
+- Batch managing product categories (add, replace, remove)
+
 ## v1.2.0 (2020-09-03)
 
 #### Details
