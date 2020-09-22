@@ -1,5 +1,6 @@
 mango-sylius:
     admin:
+        selected_products_count: Selected products
         form:
             channel:
                 bccEmail: BCC email
@@ -10,7 +11,7 @@ mango-sylius:
         product:
             duplicate: Duplicate
             success: The product was successfully duplicated
-            manage_categories: Manage categories
+            manage_categories: Manage Taxons
         product_variant:
             duplicate: Duplicate
             success: The product variant was successfully duplicated
@@ -22,21 +23,35 @@ mango-sylius:
         grid:
             bulk_actions: Bulk actions
         manage_product_categories:
-            saved: The product categories were successfully saved
+            saved: The product Taxons were successfully saved
             main_taxon_actions_label: Action
             main_taxon_actions:
-                ignore: ignore
-                replace: replace
-                add: add
-                remove: remove
-                remove_all: remove from all products
+                ignore: Ignore
+                replace: Replace
+                add: Add
+                remove: Remove selected
+                remove_all: Remove all
+            main_taxon_actions_help_title: Main taxon actions
+            main_taxon_actions_help:
+                ignore: Do nothing. Use when you want to change taxon tree only.
+                replace: Overwrite the main taxon for all products regardless of its existing value.
+                add: Add selected taxon for products with empty main taxon.
+                remove: Remove value when product taxon equans to selected taxon.
+                remove_all: Remove the main taxon regardless of its existing value or selected main taxon.
             taxons_actions_label: Action
             taxons_actions:
-                ignore: ignore all
-                replace: replace
-                add: add selected
-                remove: remove selected
-                remove_all: remove all
+                ignore: Ignore
+                replace: Replace
+                add: Add
+                remove: Remove selected
+                remove_all: Remove all
+            taxons_actions_help_title: Taxon tree actions
+            taxons_actions_help:
+                ignore: Do nothing. Use when you want to change main taxon only.
+                replace: Remove all taxons and add selected.
+                add: Add selected taxons preserving existing taxons as well.
+                remove: Remove selected taxons preserving other existing taxons.
+                remove_all: Remove all taxons regardless of what you have selected.
 
 mangoweb_extended_channels_plugin:
     ui:

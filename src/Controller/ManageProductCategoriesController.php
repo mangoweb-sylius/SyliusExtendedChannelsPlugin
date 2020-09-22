@@ -118,6 +118,7 @@ class ManageProductCategoriesController
 		return new Response($this->templatingEngine->render('@MangoSyliusExtendedChannelsPlugin/ManageProductCategories/form.html.twig', [
 			'form' => $form->createView(),
 			'productIds' => implode(',', $productIds),
+			'productIdsCount' => count($productIds),
 			'paths' => [
 				'cancel' => $this->router->generate('sylius_admin_product_index'),
 			],

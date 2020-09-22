@@ -1,9 +1,32 @@
 {% extends '@SyliusAdmin/layout.html.twig' %}
+
+{% import '@SyliusAdmin/Macro/breadcrumb.html.twig' as breadcrumb %}
+
 {% form_theme form '@SyliusAdmin/Form/theme.html.twig' %}
 
 {% block title %}{{ 'mango-sylius.admin.product.manage_categories'|trans }} | {{ parent() }}{% endblock %}
 
 {% block content %}
+
+	<div class="ui stackable two column grid">
+		<div class="column">
+			<h1 class="ui header">
+				<i class="circular folder icon"></i>
+				<div class="content">
+					{{ 'mango-sylius.admin.product.manage_categories'|trans }}
+					<div class="sub header">{{ 'mango-sylius.admin.selected_products_count'|trans }}: {{ productIdsCount }}</div>
+				</div>
+			</h1>
+
+			{% set breadcrumbs = [
+				{ label: 'sylius.ui.administration'|trans, url: path('sylius_admin_dashboard') },
+				{ label: 'sylius.ui.products'|trans, url: path('sylius_admin_product_index') },
+				{ label: 'mango-sylius.admin.product.manage_categories'|trans },
+			] %}
+
+			{{ breadcrumb.crumble(breadcrumbs) }}
+		</div>
+	</div>
 
 	{{ form_errors(form) }}
 	<form class="ui form" method="post">
@@ -76,7 +99,37 @@
 
 			<div class="column">
 				<div class="ui segment">
-					Tady bude nápověda
+					<h3 class="ui top attached header">{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions_help_title'|trans }}</h3>
+
+					<div class="ui attached segment">
+						<h4><strong>{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions.ignore'|trans }}</strong></h4>
+						<p>{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions_help.ignore'|trans }}</p>
+						<h4><strong>{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions.replace'|trans }}</strong></h4>
+						<p>{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions_help.replace'|trans }}</p>
+						<h4><strong>{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions.add'|trans }}</strong></h4>
+						<p>{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions_help.add'|trans }}</p>
+						<h4><strong>{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions.remove'|trans }}</strong></h4>
+						<p>{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions_help.remove'|trans }}</p>
+						<h4><strong>{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions.remove_all'|trans }}</strong></h4>
+						<p>{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions_help.remove_all'|trans }}</p>
+					</div>
+				</div>
+
+				<div class="ui segment">
+					<h3 class="ui top attached header">{{ 'mango-sylius.admin.manage_product_categories.taxons_actions_help_title'|trans }}</h3>
+
+					<div class="ui attached segment">
+						<h4><strong>{{ 'mango-sylius.admin.manage_product_categories.taxons_actions.ignore'|trans }}</strong></h4>
+						<p>{{ 'mango-sylius.admin.manage_product_categories.taxons_actions_help.ignore'|trans }}</p>
+						<h4><strong>{{ 'mango-sylius.admin.manage_product_categories.taxons_actions.replace'|trans }}</strong></h4>
+						<p>{{ 'mango-sylius.admin.manage_product_categories.taxons_actions_help.replace'|trans }}</p>
+						<h4><strong>{{ 'mango-sylius.admin.manage_product_categories.taxons_actions.add'|trans }}</strong></h4>
+						<p>{{ 'mango-sylius.admin.manage_product_categories.taxons_actions_help.add'|trans }}</p>
+						<h4><strong>{{ 'mango-sylius.admin.manage_product_categories.taxons_actions.remove'|trans }}</strong></h4>
+						<p>{{ 'mango-sylius.admin.manage_product_categories.taxons_actions_help.remove'|trans }}</p>
+						<h4><strong>{{ 'mango-sylius.admin.manage_product_categories.taxons_actions.remove_all'|trans }}</strong></h4>
+						<p>{{ 'mango-sylius.admin.manage_product_categories.taxons_actions_help.remove_all'|trans }}</p>
+					</div>
 				</div>
 			</div>
 		</div>
