@@ -1,30 +1,84 @@
 {% extends '@SyliusAdmin/layout.html.twig' %}
 {% form_theme form '@SyliusAdmin/Form/theme.html.twig' %}
 
+{% block title %}{{ 'mango-sylius.admin.product.manage_categories'|trans }} | {{ parent() }}{% endblock %}
+
 {% block content %}
+
 	{{ form_errors(form) }}
-	<form method="post">
+	<form class="ui form" method="post">
+		<div class="ui two column stackable grid">
 
-		<div>
-			<h3 class="ui top attached header">{{ 'sylius.ui.taxonomy'|trans }}</h3>
+			<div class="column">
+				<div class="ui segment">
+					<h3 class="ui top attached header">{{ 'sylius.form.product.main_taxon'|trans }}</h3>
 
-			<div class="ui attached segment">
-				{{ form_row(form.mainTaxon) }}
+					<div class="ui attached segment">
 
-				<h4>{{ 'sylius.ui.product_taxon'|trans }}</h4>
-				<div id="sylius-product-taxonomy-tree"
-					 data-tree-root-nodes-url="{{ path('sylius_admin_ajax_taxon_root_nodes') }}"
-					 data-tree-leafs-url="{{ path('sylius_admin_ajax_taxon_leafs') }}"
-				>
-					{{ form_widget(form.productTaxons) }}
-					<div class="ui inverted dimmer">
-						<div class="ui loader"></div>
+						<div class="field">
+							<label
+								for="mangoweb_extended_channels_main_taxon_action_label">{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions_label'|trans }}</label>
+							<select id="mangoweb_extended_channels_main_taxon_action_label" name="main_taxon_action">
+								<option
+									value="ignore">{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions.ignore'|trans }}</option>
+								<option
+									value="replace">{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions.replace'|trans }}</option>
+								<option
+									value="add">{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions.add'|trans }}</option>
+								<option
+									value="remove">{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions.remove'|trans }}</option>
+								<option
+									value="remove_all">{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions.remove_all'|trans }}</option>
+							</select>
+						</div>
+
+						{{ form_row(form.mainTaxon) }}
+
 					</div>
+				</div>
+				<div class="ui segment">
+
+					<h3 class="ui top attached header">{{ 'sylius.ui.taxons'|trans }}</h3>
+
+					<div class="ui attached segment">
+						<div class="field">
+							<label
+								for="mangoweb_extended_channels_taxons_action_label">{{ 'mango-sylius.admin.manage_product_categories.taxons_actions_label'|trans }}</label>
+							<select id="mangoweb_extended_channels_taxons_action_label" name="taxons_action">
+								<option
+									value="ignore">{{ 'mango-sylius.admin.manage_product_categories.taxons_actions.ignore'|trans }}</option>
+								<option
+									value="replace">{{ 'mango-sylius.admin.manage_product_categories.taxons_actions.replace'|trans }}</option>
+								<option
+									value="add">{{ 'mango-sylius.admin.manage_product_categories.taxons_actions.add'|trans }}</option>
+								<option
+									value="remove">{{ 'mango-sylius.admin.manage_product_categories.taxons_actions.remove'|trans }}</option>
+								<option
+									value="remove_all">{{ 'mango-sylius.admin.manage_product_categories.taxons_actions.remove_all'|trans }}</option>
+							</select>
+						</div>
+
+						<div id="sylius-product-taxonomy-tree"
+							 data-tree-root-nodes-url="{{ path('sylius_admin_ajax_taxon_root_nodes') }}"
+							 data-tree-leafs-url="{{ path('sylius_admin_ajax_taxon_leafs') }}"
+						>
+							{{ form_widget(form.productTaxons) }}
+							<div class="ui inverted dimmer">
+								<div class="ui loader"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<input type="hidden" name="bulkProductsIds" value="{{ productIds }}">
+				{% set paths = { 'calcel': path('sylius_admin_product_index') } %}
+				{% include '@SyliusUi/Form/Buttons/_update.html.twig' %}
+			</div>
+
+			<div class="column">
+				<div class="ui segment">
+					Tady bude nápověda
 				</div>
 			</div>
 		</div>
-		<input type="hidden" name="bulkProductsIds" value="{{ productIds }}">
-		{% set paths = { 'calcel': path('sylius_admin_product_index') } %}
-		{% include '@SyliusUi/Form/Buttons/_update.html.twig' %}
 	</form>
 {% endblock content %}

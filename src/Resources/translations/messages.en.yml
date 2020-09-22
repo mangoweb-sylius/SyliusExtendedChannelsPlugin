@@ -23,6 +23,20 @@ mango-sylius:
             bulk_actions: Bulk actions
         manage_product_categories:
             saved: The product categories were successfully saved
+            main_taxon_actions_label: Action
+            main_taxon_actions:
+                ignore: ignore
+                replace: replace
+                add: add
+                remove: remove
+                remove_all: remove from all products
+            taxons_actions_label: Action
+            taxons_actions:
+                ignore: ignore all
+                replace: replace
+                add: add selected
+                remove: remove selected
+                remove_all: remove all
 
 mangoweb_extended_channels_plugin:
     ui:

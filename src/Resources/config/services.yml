@@ -136,6 +136,8 @@ services:
             $entityManager: '@doctrine.orm.default_entity_manager'
             $formFactory: '@form.factory'
             $eventDispatcher: '@event_dispatcher'
+            $productFactory: '@sylius.custom_factory.product'
+            $productTaxonFactory: '@sylius.factory.product_taxon'
 
     MangoSylius\ExtendedChannelsPlugin\Service\ProductDuplicator:
         arguments:
