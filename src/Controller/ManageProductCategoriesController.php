@@ -182,6 +182,7 @@ class ManageProductCategoriesController
 	{
 		if ($action === 'replace') {
 			$product->getProductTaxons()->clear();
+			$this->entityManager->flush();
 			$this->addTaxon($product, $dummyProduct);
 
 			return;
