@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ManageProductCategoriesController
@@ -41,8 +41,8 @@ class ManageProductCategoriesController
 	 */
 	private $productRepository;
 
-	/** @var EngineInterface */
-	private $templatingEngine;
+	/** @var Environment */
+	private $twig;
 
 	/**
 	 * @var EntityManagerInterface
@@ -72,7 +72,7 @@ class ManageProductCategoriesController
 		FlashBagInterface $flashBag,
 		RouterInterface $router,
 		ProductRepositoryInterface $productRepository,
-		EngineInterface $templatingEngine,
+		Environment $twig,
 		EntityManagerInterface $entityManager,
 		FormFactoryInterface $formFactory,
 		EventDispatcherInterface $eventDispatcher,
@@ -83,7 +83,7 @@ class ManageProductCategoriesController
 		$this->flashBag = $flashBag;
 		$this->translator = $translator;
 		$this->productRepository = $productRepository;
-		$this->templatingEngine = $templatingEngine;
+		$this->twig = $twig;
 		$this->entityManager = $entityManager;
 		$this->formFactory = $formFactory;
 		$this->eventDispatcher = $eventDispatcher;
@@ -115,7 +115,7 @@ class ManageProductCategoriesController
 			return new RedirectResponse($this->router->generate('sylius_admin_product_index'));
 		}
 
-		return new Response($this->templatingEngine->render('@MangoSyliusExtendedChannelsPlugin/ManageProductCategories/form.html.twig', [
+		return new Response($this->twig->render('@MangoSyliusExtendedChannelsPlugin/ManageProductCategories/form.html.twig', [
 			'form' => $form->createView(),
 			'productIds' => implode(',', $productIds),
 			'productIdsCount' => count($productIds),
