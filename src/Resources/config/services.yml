@@ -132,7 +132,7 @@ services:
             $flashBag: '@session.flash_bag'
             $translator: '@translator'
             $productRepository: '@sylius.repository.product'
-            $templatingEngine: '@templating'
+            $twig: '@twig'
             $entityManager: '@doctrine.orm.default_entity_manager'
             $formFactory: '@form.factory'
             $eventDispatcher: '@event_dispatcher'
