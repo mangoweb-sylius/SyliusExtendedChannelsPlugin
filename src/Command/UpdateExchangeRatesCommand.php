@@ -47,7 +47,7 @@ class UpdateExchangeRatesCommand extends Command
 			->setDescription('Update exchange rates.');
 	}
 
-	protected function execute(InputInterface $input, OutputInterface $output): void
+	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
 		$io = new SymfonyStyle($input, $output);
 		$io->title($this->getName() . ' started at ' . date('Y-m-d H:i:s'));
@@ -122,5 +122,7 @@ class UpdateExchangeRatesCommand extends Command
 		$io->success(
 			$this->getName() . ' at ' . date('Y-m-d H:i:s')
 		);
+
+        return 0;
 	}
 }

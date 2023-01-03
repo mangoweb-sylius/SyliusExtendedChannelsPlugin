@@ -68,7 +68,7 @@ class UpdateProductPriceByExchangeRatesCommand extends Command
 			->setDescription('Update product prices by exchange rates.');
 	}
 
-	protected function execute(InputInterface $input, OutputInterface $output): void
+	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
 		$io = new SymfonyStyle($input, $output);
 		$io->title($this->getName() . ' started at ' . date('Y-m-d H:i:s'));
@@ -86,7 +86,7 @@ class UpdateProductPriceByExchangeRatesCommand extends Command
 		if (!in_array($decimals, [0, 1, 2], true)) {
 			$io->error('Option round has allowed values 0, 1 or 2');
 
-			return;
+			return 1;
 		}
 
 		assert(is_string($sourceChannelParam));
@@ -100,7 +100,7 @@ class UpdateProductPriceByExchangeRatesCommand extends Command
 			$this->logger->error($errorMsg);
 			$io->error($errorMsg);
 
-			return;
+			return 2;
 		}
 		assert($sourceChannel instanceof ChannelInterface);
 		assert($targetChannel instanceof ChannelInterface);
@@ -121,7 +121,7 @@ class UpdateProductPriceByExchangeRatesCommand extends Command
 				$this->logger->error($errorMsg);
 				$io->error($errorMsg);
 
-				return;
+				return 3;
 			}
 			assert($exchangeRate instanceof ExchangeRateInterface);
 			if ($exchangeRate->getRatio() === null || $exchangeRate->getRatio() === 0) {
@@ -129,7 +129,7 @@ class UpdateProductPriceByExchangeRatesCommand extends Command
 				$this->logger->error($errorMsg);
 				$io->error($errorMsg);
 
-				return;
+				return 4;
 			}
 		}
 
@@ -175,6 +175,8 @@ class UpdateProductPriceByExchangeRatesCommand extends Command
 		$io->success(
 			$this->getName() . ' at ' . date('Y-m-d H:i:s')
 		);
+
+        return 0;
 	}
 
 	private function roundPrice(int $price, int $decimals): int

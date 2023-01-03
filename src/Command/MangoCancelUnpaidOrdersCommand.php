@@ -58,7 +58,7 @@ class MangoCancelUnpaidOrdersCommand extends Command
 	/**
 	 * {@inheritdoc}
 	 */
-	protected function execute(InputInterface $input, OutputInterface $output): void
+	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
 		$expirationTime = $this->expirationPeriod;
 		$methodCodes = $this->expirationMethodCodes;
@@ -72,5 +72,7 @@ class MangoCancelUnpaidOrdersCommand extends Command
 		$this->unpaidCartsStateUpdater->cancel();
 
 		$this->entityManager->flush();
+
+        return 0;
 	}
 }
