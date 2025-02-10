@@ -1,10 +1,11 @@
 /public/assets
+/public/build
 /public/css
 /public/js
 /public/media/*
 !/public/media/image/
 /public/media/image/*
-!/public/media/image/.gitignore
+!/public/media/image/.gitkeep
 
 /node_modules
 

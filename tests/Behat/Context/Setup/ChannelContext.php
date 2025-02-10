@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
-use Tests\MangoSylius\ExtendedChannelsPlugin\Application\Entity\Channel;
+use Tests\MangoSylius\ExtendedChannelsPlugin\Entity\Channel;
 
 final class ChannelContext implements Context
 {
 	/**
-	 * @var ObjectManager
+	 * @var EntityManagerInterface
 	 */
 	private $channelManager;
 	/**
@@ -21,7 +21,7 @@ final class ChannelContext implements Context
 	private $sharedStorage;
 
 	public function __construct(
-		ObjectManager $channelManager,
+		EntityManagerInterface $channelManager,
 		SharedStorageInterface $sharedStorage
 	) {
 		$this->channelManager = $channelManager;

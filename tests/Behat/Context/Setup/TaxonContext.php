@@ -5,20 +5,20 @@ declare(strict_types=1);
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use MangoSylius\ExtendedChannelsPlugin\Model\ExternalLinkTaxonInterface;
 
 final class TaxonContext implements Context
 {
 	/**
-	 * @var ObjectManager
+	 * @var EntityManagerInterface
 	 */
-	private $objectManager;
+	private $entityManager;
 
 	public function __construct(
-		ObjectManager $objectManager
+		EntityManagerInterface $entityManager
 	) {
-		$this->objectManager = $objectManager;
+		$this->entityManager = $entityManager;
 	}
 
 	/**
@@ -28,7 +28,7 @@ final class TaxonContext implements Context
 	{
 		$taxon->setExternalLink(true);
 
-		$this->objectManager->persist($taxon);
-		$this->objectManager->flush();
+		$this->entityManager->persist($taxon);
+		$this->entityManager->flush();
 	}
 }

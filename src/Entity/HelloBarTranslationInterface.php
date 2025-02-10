@@ -8,11 +8,11 @@ use Sylius\Component\Resource\Model\TranslationInterface;
 
 interface HelloBarTranslationInterface extends TranslationInterface
 {
-	public function getTitle(): ?string;
+    public function getTitle(): ?string;
 
-	public function setTitle(?string $title): void;
+    public function setTitle(?string $title): void;
 
-	public function getContent(): ?string;
+    public function getContent(): ?string;
 
-	public function setContent(?string $content): void;
+    public function setContent(?string $content): void;
 }

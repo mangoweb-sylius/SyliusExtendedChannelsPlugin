@@ -9,7 +9,10 @@ use Sylius\Component\Core\Model\ProductVariantInterface;
 
 interface ProductDuplicatorInterface
 {
-	public function duplicateProduct(ProductInterface $oldEntity): ProductInterface;
+    public function duplicateProduct(ProductInterface $oldEntity): ProductInterface;
 
-	public function duplicateProductVariant(ProductInterface $product, ProductVariantInterface $oldEntity): ProductVariantInterface;
+    public function duplicateProductVariant(
+        ProductInterface $product,
+        ProductVariantInterface $oldEntity,
+    ): ProductVariantInterface;
 }

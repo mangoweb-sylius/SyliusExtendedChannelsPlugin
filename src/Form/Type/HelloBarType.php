@@ -14,59 +14,65 @@ use Symfony\Component\Validator\Constraints\Valid;
 
 final class HelloBarType extends AbstractResourceType
 {
-	/**
-	 * @var array
-	 */
-	private $helloBarTypes;
+    /** @var array<string> */
+    private array $helloBarTypes;
 
-	public function __construct(array $helloBarTypes, string $dataClass, array $validationGroups = [])
-	{
-		parent::__construct($dataClass, $validationGroups);
-		$this->helloBarTypes = $helloBarTypes;
-	}
+    /**
+     * @param array<string> $helloBarTypes
+     * @param array<string> $validationGroups
+     */
+    public function __construct(
+        array $helloBarTypes,
+        string $dataClass,
+        array $validationGroups = [],
+    ) {
+        parent::__construct($dataClass, $validationGroups);
+        $this->helloBarTypes = $helloBarTypes;
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function buildForm(FormBuilderInterface $builder, array $options): void
-	{
-		$builder
-			->add('translations', ResourceTranslationsType::class, [
-				'entry_type' => HelloBarTranslationType::class,
-				'validation_groups' => ['sylius'],
-				'constraints' => [
-					new Valid(['groups' => ['sylius']]),
-				],
-			])
-			->add('channels', ChannelChoiceType::class, [
-				'multiple' => true,
-				'expanded' => true,
-				'label' => 'sylius.form.product.channels',
-			])
-			->add('startsAt', DateTimeType::class, [
-				'required' => false,
-				'date_widget' => 'single_text',
-				'time_widget' => 'single_text',
-			])
-			->add('endsAt', DateTimeType::class, [
-				'required' => false,
-				'date_widget' => 'single_text',
-				'time_widget' => 'single_text',
-			])
-			->add('messageType', ChoiceType::class, [
-				'multiple' => false,
-				'expanded' => false,
-				'required' => true,
-				'choices' => array_flip($this->helloBarTypes),
-			])
-		;
-	}
+    /**
+     * @inheritdoc
+     */
+    public function buildForm(
+        FormBuilderInterface $builder,
+        array $options,
+    ): void {
+        $builder
+            ->add('translations', ResourceTranslationsType::class, [
+                'entry_type' => HelloBarTranslationType::class,
+                'validation_groups' => ['sylius'],
+                'constraints' => [
+                    new Valid(['groups' => ['sylius']]),
+                ],
+            ])
+            ->add('channels', ChannelChoiceType::class, [
+                'multiple' => true,
+                'expanded' => true,
+                'label' => 'sylius.form.product.channels',
+            ])
+            ->add('startsAt', DateTimeType::class, [
+                'required' => false,
+                'date_widget' => 'single_text',
+                'time_widget' => 'single_text',
+            ])
+            ->add('endsAt', DateTimeType::class, [
+                'required' => false,
+                'date_widget' => 'single_text',
+                'time_widget' => 'single_text',
+            ])
+            ->add('messageType', ChoiceType::class, [
+                'multiple' => false,
+                'expanded' => false,
+                'required' => true,
+                'choices' => array_flip($this->helloBarTypes),
+            ]);
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getBlockPrefix(): string
-	{
-		return 'hello_bar';
-	}
+    /**
+     * @inheritdoc
+     */
+    public function getBlockPrefix(): string
+    {
+        return 'hello_bar';
+    }
 }

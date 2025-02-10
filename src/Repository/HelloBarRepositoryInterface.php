@@ -10,13 +10,16 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 interface HelloBarRepositoryInterface extends RepositoryInterface
 {
-	/**
-	 * @return HelloBarInterface[]
-	 */
-	public function findAvailableForChannel(ChannelInterface $channel): array;
+    /**
+     * @return HelloBarInterface[]
+     */
+    public function findAvailableForChannel(ChannelInterface $channel): array;
 
-	/**
-	 * @return HelloBarInterface[]
-	 */
-	public function findAvailableForChannelByType(ChannelInterface $channel, string $type): array;
+    /**
+     * @return HelloBarInterface[]
+     */
+    public function findAvailableForChannelByType(
+        ChannelInterface $channel,
+        string $type,
+    ): array;
 }

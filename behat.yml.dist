@@ -4,22 +4,18 @@ imports:
 
 default:
     extensions:
-        Lakion\Behat\MinkDebugExtension:
-            directory: etc/build
-            clean_start: false
-            screenshot: true
-
         Behat\MinkExtension:
             base_url: "http://localhost:8080/"
             default_session: symfony
             sessions:
                 symfony:
                     symfony: ~
+            show_auto: false # do not automatically open browser on error
 
         FriendsOfBehat\SymfonyExtension:
             bootstrap: tests/Application/config/bootstrap.php
             kernel:
-                class: Tests\MangoSylius\ExtendedChannelsPlugin\Application\Kernel
+                class: Tests\MangoSylius\ExtendedChannelsPlugin\Kernel
 
         FriendsOfBehat\VariadicExtension: ~
 

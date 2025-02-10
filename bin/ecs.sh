@@ -8,5 +8,4 @@ cd "$(dirname "$DIR")"
 
 set -x
 
-rm -rf tests/Application/var/cache/
-vendor/bin/ecs check src tests "$@"
+vendor/bin/ecs check --config=ecs.php "$@"

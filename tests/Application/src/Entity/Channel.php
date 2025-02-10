@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\MangoSylius\ExtendedChannelsPlugin\Application\Entity;
+namespace Tests\MangoSylius\ExtendedChannelsPlugin\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use MangoSylius\ExtendedChannelsPlugin\Model\ExtendedChannelInterface;
@@ -13,6 +13,8 @@ use Sylius\Component\Core\Model\Channel as SyliusChannel;
  * @ORM\Table(name="sylius_channel")
  * @ORM\Entity
  */
+#[ORM\Table(name: "sylius_channel")]
+#[ORM\Entity]
 class Channel extends SyliusChannel implements ExtendedChannelInterface
 {
 	use ExtendedChannelTrait;

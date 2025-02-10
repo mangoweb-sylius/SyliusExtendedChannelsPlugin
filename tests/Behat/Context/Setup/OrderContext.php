@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use SM\Factory\FactoryInterface as StateMachineFactoryInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\AddressInterface;
@@ -27,9 +27,9 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 final class OrderContext implements Context
 {
 	/**
-	 * @var ObjectManager
+	 * @var EntityManagerInterface
 	 */
-	private $objectManager;
+	private $entityManager;
 	/**
 	 * @var SharedStorageInterface
 	 */
@@ -60,16 +60,16 @@ final class OrderContext implements Context
 	private $stateMachineFactory;
 
 	public function __construct(
-		ObjectManager $objectManager,
-		SharedStorageInterface $sharedStorage,
-		FactoryInterface $customerFactory,
-		ProductVariantResolverInterface $variantResolver,
-		FactoryInterface $orderItemFactory,
+		EntityManagerInterface             $entityManager,
+		SharedStorageInterface             $sharedStorage,
+		FactoryInterface                   $customerFactory,
+		ProductVariantResolverInterface    $variantResolver,
+		FactoryInterface                   $orderItemFactory,
 		OrderItemQuantityModifierInterface $itemQuantityModifier,
-		FactoryInterface $orderFactory,
-		StateMachineFactoryInterface $stateMachineFactory
+		FactoryInterface                   $orderFactory,
+		StateMachineFactoryInterface       $stateMachineFactory
 	) {
-		$this->objectManager = $objectManager;
+		$this->entityManager = $entityManager;
 		$this->sharedStorage = $sharedStorage;
 		$this->customerFactory = $customerFactory;
 		$this->variantResolver = $variantResolver;
@@ -96,10 +96,10 @@ final class OrderContext implements Context
 		$customer->setFirstName('John');
 		$customer->setLastName('Doe');
 
-		$this->objectManager->persist($customer);
+		$this->entityManager->persist($customer);
 
 		$this->placeOrder($product, $shippingMethod, $address, $paymentMethod, $customer, $number);
-		$this->objectManager->flush();
+		$this->entityManager->flush();
 	}
 
 	/**
@@ -111,8 +111,8 @@ final class OrderContext implements Context
 		$date = $date->modify('-' . $days . ' day');
 		$order->setCheckoutCompletedAt($date);
 
-		$this->objectManager->persist($order);
-		$this->objectManager->flush();
+		$this->entityManager->persist($order);
+		$this->entityManager->flush();
 
 		$this->sharedStorage->set('order', $order);
 	}
@@ -146,7 +146,7 @@ final class OrderContext implements Context
 
 		$this->checkoutUsing($order, $shippingMethod, clone $address, $paymentMethod);
 
-		$this->objectManager->persist($order);
+		$this->entityManager->persist($order);
 		$this->sharedStorage->set('order', $order);
 	}
 

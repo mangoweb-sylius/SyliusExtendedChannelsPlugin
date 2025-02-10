@@ -19,97 +19,89 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DuplicateController
 {
-	/**
-	 * @var RouterInterface
-	 */
-	private $router;
-	/**
-	 * @var FlashBagInterface
-	 */
-	private $flashBag;
-	/**
-	 * @var TranslatorInterface
-	 */
-	private $translator;
-	/**
-	 * @var ProductRepositoryInterface
-	 */
-	private $productRepository;
-	/**
-	 * @var ProductVariantRepositoryInterface
-	 */
-	private $productVariantRepository;
-	/**
-	 * @var ProductDuplicatorInterface
-	 */
-	private $productDuplicator;
-	/**
-	 * @var EventDispatcherInterface
-	 */
-	private $eventDispatcher;
+    /** @var RouterInterface */
+    private $router;
 
-	public function __construct(
-		EventDispatcherInterface $eventDispatcher,
-		TranslatorInterface $translator,
-		FlashBagInterface $flashBag,
-		RouterInterface $router,
-		ProductRepositoryInterface $productRepository,
-		ProductVariantRepositoryInterface $productVariantRepository,
-		ProductDuplicatorInterface $productDuplicator
-	) {
-		$this->router = $router;
-		$this->flashBag = $flashBag;
-		$this->translator = $translator;
-		$this->productRepository = $productRepository;
-		$this->productVariantRepository = $productVariantRepository;
-		$this->productDuplicator = $productDuplicator;
-		$this->eventDispatcher = $eventDispatcher;
-	}
+    /** @var FlashBagInterface */
+    private $flashBag;
 
-	public function duplicateProduct(int $id): RedirectResponse
-	{
-		$entity = $this->productRepository->find($id);
-		if ($entity === null) {
-			throw new NotFoundException();
-		}
+    /** @var TranslatorInterface */
+    private $translator;
 
-		assert($entity instanceof ProductInterface);
-		$clonedEntity = $this->productDuplicator->duplicateProduct($entity);
+    /** @var ProductRepositoryInterface */
+    private $productRepository;
 
-		$event = new GenericEvent($clonedEntity, ['oldEntity' => $entity]);
-		$this->eventDispatcher->dispatch('mango-sylius-extended-channels.duplicate.product.before-persist', $event);
-		$this->productRepository->add($clonedEntity);
-		$this->eventDispatcher->dispatch('mango-sylius-extended-channels.duplicate.product.after-persist', $event);
+    /** @var ProductVariantRepositoryInterface */
+    private $productVariantRepository;
 
-		$message = $this->translator->trans('mango-sylius.admin.product.success');
-		$this->flashBag->add('success', $message);
+    /** @var ProductDuplicatorInterface */
+    private $productDuplicator;
 
-		return new RedirectResponse($this->router->generate('sylius_admin_product_update', ['id' => $clonedEntity->getId()]));
-	}
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
 
-	public function duplicateProductVariant(int $id): RedirectResponse
-	{
-		$entity = $this->productVariantRepository->find($id);
-		if ($entity === null) {
-			throw new NotFoundException();
-		}
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        TranslatorInterface $translator,
+        FlashBagInterface $flashBag,
+        RouterInterface $router,
+        ProductRepositoryInterface $productRepository,
+        ProductVariantRepositoryInterface $productVariantRepository,
+        ProductDuplicatorInterface $productDuplicator,
+    ) {
+        $this->router = $router;
+        $this->flashBag = $flashBag;
+        $this->translator = $translator;
+        $this->productRepository = $productRepository;
+        $this->productVariantRepository = $productVariantRepository;
+        $this->productDuplicator = $productDuplicator;
+        $this->eventDispatcher = $eventDispatcher;
+    }
 
-		assert($entity instanceof ProductVariantInterface);
-		$product = $entity->getProduct();
-		assert($product instanceof ProductInterface);
-		$clonedEntity = $this->productDuplicator->duplicateProductVariant($product, $entity);
+    public function duplicateProduct(int $id): RedirectResponse
+    {
+        $entity = $this->productRepository->find($id);
+        if ($entity === null) {
+            throw new NotFoundException();
+        }
 
-		$event = new GenericEvent($clonedEntity);
-		$this->eventDispatcher->dispatch('mango-sylius-extended-channels.duplicate.product-variant.before-persist', $event);
-		$this->productVariantRepository->add($clonedEntity);
-		$this->eventDispatcher->dispatch('mango-sylius-extended-channels.duplicate.product-variant.after-persist', $event);
+        assert($entity instanceof ProductInterface);
+        $clonedEntity = $this->productDuplicator->duplicateProduct($entity);
 
-		$message = $this->translator->trans('mango-sylius.admin.product_variant.success');
-		$this->flashBag->add('success', $message);
+        $event = new GenericEvent($clonedEntity, ['oldEntity' => $entity]);
+        $this->eventDispatcher->dispatch($event, 'mango-sylius-extended-channels.duplicate.product.before-persist');
+        $this->productRepository->add($clonedEntity);
+        $this->eventDispatcher->dispatch($event, 'mango-sylius-extended-channels.duplicate.product.after-persist');
 
-		return new RedirectResponse($this->router->generate('sylius_admin_product_variant_update', [
-			'id' => $clonedEntity->getId(),
-			'productId' => $product->getId(),
-		]));
-	}
+        $message = $this->translator->trans('mango-sylius.admin.product.success');
+        $this->flashBag->add('success', $message);
+
+        return new RedirectResponse($this->router->generate('sylius_admin_product_update', ['id' => $clonedEntity->getId()]));
+    }
+
+    public function duplicateProductVariant(int $id): RedirectResponse
+    {
+        $entity = $this->productVariantRepository->find($id);
+        if ($entity === null) {
+            throw new NotFoundException();
+        }
+
+        assert($entity instanceof ProductVariantInterface);
+        $product = $entity->getProduct();
+        assert($product instanceof ProductInterface);
+        $clonedEntity = $this->productDuplicator->duplicateProductVariant($product, $entity);
+
+        $event = new GenericEvent($clonedEntity);
+        $this->eventDispatcher->dispatch($event, 'mango-sylius-extended-channels.duplicate.product-variant.before-persist');
+        $this->productVariantRepository->add($clonedEntity);
+        $this->eventDispatcher->dispatch($event, 'mango-sylius-extended-channels.duplicate.product-variant.after-persist');
+
+        $message = $this->translator->trans('mango-sylius.admin.product_variant.success');
+        $this->flashBag->add('success', $message);
+
+        return new RedirectResponse($this->router->generate('sylius_admin_product_variant_update', [
+            'id' => $clonedEntity->getId(),
+            'productId' => $product->getId(),
+        ]));
+    }
 }

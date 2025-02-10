@@ -13,43 +13,44 @@ use Symfony\Component\Form\FormEvents;
 
 final class AddCodeFormSubscriber implements EventSubscriberInterface
 {
-	/** @var string */
-	private $type;
+    private string $type;
 
-	/** @var array */
-	private $options;
+    /** @var array<string, mixed> */
+    private array $options;
 
-	/**
-	 * @param string $type
-	 */
-	public function __construct(?string $type = null, array $options = [])
-	{
-		$this->type = $type ?? TextType::class;
-		$this->options = $options;
-	}
+    /**
+     * @param array<string, mixed> $options
+     */
+    public function __construct(
+        ?string $type = null,
+        array $options = [],
+    ) {
+        $this->type = $type ?? TextType::class;
+        $this->options = $options;
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public static function getSubscribedEvents(): array
-	{
-		return [
-			FormEvents::PRE_SET_DATA => 'preSetData',
-		];
-	}
+    /**
+     * @inheritdoc
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            FormEvents::PRE_SET_DATA => 'preSetData',
+        ];
+    }
 
-	public function preSetData(FormEvent $event): void
-	{
-		$resource = $event->getData();
+    public function preSetData(FormEvent $event): void
+    {
+        $resource = $event->getData();
 
-		if (!($resource instanceof CodeAwareInterface) && null !== $resource) {
-			throw new UnexpectedTypeException($resource, CodeAwareInterface::class);
-		}
+        if (!($resource instanceof CodeAwareInterface) && null !== $resource) {
+            throw new UnexpectedTypeException($resource, CodeAwareInterface::class);
+        }
 
-		$form = $event->getForm();
-		$form->add('code', $this->type, array_merge(
-			['label' => 'sylius.ui.code'],
-			$this->options
-		));
-	}
+        $form = $event->getForm();
+        $form->add('code', $this->type, array_merge(
+            ['label' => 'sylius.ui.code'],
+            $this->options,
+        ));
+    }
 }

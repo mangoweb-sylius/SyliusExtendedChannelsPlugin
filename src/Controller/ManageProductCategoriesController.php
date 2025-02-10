@@ -19,222 +19,224 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\RouterInterface;
-use Twig\Environment;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Twig\Environment;
 
 class ManageProductCategoriesController
 {
-	/**
-	 * @var RouterInterface
-	 */
-	private $router;
-	/**
-	 * @var FlashBagInterface
-	 */
-	private $flashBag;
-	/**
-	 * @var TranslatorInterface
-	 */
-	private $translator;
-	/**
-	 * @var ProductRepositoryInterface
-	 */
-	private $productRepository;
+    /** @var RouterInterface */
+    private $router;
 
-	/** @var Environment */
-	private $twig;
+    /** @var FlashBagInterface */
+    private $flashBag;
 
-	/**
-	 * @var EntityManagerInterface
-	 */
-	private $entityManager;
+    /** @var TranslatorInterface */
+    private $translator;
 
-	/**
-	 * @var FormFactoryInterface
-	 */
-	private $formFactory;
+    /** @var ProductRepositoryInterface */
+    private $productRepository;
 
-	/**
-	 * @var EventDispatcherInterface
-	 */
-	private $eventDispatcher;
-	/**
-	 * @var ProductFactoryInterface
-	 */
-	private $productFactory;
-	/**
-	 * @var FactoryInterface
-	 */
-	private $productTaxonFactory;
+    /** @var Environment */
+    private $twig;
 
-	public function __construct(
-		TranslatorInterface $translator,
-		FlashBagInterface $flashBag,
-		RouterInterface $router,
-		ProductRepositoryInterface $productRepository,
-		Environment $twig,
-		EntityManagerInterface $entityManager,
-		FormFactoryInterface $formFactory,
-		EventDispatcherInterface $eventDispatcher,
-		ProductFactoryInterface $productFactory,
-		FactoryInterface $productTaxonFactory
-	) {
-		$this->router = $router;
-		$this->flashBag = $flashBag;
-		$this->translator = $translator;
-		$this->productRepository = $productRepository;
-		$this->twig = $twig;
-		$this->entityManager = $entityManager;
-		$this->formFactory = $formFactory;
-		$this->eventDispatcher = $eventDispatcher;
-		$this->productFactory = $productFactory;
-		$this->productTaxonFactory = $productTaxonFactory;
-	}
+    /** @var EntityManagerInterface */
+    private $entityManager;
 
-	public function bulkManageProductCategories(Request $request): Response
-	{
-		/** @var array<int> $productIds */
-		$productIds = array_filter(explode(',', $request->get('bulkProductsIds', [])));
-		assert(count($productIds) > 0);
+    /** @var FormFactoryInterface */
+    private $formFactory;
 
-		$dummyProduct = $this->productFactory->createNew();
-		assert($dummyProduct instanceof ProductInterface);
-		$form = $this->formFactory->create(BulkManageProductCategoriesType::class, $dummyProduct);
-		$form->handleRequest($request);
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
 
-		if ($form->isSubmitted()) {
-			$this->manageProducts($request, $dummyProduct, $productIds);
+    /** @var ProductFactoryInterface */
+    private $productFactory;
 
-			$message = $this->translator->trans('mango-sylius.admin.manage_product_categories.saved');
-			$this->flashBag->add('success', $message);
+    /** @var FactoryInterface */
+    private $productTaxonFactory;
 
-			// Eg. for update products in elasticsearch
-			$event = new GenericEvent($productIds);
-			$this->eventDispatcher->dispatch('mango-sylius-extended-channels.products.after_bulk_categories', $event);
+    public function __construct(
+        TranslatorInterface $translator,
+        FlashBagInterface $flashBag,
+        RouterInterface $router,
+        ProductRepositoryInterface $productRepository,
+        Environment $twig,
+        EntityManagerInterface $entityManager,
+        FormFactoryInterface $formFactory,
+        EventDispatcherInterface $eventDispatcher,
+        ProductFactoryInterface $productFactory,
+        FactoryInterface $productTaxonFactory,
+    ) {
+        $this->router = $router;
+        $this->flashBag = $flashBag;
+        $this->translator = $translator;
+        $this->productRepository = $productRepository;
+        $this->twig = $twig;
+        $this->entityManager = $entityManager;
+        $this->formFactory = $formFactory;
+        $this->eventDispatcher = $eventDispatcher;
+        $this->productFactory = $productFactory;
+        $this->productTaxonFactory = $productTaxonFactory;
+    }
 
-			return new RedirectResponse($this->router->generate('sylius_admin_product_index'));
-		}
+    public function bulkManageProductCategories(Request $request): Response
+    {
+        $bulkProductsIds = $request->get('bulkProductsIds', '');
+        assert(is_string($bulkProductsIds));
+        /** @var array<int> $productIds */
+        $productIds = array_filter(explode(',', $bulkProductsIds));
+        assert(count($productIds) > 0);
 
-		return new Response($this->twig->render('@MangoSyliusExtendedChannelsPlugin/ManageProductCategories/form.html.twig', [
-			'form' => $form->createView(),
-			'productIds' => implode(',', $productIds),
-			'productIdsCount' => count($productIds),
-			'paths' => [
-				'cancel' => $this->router->generate('sylius_admin_product_index'),
-			],
-		]));
-	}
+        $dummyProduct = $this->productFactory->createNew();
+        assert($dummyProduct instanceof ProductInterface);
+        $form = $this->formFactory->create(BulkManageProductCategoriesType::class, $dummyProduct);
+        $form->handleRequest($request);
 
-	/**
-	 * @param array<int> $productIds
-	 */
-	protected function manageProducts(Request $request, ProductInterface $dummyProduct, array $productIds): void
-	{
-		$mainTaxonAction = $request->request->get('main_taxon_action');
-		$taxonAction = $request->request->get('taxons_action');
+        if ($form->isSubmitted()) {
+            $this->manageProducts($request, $dummyProduct, $productIds);
 
-		assert($mainTaxonAction !== null);
-		assert($taxonAction !== null);
+            $message = $this->translator->trans('mango-sylius.admin.manage_product_categories.saved');
+            $this->flashBag->add('success', $message);
 
-		foreach ($productIds as $productId) {
-			$product = $this->productRepository->find($productId);
-			assert($product instanceof ProductInterface);
+            // Eg. for update products in elasticsearch
+            $event = new GenericEvent($productIds);
+            $this->eventDispatcher->dispatch($event, 'mango-sylius-extended-channels.products.after_bulk_categories');
 
-			$this->manageMainTaxon($product, $dummyProduct, $mainTaxonAction);
-			$this->manageCategories($product, $dummyProduct, $taxonAction);
-		}
+            return new RedirectResponse($this->router->generate('sylius_admin_product_index'));
+        }
 
-		$this->entityManager->flush();
-	}
+        return new Response($this->twig->render('@MangoSyliusExtendedChannelsPlugin/ManageProductCategories/form.html.twig', [
+            'form' => $form->createView(),
+            'productIds' => implode(',', $productIds),
+            'productIdsCount' => count($productIds),
+            'paths' => [
+                'cancel' => $this->router->generate('sylius_admin_product_index'),
+            ],
+        ]));
+    }
 
-	protected function manageMainTaxon(ProductInterface $product, ProductInterface $dummyProduct, string $action): void
-	{
-		if ($action === 'replace') {
-			$product->setMainTaxon($dummyProduct->getMainTaxon());
+    /**
+     * @param array<int> $productIds
+     */
+    protected function manageProducts(
+        Request $request,
+        ProductInterface $dummyProduct,
+        array $productIds,
+    ): void {
+        $mainTaxonAction = $request->request->get('main_taxon_action');
+        $taxonAction = $request->request->get('taxons_action');
 
-			return;
-		}
+        assert(is_string($mainTaxonAction));
+        assert(is_string($taxonAction));
 
-		if ($action === 'add') {
-			if ($product->getMainTaxon() === null) {
-				$product->setMainTaxon($dummyProduct->getMainTaxon());
-			}
+        foreach ($productIds as $productId) {
+            $product = $this->productRepository->find($productId);
+            assert($product instanceof ProductInterface);
 
-			return;
-		}
+            $this->manageMainTaxon($product, $dummyProduct, $mainTaxonAction);
+            $this->manageCategories($product, $dummyProduct, $taxonAction);
+        }
 
-		if ($action === 'remove') {
-			if ($product->getMainTaxon() === $dummyProduct->getMainTaxon()) {
-				$product->setMainTaxon(null);
-			}
+        $this->entityManager->flush();
+    }
 
-			return;
-		}
+    protected function manageMainTaxon(
+        ProductInterface $product,
+        ProductInterface $dummyProduct,
+        string $action,
+    ): void {
+        if ($action === 'replace') {
+            $product->setMainTaxon($dummyProduct->getMainTaxon());
 
-		if ($action === 'remove_all') {
-			$product->setMainTaxon(null);
+            return;
+        }
 
-			return;
-		}
-	}
+        if ($action === 'add') {
+            if ($product->getMainTaxon() === null) {
+                $product->setMainTaxon($dummyProduct->getMainTaxon());
+            }
 
-	protected function manageCategories(ProductInterface $product, ProductInterface $dummyProduct, string $action): void
-	{
-		if ($action === 'replace') {
-			$product->getProductTaxons()->clear();
-			$this->entityManager->flush();
-			$this->addTaxon($product, $dummyProduct);
+            return;
+        }
 
-			return;
-		}
+        if ($action === 'remove') {
+            if ($product->getMainTaxon() === $dummyProduct->getMainTaxon()) {
+                $product->setMainTaxon(null);
+            }
 
-		if ($action === 'add') {
-			$this->addTaxon($product, $dummyProduct);
+            return;
+        }
 
-			return;
-		}
+        if ($action === 'remove_all') {
+            $product->setMainTaxon(null);
 
-		if ($action === 'remove') {
-			$this->removeTaxon($product, $dummyProduct);
+            return;
+        }
+    }
 
-			return;
-		}
+    protected function manageCategories(
+        ProductInterface $product,
+        ProductInterface $dummyProduct,
+        string $action,
+    ): void {
+        if ($action === 'replace') {
+            $product->getProductTaxons()->clear();
+            $this->entityManager->flush();
+            $this->addTaxon($product, $dummyProduct);
 
-		if ($action === 'remove_all') {
-			$product->getProductTaxons()->clear();
+            return;
+        }
 
-			return;
-		}
-	}
+        if ($action === 'add') {
+            $this->addTaxon($product, $dummyProduct);
 
-	protected function addTaxon(ProductInterface $product, ProductInterface $dummyProduct): void
-	{
-		foreach ($dummyProduct->getProductTaxons() as $productTaxon) {
-			$taxon = $productTaxon->getTaxon();
-			if ($taxon !== null && !$product->hasTaxon($taxon)) {
-				$dummyProductTaxon = $this->productTaxonFactory->createNew();
-				assert($dummyProductTaxon instanceof ProductTaxonInterface);
-				$dummyProductTaxon->setProduct($product);
-				$dummyProductTaxon->setTaxon($taxon);
+            return;
+        }
 
-				$product->addProductTaxon($dummyProductTaxon);
-			}
-		}
-	}
+        if ($action === 'remove') {
+            $this->removeTaxon($product, $dummyProduct);
 
-	protected function removeTaxon(ProductInterface $product, ProductInterface $dummyProduct): void
-	{
-		foreach ($dummyProduct->getProductTaxons() as $productTaxon) {
-			$taxon = $productTaxon->getTaxon();
-			if ($taxon !== null && $product->hasTaxon($taxon)) {
-				foreach ($product->getProductTaxons() as $pt) {
-					if ($pt->getTaxon() === $taxon) {
-						$product->removeProductTaxon($pt);
+            return;
+        }
 
-						break;
-					}
-				}
-			}
-		}
-	}
+        if ($action === 'remove_all') {
+            $product->getProductTaxons()->clear();
+
+            return;
+        }
+    }
+
+    protected function addTaxon(
+        ProductInterface $product,
+        ProductInterface $dummyProduct,
+    ): void {
+        foreach ($dummyProduct->getProductTaxons() as $productTaxon) {
+            $taxon = $productTaxon->getTaxon();
+            if ($taxon !== null && !$product->hasTaxon($taxon)) {
+                $dummyProductTaxon = $this->productTaxonFactory->createNew();
+                assert($dummyProductTaxon instanceof ProductTaxonInterface);
+                $dummyProductTaxon->setProduct($product);
+                $dummyProductTaxon->setTaxon($taxon);
+
+                $product->addProductTaxon($dummyProductTaxon);
+            }
+        }
+    }
+
+    protected function removeTaxon(
+        ProductInterface $product,
+        ProductInterface $dummyProduct,
+    ): void {
+        foreach ($dummyProduct->getProductTaxons() as $productTaxon) {
+            $taxon = $productTaxon->getTaxon();
+            if ($taxon !== null && $product->hasTaxon($taxon)) {
+                foreach ($product->getProductTaxons() as $pt) {
+                    if ($pt->getTaxon() === $taxon) {
+                        $product->removeProductTaxon($pt);
+
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }

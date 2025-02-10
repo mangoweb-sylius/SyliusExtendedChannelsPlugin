@@ -1,0 +1,20 @@
+includes:
+    - vendor/phpstan/phpstan-doctrine/extension.neon
+    - vendor/phpstan/phpstan-symfony/extension.neon
+
+parameters:
+    symfony:
+        container_xml_path: tests/Application/var/cache/test/Tests_MangoSylius_ExtendedChannelsPlugin_KernelTestDebugContainer.xml
+
+    excludePaths:
+        # Too slow
+        - 'src/DependencyInjection/Configuration.php'
+
+        # Test dependencies
+        - '*/tests/Application/var/*'
+
+        - 'src/Migrations/'
+        - 'tests/'
+
+    ignoreErrors:
+        - identifier: missingType.generics
