@@ -14,20 +14,16 @@ use Symfony\Component\Validator\Constraints\Valid;
 
 final class HelloBarType extends AbstractResourceType
 {
-    /** @var array<string> */
-    private array $helloBarTypes;
-
     /**
      * @param array<string> $helloBarTypes
      * @param array<string> $validationGroups
      */
     public function __construct(
-        array $helloBarTypes,
+        private array $helloBarTypes,
         string $dataClass,
         array $validationGroups = [],
     ) {
         parent::__construct($dataClass, $validationGroups);
-        $this->helloBarTypes = $helloBarTypes;
     }
 
     /**

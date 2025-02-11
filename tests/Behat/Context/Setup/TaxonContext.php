@@ -10,25 +10,18 @@ use MangoSylius\ExtendedChannelsPlugin\Model\ExternalLinkTaxonInterface;
 
 final class TaxonContext implements Context
 {
-	/**
-	 * @var EntityManagerInterface
-	 */
-	private $entityManager;
+    public function __construct(private EntityManagerInterface $entityManager)
+    {
+    }
 
-	public function __construct(
-		EntityManagerInterface $entityManager
-	) {
-		$this->entityManager = $entityManager;
-	}
+    /**
+     * @Given /^(this taxon) is marked as external link$/
+     */
+    public function thisTaxonIsMarkedAsExternalLink(ExternalLinkTaxonInterface $taxon)
+    {
+        $taxon->setExternalLink(true);
 
-	/**
-	 * @Given /^(this taxon) is marked as external link$/
-	 */
-	public function thisTaxonIsMarkedAsExternalLink(ExternalLinkTaxonInterface $taxon)
-	{
-		$taxon->setExternalLink(true);
-
-		$this->entityManager->persist($taxon);
-		$this->entityManager->flush();
-	}
+        $this->entityManager->persist($taxon);
+        $this->entityManager->flush();
+    }
 }

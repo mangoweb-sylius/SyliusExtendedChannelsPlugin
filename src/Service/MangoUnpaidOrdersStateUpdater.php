@@ -18,31 +18,15 @@ use Sylius\Component\Payment\Model\PaymentInterface;
 
 class MangoUnpaidOrdersStateUpdater implements UnpaidOrdersStateUpdaterInterface
 {
-    /** @var OrderRepositoryInterface */
-    private $orderRepository;
-
-    /** @var Factory */
-    private $stateMachineFactory;
-
-    /** @var string */
-    private $expirationPeriod;
-
-    /** @var string[] */
-    private $expirationMethodCodes;
-
     /**
      * @param array<string> $expirationMethodCodes
      */
     public function __construct(
-        OrderRepositoryInterface $orderRepository,
-        Factory $stateMachineFactory,
-        string $expirationPeriod,
-        array $expirationMethodCodes,
+        private OrderRepositoryInterface $orderRepository,
+        private Factory $stateMachineFactory,
+        private string $expirationPeriod,
+        private array $expirationMethodCodes,
     ) {
-        $this->orderRepository = $orderRepository;
-        $this->stateMachineFactory = $stateMachineFactory;
-        $this->expirationPeriod = $expirationPeriod;
-        $this->expirationMethodCodes = $expirationMethodCodes;
     }
 
     public function cancel(): void

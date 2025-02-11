@@ -19,43 +19,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DuplicateController
 {
-    /** @var RouterInterface */
-    private $router;
-
-    /** @var FlashBagInterface */
-    private $flashBag;
-
-    /** @var TranslatorInterface */
-    private $translator;
-
-    /** @var ProductRepositoryInterface */
-    private $productRepository;
-
-    /** @var ProductVariantRepositoryInterface */
-    private $productVariantRepository;
-
-    /** @var ProductDuplicatorInterface */
-    private $productDuplicator;
-
-    /** @var EventDispatcherInterface */
-    private $eventDispatcher;
-
     public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        TranslatorInterface $translator,
-        FlashBagInterface $flashBag,
-        RouterInterface $router,
-        ProductRepositoryInterface $productRepository,
-        ProductVariantRepositoryInterface $productVariantRepository,
-        ProductDuplicatorInterface $productDuplicator,
+        private EventDispatcherInterface $eventDispatcher,
+        private TranslatorInterface $translator,
+        private FlashBagInterface $flashBag,
+        private RouterInterface $router,
+        private ProductRepositoryInterface $productRepository,
+        private ProductVariantRepositoryInterface $productVariantRepository,
+        private ProductDuplicatorInterface $productDuplicator,
     ) {
-        $this->router = $router;
-        $this->flashBag = $flashBag;
-        $this->translator = $translator;
-        $this->productRepository = $productRepository;
-        $this->productVariantRepository = $productVariantRepository;
-        $this->productDuplicator = $productDuplicator;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function duplicateProduct(int $id): RedirectResponse

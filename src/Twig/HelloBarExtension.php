@@ -12,18 +12,10 @@ use Twig\TwigFunction;
 
 class HelloBarExtension extends AbstractExtension
 {
-    /** @var ChannelContextInterface */
-    private $channelContext;
-
-    /** @var HelloBarRepositoryInterface */
-    private $helloBarRepository;
-
     public function __construct(
-        ChannelContextInterface $channelContext,
-        HelloBarRepositoryInterface $helloBarRepository,
+        private ChannelContextInterface $channelContext,
+        private HelloBarRepositoryInterface $helloBarRepository,
     ) {
-        $this->channelContext = $channelContext;
-        $this->helloBarRepository = $helloBarRepository;
     }
 
     /**

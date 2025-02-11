@@ -10,24 +10,20 @@ use Webmozart\Assert\Assert;
 
 final class ExchangeRatesContext implements Context
 {
-	/**
-	 * @var ExchangeRateRepositoryInterface
-	 */
-	private $exchangeRateRepository;
+    public function __construct(private ExchangeRateRepositoryInterface $exchangeRateRepository)
+    {
+    }
 
-	public function __construct(
-		ExchangeRateRepositoryInterface $exchangeRateRepository
-	) {
-		$this->exchangeRateRepository = $exchangeRateRepository;
-	}
-
-	/**
-	 * @Given the exchange rate of :currencyCode1 to :currencyCode2 should be :ration
-	 */
-	public function theExchangeRateOfToShouldBe(string $currencyCode1, string $currencyCode2, float $ration)
-	{
-		$exchangeRate = $this->exchangeRateRepository->findOneWithCurrencyPair($currencyCode1, $currencyCode2);
-		assert($exchangeRate !== null);
-		Assert::true($exchangeRate->getRatio() === $ration);
-	}
+    /**
+     * @Given the exchange rate of :currencyCode1 to :currencyCode2 should be :ration
+     */
+    public function theExchangeRateOfToShouldBe(
+        string $currencyCode1,
+        string $currencyCode2,
+        float  $ration,
+    ) {
+        $exchangeRate = $this->exchangeRateRepository->findOneWithCurrencyPair($currencyCode1, $currencyCode2);
+        assert($exchangeRate !== null);
+        Assert::true($exchangeRate->getRatio() === $ration);
+    }
 }

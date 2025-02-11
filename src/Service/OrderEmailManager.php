@@ -13,18 +13,10 @@ use Sylius\Component\Mailer\Sender\SenderInterface;
 
 final class OrderEmailManager implements OrderEmailManagerInterface
 {
-    /** @var SenderInterface */
-    private $emailSender;
-
-    /** @var ChannelContextInterface */
-    private $channelContext;
-
     public function __construct(
-        SenderInterface $emailSender,
-        ChannelContextInterface $channelContext,
+        private SenderInterface $emailSender,
+        private ChannelContextInterface $channelContext,
     ) {
-        $this->emailSender = $emailSender;
-        $this->channelContext = $channelContext;
     }
 
     public function sendConfirmationEmail(OrderInterface $order): void

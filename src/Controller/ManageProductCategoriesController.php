@@ -24,58 +24,18 @@ use Twig\Environment;
 
 class ManageProductCategoriesController
 {
-    /** @var RouterInterface */
-    private $router;
-
-    /** @var FlashBagInterface */
-    private $flashBag;
-
-    /** @var TranslatorInterface */
-    private $translator;
-
-    /** @var ProductRepositoryInterface */
-    private $productRepository;
-
-    /** @var Environment */
-    private $twig;
-
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
-    /** @var FormFactoryInterface */
-    private $formFactory;
-
-    /** @var EventDispatcherInterface */
-    private $eventDispatcher;
-
-    /** @var ProductFactoryInterface */
-    private $productFactory;
-
-    /** @var FactoryInterface */
-    private $productTaxonFactory;
-
     public function __construct(
-        TranslatorInterface $translator,
-        FlashBagInterface $flashBag,
-        RouterInterface $router,
-        ProductRepositoryInterface $productRepository,
-        Environment $twig,
-        EntityManagerInterface $entityManager,
-        FormFactoryInterface $formFactory,
-        EventDispatcherInterface $eventDispatcher,
-        ProductFactoryInterface $productFactory,
-        FactoryInterface $productTaxonFactory,
+        private TranslatorInterface $translator,
+        private FlashBagInterface $flashBag,
+        private RouterInterface $router,
+        private ProductRepositoryInterface $productRepository,
+        private Environment $twig,
+        private EntityManagerInterface $entityManager,
+        private FormFactoryInterface $formFactory,
+        private EventDispatcherInterface $eventDispatcher,
+        private ProductFactoryInterface $productFactory,
+        private FactoryInterface $productTaxonFactory,
     ) {
-        $this->router = $router;
-        $this->flashBag = $flashBag;
-        $this->translator = $translator;
-        $this->productRepository = $productRepository;
-        $this->twig = $twig;
-        $this->entityManager = $entityManager;
-        $this->formFactory = $formFactory;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->productFactory = $productFactory;
-        $this->productTaxonFactory = $productTaxonFactory;
     }
 
     public function bulkManageProductCategories(Request $request): Response

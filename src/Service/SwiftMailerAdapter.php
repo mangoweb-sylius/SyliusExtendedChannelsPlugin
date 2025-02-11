@@ -17,16 +17,12 @@ class SwiftMailerAdapter extends AbstractAdapter
     /** @var \Swift_Mailer */
     protected $mailer;
 
-    /** @var LoggerInterface */
-    private $logger;
-
     public function __construct(
         \Swift_Mailer $mailer,
-        LoggerInterface $logger,
+        private LoggerInterface $logger,
         EventDispatcherInterface $dispatcher,
     ) {
         $this->mailer = $mailer;
-        $this->logger = $logger;
         $this->setEventDispatcher($dispatcher);
     }
 
@@ -67,11 +63,7 @@ class SwiftMailerAdapter extends AbstractAdapter
             $this->mailer->send($message);
         } catch (\Swift_TransportException $err) {
             $this->logger->warning($err->getMessage());
-        } catch (\Swift_RfcComplianceException $err) {
-            $this->logger->error($err->getMessage());
-        } catch (\Swift_SwiftException $err) {
-            $this->logger->error($err->getMessage());
-        } catch (\Throwable $err) {
+        } catch (\Swift_RfcComplianceException|\Swift_SwiftException|\Throwable $err) {
             $this->logger->error($err->getMessage());
         }
 
