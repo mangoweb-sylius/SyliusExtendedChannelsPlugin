@@ -8,9 +8,8 @@ cd "$(dirname "$DIR")"
 
 set -x
 tests/Application/bin/console cache:warmup --no-optional-warmers
-XDEBUG_MODE=off vendor/bin/phpstan analyse \
+XDEBUG_MODE=off php -d memory_limit=1G vendor/bin/phpstan analyse \
     -v --error-format=table \
-    --memory-limit 1G \
     --debug \
     --level max \
     src tests \
