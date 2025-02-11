@@ -17,7 +17,7 @@ services:
         autoconfigure: false
         public: true
         parent: sylius.email_sender.adapter.abstract
-        class: MangoSylius\ExtendedChannelsPlugin\Service\SwiftMailerAdapter
+        class: MangoSylius\ExtendedChannelsPlugin\Service\MailerAdapter
         arguments:
             $dispatcher: '@event_dispatcher'
             $mailer: '@mailer'
@@ -119,7 +119,6 @@ services:
         arguments:
             $eventDispatcher: '@event_dispatcher'
             $router: '@router'
-            $flashBag: '@session.flash_bag'
             $translator: '@translator'
             $productRepository: '@sylius.repository.product'
             $productVariantRepository: '@sylius.repository.product_variant'
@@ -129,7 +128,6 @@ services:
         public: true
         arguments:
             $router: '@router'
-            $flashBag: '@session.flash_bag'
             $translator: '@translator'
             $productRepository: '@sylius.repository.product'
             $twig: '@twig'

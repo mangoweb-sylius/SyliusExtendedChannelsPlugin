@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Domain;
 
 use Behat\Behat\Context\Context;
+use Sylius\Behat\Service\Checker\EmailCheckerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Test\Services\EmailCheckerInterface;
 use Webmozart\Assert\Assert;
 
 final class EmailContext implements Context

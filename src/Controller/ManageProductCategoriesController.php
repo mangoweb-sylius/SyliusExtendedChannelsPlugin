@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MangoSylius\ExtendedChannelsPlugin\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
+use MangoSylius\ExtendedChannelsPlugin\Controller\Partials\GetFlashBagTrait;
 use MangoSylius\ExtendedChannelsPlugin\Form\Type\BulkManageProductCategoriesType;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductTaxonInterface;
@@ -17,16 +18,16 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 class ManageProductCategoriesController
 {
+    use GetFlashBagTrait;
+
     public function __construct(
         private TranslatorInterface $translator,
-        private FlashBagInterface $flashBag,
         private RouterInterface $router,
         private ProductRepositoryInterface $productRepository,
         private Environment $twig,
@@ -55,7 +56,7 @@ class ManageProductCategoriesController
             $this->manageProducts($request, $dummyProduct, $productIds);
 
             $message = $this->translator->trans('mango-sylius.admin.manage_product_categories.saved');
-            $this->flashBag->add('success', $message);
+            $this->getFlashBag($request)->add('success', $message);
 
             // Eg. for update products in elasticsearch
             $event = new GenericEvent($productIds);

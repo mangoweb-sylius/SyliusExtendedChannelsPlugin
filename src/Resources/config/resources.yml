@@ -74,3 +74,11 @@ sylius_grid:
                         type: update
                     delete:
                         type: delete
+
+sylius_ui:
+    events:
+        sylius.admin.channel.form.first_column_content:
+            blocks:
+                general_host:
+                    template: '@MangoSyliusExtendedChannelsPlugin/Channel/extendedChannelForm.html.twig'
+                    priority: 10
