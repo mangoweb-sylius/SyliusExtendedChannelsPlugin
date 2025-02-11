@@ -57,7 +57,7 @@ jobs:
 
             # COMPOSER PREFER LOWEST (oldest possible) #
             # has to delete vendor for next test with different libraries version to avoid Composer error 'Failed to extract...' if vendor dir cache does not exist
-            -   run: rm -fr vendor composer.lock
+            -   run: rm -fr composer.lock
             -   run: composer update --no-interaction --prefer-lowest --no-plugins
             -   run: yarn --cwd tests/Application install
             -   run: yarn --cwd tests/Application build

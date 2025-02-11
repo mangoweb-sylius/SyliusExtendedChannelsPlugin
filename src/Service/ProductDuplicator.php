@@ -311,7 +311,9 @@ class ProductDuplicator implements ProductDuplicatorInterface
         $temp = tmpfile();
         fwrite($temp, (string) $binaryFile->getContent());
         fseek($temp, 0);
-        $newEntity->setFile(new UploadedFile(stream_get_meta_data($temp)['uri'], $image->getPath()));
+        /** @var array{uri: string} $metadata */
+        $metadata = stream_get_meta_data($temp);
+        $newEntity->setFile(new UploadedFile($metadata['uri'], $image->getPath()));
         $this->imageUploader->upload($newEntity);
         fclose($temp);
 
