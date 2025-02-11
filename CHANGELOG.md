@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## v1.5.0 (2025-02-11)
+
+- Add support to Sylius 1.12, 1.13
+- Drop support for Sylius 1.11
+- BC ⚠️ on update
+  - remove `{{ include('@MangoSyliusExtendedChannelsPlugin/Channel/extendedChannelForm.html.twig') }}` from `@SyliusAdmin/Channel/_form.html.twig` (and probably delete your copy of `@SyliusAdmin/Channel/_form.html.twig` at all, if that was the only change)
+  - remove `{{ include('@MangoSyliusExtendedChannelsPlugin/Grid/bulkActions.html.twig') }}` from `@SyliusAdmin/Grid/_default.html.twig` (and probably delete your copy of `@SyliusAdmin/Grid/_default.html.twig` at all, if that was the only change)
+    - replace inner content of `<div class="sylius-grid-nav__bulk"> ... </div>` with `{{ include('@MangoSyliusExtendedChannelsPlugin/Grid/bulkActions.html.twig') }}` in `@SyliusAdmin/Grid/_default.html.twig` 
+
 ## v1.4.0 (2025-02-11)
 
 #### Details

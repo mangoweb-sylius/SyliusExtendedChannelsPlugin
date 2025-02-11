@@ -1,0 +1,2 @@
+imports:
+    - { resource: "../../1.12/packages/framework.yaml" }

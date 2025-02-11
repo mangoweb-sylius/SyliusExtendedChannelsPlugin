@@ -12,8 +12,8 @@ Extended Channels Plugin
     <a href="https://packagist.org/packages/mangoweb-sylius/sylius-extended-channels" title="Version" target="_blank">
         <img src="https://img.shields.io/packagist/v/mangoweb-sylius/sylius-extended-channels.svg" />
     </a>
-    <a href="http://travis-ci.org/mangoweb-sylius/SyliusExtendedChannelsPlugin" title="Build status" target="_blank">
-        <img src="https://img.shields.io/travis/mangoweb-sylius/SyliusExtendedChannelsPlugin/master.svg" />
+    <a href="https://app.circleci.com/pipelines/github/mangoweb-sylius/SyliusExtendedChannelsPlugin" title="Build status" target="_blank">
+        <img src="https://circleci.com/gh/mangoweb-sylius/SyliusExtendedChannelsPlugin.svg?style=shield" />
     </a>
     <br />
     <img src="https://sylius.com/assets/badge-approved-by-sylius.png" alt="Approved by Sylius" width="120"/>
@@ -52,8 +52,8 @@ Extended Channels Plugin
    
 1. Your Entity `Channel` has to implement `\MangoSylius\ExtendedChannelsPlugin\Model\ExtendedChannelInterface`. You can use Trait `MangoSylius\ExtendedChannelsPlugin\Model\ExtendedChannelTrait`.
 1. Your Entity `Taxon` has to implement `\MangoSylius\ExtendedChannelsPlugin\Model\ExternalLinkTaxonInterface`. You can use Trait `MangoSylius\ExtendedChannelsPlugin\Model\ExternalLinkTaxonTrait`.
-1. Include template `{{ include('@MangoSyliusExtendedChannelsPlugin/Channel/extendedChannelForm.html.twig') }}` in `@SyliusAdmin/Channel/_form.html.twig`.
 1. Add `{{ form_row(form.externalLink) }}` to template in `@SyliusAdmin/Taxon/_form.html.twig`.
+1. Replace inner content of `<div class="sylius-grid-nav__bulk"> ... </div>` with `{{ include('@MangoSyliusExtendedChannelsPlugin/Grid/bulkActions.html.twig') }}` in `@SyliusUi/Grid/Body/_navigation.html.twig`.
 1. Replace inner content of `<div class="sylius-grid-nav__bulk"> ... </div>` with `{{ include('@MangoSyliusExtendedChannelsPlugin/Grid/bulkActions.html.twig') }}` in `@SyliusAdmin/Grid/_default.html.twig`.
 1. Add resource to `config/packeges/_sylius.yaml`
 
