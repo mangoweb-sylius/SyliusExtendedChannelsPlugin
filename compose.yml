@@ -2,9 +2,10 @@ services:
     php:
         build: ./.docker/php
         environment:
-            APP_ENV: "test"
+            APP_ENV: "dev"
             DATABASE_URL: "mysql://root:mysql@mysql/sylius_%kernel.environment%?charset=utf8mb4"
-#            DATABASE_URL: "pgsql://root:postgres@postgres/sylius_%kernel.environment%?charset=utf8" # When using postgres
+            #            DATABASE_URL: "pgsql://root:postgres@postgres/sylius_%kernel.environment%?charset=utf8" # When using postgres
+            MAILER_DSN: "smtp://mailhog:1025"
             PHP_DATE_TIMEZONE: "Europe/Prague"
             COMPOSER_HOME: "/tmp"
             YARN_CACHE_FOLDER: "/tmp"
@@ -22,14 +23,13 @@ services:
             PHP_IDE_CONFIG: "serverName=MangoSyliusExtendedChannelsPlugin"
         volumes:
             - ./:/srv/sylius:delegated
-#            - ./.docker/nginx/nginx.conf:/etc/nginx/nginx.conf:delegated
-#            - ./.docker/php/php.ini:/etc/php8/php.ini:delegated
-#            - ./.docker/nginx/nginx.conf:/etc/nginx/nginx.conf:delegated
+        #            - ./.docker/nginx/nginx.conf:/etc/nginx/nginx.conf:delegated
+        #            - ./.docker/php/php.ini:/etc/php8/php.ini:delegated
+        #            - ./.docker/nginx/nginx.conf:/etc/nginx/nginx.conf:delegated
         depends_on:
             - mysql
-#            - postgres
-        networks:
-            - sylius
+            - mailhog
+    #            - postgres
 
     nginx:
         build: ./.docker/nginx
@@ -39,8 +39,6 @@ services:
             - ./:/srv/sylius:delegated
         ports:
             - "${APP_HOST_MAPPING_PORT:-8080}:80"
-        networks:
-            - sylius
 
     mysql:
         image: mysql:8.0
@@ -54,8 +52,12 @@ services:
             # - or extends ports in docker-compose.override.yml
             # To find out used port use `docker ps` and look for PORTS column to see mapped host port, including IP it can be for example 0.0.0.0:32772 which is roughly equivalent to 127.0.0.1:32772 for internal network requests
             - "${MYSQL_HOST_MAPPING_PORT:-0}:3306"
-        networks:
-            - sylius
+
+    mailhog:
+        image: mailhog/mailhog:latest
+        ports:
+            - "${MAILHOG_WEB_PORT:-8025}:8025"  # Web interface
+            - "${MAILHOG_SMTP_PORT:-1025}:1025" # SMTP server
 
 #    postgres:
 #        image: postgres:${POSTGRES_VERSION:-16}-alpine
@@ -72,7 +74,3 @@ services:
 
 # volumes:
 #    database_data:
-
-networks:
-    sylius:
-        driver: bridge

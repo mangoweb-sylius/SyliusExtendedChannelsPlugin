@@ -60,14 +60,14 @@ Extended Channels Plugin
     ```yaml
     imports:
          ...
-         - { resource: "@MangoSyliusExtendedChannelsPlugin/Resources/config/resources.yml" }
+         - { resource: "@MangoSyliusExtendedChannelsPlugin/config/resources.yaml" }
     ```
    
 1. Add routing to `config/_routes.yaml`
 
     ```yaml
     mango_sylius_extended_channels:
-        resource: '@MangoSyliusExtendedChannelsPlugin/Resources/config/routing.yml'
+        resource: '@MangoSyliusExtendedChannelsPlugin/config/routing.yaml'
         prefix: /admin
     ```
 
@@ -88,7 +88,7 @@ Run `src/Migrations/basic-data/timezones-data.sql` for load the timezones table.
   ```
 
 
-* Update Product prices by exchange rates, from `sourceChannel` (primary value, won't be changed) to `targetChannel`. You can run this after the previous command to update by downloaded rates or you can run it without the previous one to update the prices with your custom exchange rates set in Sylius admin.
+* Update Product prices by exchange rates, from `sourceChannel` (primary value, won't be changed) to `targetChannel`. You can run this after the previous command to update by downloaded rates, or you can run it without the previous one to update the prices with your custom exchange rates set in Sylius admin.
 
    ```bash
    mango:product:update-price sourceChannel targetChannel

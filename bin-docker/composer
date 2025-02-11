@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# some value to avoid 'invalid environment variable: ' docker compose error
+APP_ENV_DEFINITION='EMPTY_NOTHINGNESS=NOTHING'
+if [ -n "${APP_ENV:-}" ]; then
+  APP_ENV_DEFINITION="APP_ENV=${APP_ENV}"
+fi
+
+source "${DIR}/_tty.sh"
+
+mkdir -p "$HOME/.composer/cache"
+
+CURRENT_USER_ID=$(id -u)
+CURRENT_GROUP_ID=$(id -g)
+
+if [ "$(docker compose ps php | grep --count Up)" -gt 0 ]; then
+	docker_compose_exec \
+		--user="${CURRENT_USER_ID}:${CURRENT_GROUP_ID}" \
+		--env="${APP_ENV_DEFINITION}" \
+		php composer "$@"
+else
+	docker_compose_run \
+		--entrypoint=php \
+		--user="${CURRENT_USER_ID}:${CURRENT_GROUP_ID}" \
+		php /usr/local/bin/composer "$@"
+fi

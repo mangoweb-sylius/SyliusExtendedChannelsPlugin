@@ -7,4 +7,5 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$(dirname "$DIR")"
 
 set -x
-APP_ENV="test" php vendor/bin/behat "$@"
+
+bin/console --no-interaction doctrine:schema:validate --skip-sync

@@ -7,18 +7,18 @@ workflows:
                     name: php-<<matrix.php_version>>-sylius-<< matrix.sylius_version >>-symfony-<< matrix.symfony_version >>
                     matrix:
                         parameters:
-                            php_version: [ "8.0" ]
                             sylius_version: [ "1.12" ]
                             symfony_version: [ "6.0" ]
+                            php_version: [ "8.0" ]
     sylius1.12-php8.1+:
         jobs:
             -   build:
-                    name: php-<<matrix.php_version>>-sylius-<< matrix.sylius_version >>-symfony-<< matrix.symfony_version >>
+                    name: php-<<matrix.php_version>>-sylius-<<matrix.sylius_version>>-symfony-<<matrix.symfony_version>>
                     matrix:
                         parameters:
                             sylius_version: [ "1.12" ]
-                            php_version: [ "8.1", "8.2", "8.3" ]
                             symfony_version: [ "6.0", "6.1", "6.2", "6.3", "6.4" ]
+                            php_version: [ "8.1", "8.2", "8.3" ]
 
     sylius1.13-php8.1+:
         jobs:
@@ -27,8 +27,8 @@ workflows:
                     matrix:
                         parameters:
                             sylius_version: [ "1.13" ]
-                            php_version: [ "8.1", "8.2", "8.3" ]
                             symfony_version: [ "6.4" ]
+                            php_version: [ "8.1", "8.2", "8.3" ]
 
 jobs:
     build:
@@ -39,6 +39,7 @@ jobs:
                 type: string
             php_version:
                 type: string
+
         docker:
             -   image: webdevops/php-nginx:<< parameters.php_version >>
                 environment:
@@ -60,18 +61,16 @@ jobs:
             -   run: apt-get install -y nodejs yarn mariadb-client netcat-openbsd
             -   run: composer self-update
 
-            # Sylius & Symfony in current matrix versions
             -   run: composer require "sylius/sylius:<< parameters.sylius_version >>.*" --no-interaction --no-update --no-scripts
-            -   run: grep -o -E '"(symfony/[^"]+)"' composer.json | grep -v -E '(symfony/flex|symfony/webpack-encore-bundle)' | xargs printf '%s:<< parameters.symfony_version >>.* '| xargs composer require --no-interaction --no-update
+            -   run: grep -o -E '"(symfony/[^"]+)"' composer.json | grep -v -E '(symfony/flex|symfony/webpack-encore-bundle|symfony/debug-bundle|symfony/web-profiler-bundle)' | xargs printf '%s:<< parameters.symfony_version >>.* ' | xargs composer require --no-interaction --no-update
 
             -   run:
                     name: Wait for database
-                    command: timeout 60s bash -c -- 'while ! nc -z 127.0.0.1 3306; do sleep 0.1; done' \
-                        && timeout 30s bash -c -- 'mysql --user=sylius --password=pass --host=127.0.0.1 --port=3306 -e "exit"'
+                    command: timeout 60s bash -c -- 'while ! nc -z 127.0.0.1 3306; do sleep 0.1; done' && timeout 30s bash -c -- 'mysql --user=sylius --password=pass --host=127.0.0.1 --port=3306 -e "exit"'
 
             # COMPOSER PREFER LOWEST (oldest possible) #
             # has to delete vendor for next test with different libraries version to avoid Composer error 'Failed to extract...' if vendor dir cache does not exist
-            -   run: rm -fr composer.lock
+            -   run: rm -fr vendor composer.lock
             -   run: composer update --no-interaction --prefer-lowest --no-plugins
             -   run: yarn --cwd tests/Application install
             -   run: yarn --cwd tests/Application build

@@ -13,7 +13,7 @@ mangoweb_extended_channels_plugin_hello_bar:
         alias: mangoweb_extended_channels_plugin.hello_bar
         section: admin
         path: hello_bar
-        templates: SyliusAdminBundle:Crud
+        templates: '@SyliusAdmin/Crud'
         redirect: update
         grid: mangoweb_extended_channels_plugin_hello_bar
         vars:

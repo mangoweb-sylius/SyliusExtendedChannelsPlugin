@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+source "${DIR}/_tty.sh"
+
+CURRENT_USER_ID=$(id -u)
+CURRENT_GROUP_ID=$(id -g)
+
+if [ "$(docker compose ps php | grep --count Up)" -gt 0 ]; then
+	docker_compose_exec \
+		--user="${CURRENT_USER_ID}:${CURRENT_GROUP_ID}" \
+		php yarn "$@"
+else
+	docker_compose_run \
+		--entrypoint=yarn \
+		--user="${CURRENT_USER_ID}:${CURRENT_GROUP_ID}" \
+		php "$@"
+fi
