@@ -11,22 +11,17 @@ use Webmozart\Assert\Assert;
 
 final class EmailContext implements Context
 {
-	/**
-	 * @var EmailCheckerInterface
-	 */
-	private $emailChecker;
+    public function __construct(private EmailCheckerInterface $emailChecker)
+    {
+    }
 
-	public function __construct(
-		EmailCheckerInterface $emailChecker
-	) {
-		$this->emailChecker = $emailChecker;
-	}
-
-	/**
-	 * @Then /^an email generated for (order placed by "[^"]+") should be sent to "([^"]+)"$/
-	 */
-	public function anEmailGeneratedForOrderShouldBeSentTo(OrderInterface $order, string $arg2): void
-	{
-		Assert::true($this->emailChecker->hasMessageTo('Your order no. ' . $order->getNumber() . ' has been successfully placed.', $arg2));
-	}
+    /**
+     * @Then /^an email generated for (order placed by "[^"]+") should be sent to "([^"]+)"$/
+     */
+    public function anEmailGeneratedForOrderShouldBeSentTo(
+        OrderInterface $order,
+        string         $arg2,
+    ): void {
+        Assert::true($this->emailChecker->hasMessageTo('Your order no. ' . $order->getNumber() . ' has been successfully placed.', $arg2));
+    }
 }

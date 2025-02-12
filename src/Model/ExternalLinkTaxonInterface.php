@@ -6,7 +6,7 @@ namespace MangoSylius\ExtendedChannelsPlugin\Model;
 
 interface ExternalLinkTaxonInterface
 {
-	public function getExternalLink(): ?bool;
+    public function getExternalLink(): ?bool;
 
-	public function setExternalLink(?bool $externalLink): void;
+    public function setExternalLink(?bool $externalLink): void;
 }

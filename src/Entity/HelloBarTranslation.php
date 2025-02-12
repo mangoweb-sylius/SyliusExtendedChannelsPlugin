@@ -10,61 +10,55 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * @ORM\Entity
+ *
  * @ORM\Table(name="mangoweb_hello_bar_translation")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'mangoweb_hello_bar_translation')]
 class HelloBarTranslation extends AbstractTranslation implements ResourceInterface, HelloBarTranslationInterface
 {
-	/**
-	 * @var int|null
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	protected $id;
+    /**
+     * @ORM\Id
+     *
+     * @ORM\Column(type="integer")
+     *
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected ?int $id = null;
 
-	/**
-	 * @var string|null
-	 * @ORM\Column(type="text", nullable=true)
-	 */
-	protected $title;
+    /** @ORM\Column(type="text", nullable=true) */
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected ?string $title = null;
 
-	/**
-	 * @var string|null
-	 * @ORM\Column(type="text", nullable=true)
-	 */
-	protected $content;
+    /** @ORM\Column(type="text", nullable=true) */
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected ?string $content = null;
 
-	public function getId(): ?int
-	{
-		return $this->id;
-	}
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
-	private function getFallbackTranslation(): HelloBarTranslationInterface
-	{
-		assert($this->translatable instanceof HelloBarInterface);
-		$trans = $this->translatable->getTranslation($this->translatable->getFallbackLocale());
-		assert($trans instanceof HelloBarTranslationInterface);
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
 
-		return $trans;
-	}
+    public function setTitle(?string $title): void
+    {
+        $this->title = $title;
+    }
 
-	public function getTitle(): ?string
-	{
-		return $this->title;
-	}
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
 
-	public function setTitle(?string $title): void
-	{
-		$this->title = $title;
-	}
-
-	public function getContent(): ?string
-	{
-		return $this->content;
-	}
-
-	public function setContent(?string $content): void
-	{
-		$this->content = $content;
-	}
+    public function setContent(?string $content): void
+    {
+        $this->content = $content;
+    }
 }

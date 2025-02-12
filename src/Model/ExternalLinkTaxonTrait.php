@@ -8,19 +8,20 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait ExternalLinkTaxonTrait
 {
-	/**
-	 * @var bool|null
-	 * @ORM\Column(type="boolean", nullable=true)
-	 */
-	public $externalLink = false;
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    public $externalLink = false;
 
-	public function getExternalLink(): ?bool
-	{
-		return $this->externalLink;
-	}
+    public function getExternalLink(): ?bool
+    {
+        return $this->externalLink;
+    }
 
-	public function setExternalLink(?bool $externalLink): void
-	{
-		$this->externalLink = $externalLink;
-	}
+    public function setExternalLink(?bool $externalLink): void
+    {
+        $this->externalLink = $externalLink;
+    }
 }

@@ -14,62 +14,59 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class SwiftMailerAdapter extends AbstractAdapter
 {
-	/** @var \Swift_Mailer */
-	protected $mailer;
+    /** @var \Swift_Mailer */
+    protected $mailer;
 
-	/** @var LoggerInterface */
-	private $logger;
+    public function __construct(
+        \Swift_Mailer $mailer,
+        private LoggerInterface $logger,
+        EventDispatcherInterface $dispatcher,
+    ) {
+        $this->mailer = $mailer;
+        $this->setEventDispatcher($dispatcher);
+    }
 
-	public function __construct(\Swift_Mailer $mailer, LoggerInterface $logger, EventDispatcherInterface $dispatcher)
-	{
-		$this->mailer = $mailer;
-		$this->logger = $logger;
-		$this->setEventDispatcher($dispatcher);
-	}
+    /**
+     * @phpstan-ignore-next-line missingType.iterableValue
+     */
+    public function send(
+        array $recipients,
+        string $senderAddress,
+        string $senderName,
+        RenderedEmail $renderedEmail,
+        EmailInterface $email,
+        array $data,
+        array $attachments = [],
+        array $replyTo = [],
+    ): void {
+        $message = (new \Swift_Message())
+            ->setSubject($renderedEmail->getSubject())
+            ->setFrom([$senderAddress => $senderName])
+            ->setTo($recipients)
+            ->setReplyTo($replyTo);
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function send(
-		array $recipients,
-		string $senderAddress,
-		string $senderName,
-		RenderedEmail $renderedEmail,
-		EmailInterface $email,
-		array $data,
-		array $attachments = [],
-		array $replyTo = []
-	): void {
-		$message = (new \Swift_Message())
-			->setSubject($renderedEmail->getSubject())
-			->setFrom([$senderAddress => $senderName])
-			->setTo($recipients)
-			->setReplyTo($replyTo);
+        $message->setBody($renderedEmail->getBody(), 'text/html');
 
-		$message->setBody($renderedEmail->getBody(), 'text/html');
+        foreach ($attachments as $attachment) {
+            $file = \Swift_Attachment::fromPath($attachment);
 
-		foreach ($attachments as $attachment) {
-			$file = \Swift_Attachment::fromPath($attachment);
+            $message->attach($file);
+        }
 
-			$message->attach($file);
-		}
+        $emailSendEvent = new EmailSendEvent($message, $email, $data, $recipients, $replyTo);
 
-		$emailSendEvent = new EmailSendEvent($message, $email, $data, $recipients, $replyTo);
+        assert($this->dispatcher instanceof EventDispatcherInterface);
 
-		$this->dispatcher->dispatch(SyliusMailerEvents::EMAIL_PRE_SEND, $emailSendEvent);
+        $this->dispatcher->dispatch($emailSendEvent, SyliusMailerEvents::EMAIL_PRE_SEND);
 
-		try {
-			$this->mailer->send($message);
-		} catch (\Swift_TransportException $err) {
-			$this->logger->warning($err->getMessage());
-		} catch (\Swift_RfcComplianceException $err) {
-			$this->logger->error($err->getMessage());
-		} catch (\Swift_SwiftException $err) {
-			$this->logger->error($err->getMessage());
-		} catch (\Throwable $err) {
-			$this->logger->error($err->getMessage());
-		}
+        try {
+            $this->mailer->send($message);
+        } catch (\Swift_TransportException $err) {
+            $this->logger->warning($err->getMessage());
+        } catch (\Swift_RfcComplianceException|\Swift_SwiftException|\Throwable $err) {
+            $this->logger->error($err->getMessage());
+        }
 
-		$this->dispatcher->dispatch(SyliusMailerEvents::EMAIL_POST_SEND, $emailSendEvent);
-	}
+        $this->dispatcher->dispatch($emailSendEvent, SyliusMailerEvents::EMAIL_POST_SEND);
+    }
 }

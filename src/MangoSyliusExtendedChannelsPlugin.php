@@ -9,5 +9,5 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class MangoSyliusExtendedChannelsPlugin extends Bundle
 {
-	use SyliusPluginTrait;
+    use SyliusPluginTrait;
 }

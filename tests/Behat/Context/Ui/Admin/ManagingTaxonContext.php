@@ -10,46 +10,39 @@ use Webmozart\Assert\Assert;
 
 final class ManagingTaxonContext implements Context
 {
-	/**
-	 * @var UpdatePageInterface
-	 */
-	private $updatePage;
+    public function __construct(private UpdatePageInterface $updatePage)
+    {
+    }
 
-	public function __construct(
-		UpdatePageInterface $updatePage
-	) {
-		$this->updatePage = $updatePage;
-	}
+    /**
+     * @When /^I mark (this taxon) as external link$/
+     */
+    public function iMarkTaxonAsExternalLink()
+    {
+        $this->updatePage->markTaxonAsExternalLink();
+    }
 
-	/**
-	 * @When /^I mark (this taxon) as external link$/
-	 */
-	public function iMarkTaxonAsExternalLink()
-	{
-		$this->updatePage->markTaxonAsExternalLink();
-	}
+    /**
+     * @Then /^(this taxon) should be marked as external link$/
+     */
+    public function thisTaxonShouldBeMarkedAsExternalLink()
+    {
+        Assert::true((bool)$this->updatePage->isSingleResourceOnPage('external_link_checkbox'));
+    }
 
-	/**
-	 * @Then /^(this taxon) should be marked as external link$/
-	 */
-	public function thisTaxonShouldBeMarkedAsExternalLink()
-	{
-		Assert::true((bool) $this->updatePage->isSingleResourceOnPage('external_link_checkbox'));
-	}
+    /**
+     * @When /^I unmark (this taxon) as external link$/
+     */
+    public function iUnmarkTaxonAsExternalLink()
+    {
+        $this->updatePage->unmarkTaxonAsExternalLink();
+    }
 
-	/**
-	 * @When /^I unmark (this taxon) as external link$/
-	 */
-	public function iUnmarkTaxonAsExternalLink()
-	{
-		$this->updatePage->unmarkTaxonAsExternalLink();
-	}
-
-	/**
-	 * @Then /^(this taxon) should be unmarked as external link$/
-	 */
-	public function thisTaxonShouldBeUnmarkedAsExternalLink()
-	{
-		Assert::false((bool) $this->updatePage->isSingleResourceOnPage('external_link_checkbox'));
-	}
+    /**
+     * @Then /^(this taxon) should be unmarked as external link$/
+     */
+    public function thisTaxonShouldBeUnmarkedAsExternalLink()
+    {
+        Assert::false((bool)$this->updatePage->isSingleResourceOnPage('external_link_checkbox'));
+    }
 }

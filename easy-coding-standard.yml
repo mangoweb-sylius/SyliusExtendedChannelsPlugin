@@ -3,4 +3,5 @@ imports:
 
 parameters:
     indentation: tab
-
+    exclude_files:
+        - 'tests/Application/var/*'

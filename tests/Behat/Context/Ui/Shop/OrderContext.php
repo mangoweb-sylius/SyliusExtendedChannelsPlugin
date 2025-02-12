@@ -11,31 +11,20 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 
 final class OrderContext implements Context
 {
-	/**
-	 * @var SharedStorageInterface
-	 */
-	private $sharedStorage;
-	/**
-	 * @var EventDispatcherInterface
-	 */
-	private $eventDispatcher;
+    public function __construct(
+        private SharedStorageInterface   $sharedStorage,
+        private EventDispatcherInterface $eventDispatcher,
+    ) {
+    }
 
-	public function __construct(
-		SharedStorageInterface $sharedStorage,
-		EventDispatcherInterface $eventDispatcher
-	) {
-		$this->sharedStorage = $sharedStorage;
-		$this->eventDispatcher = $eventDispatcher;
-	}
+    /**
+     * @Given shop send an email after finished order
+     */
+    public function shopSendAnEmailAfterFinishedOrder()
+    {
+        $order = $this->sharedStorage->get('order');
 
-	/**
-	 * @Given shop send an email after finished order
-	 */
-	public function shopSendAnEmailAfterFinishedOrder()
-	{
-		$order = $this->sharedStorage->get('order');
-
-		$event = new GenericEvent($order);
-		$this->eventDispatcher->dispatch('sylius.order.post_complete', $event);
-	}
+        $event = new GenericEvent($order);
+        $this->eventDispatcher->dispatch('sylius.order.post_complete', $event);
+    }
 }

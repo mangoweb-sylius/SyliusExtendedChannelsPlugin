@@ -13,36 +13,36 @@ use Symfony\Component\Validator\Constraints\Email;
 
 final class ExtendedChannelExtension extends AbstractTypeExtension
 {
-	public function buildForm(FormBuilderInterface $builder, array $options): void
-	{
-		$builder
-			->add('bccEmail', EmailType::class, [
-				'label' => 'mango-sylius.admin.form.channel.bccEmail',
-				'required' => false,
-				'constraints' => [
-					new Email([
-						'groups' => ['sylius'],
-						'checkHost' => true,
-						'checkMX' => true,
-					]),
-				],
-			])
-			->add('contactPhone', EmailType::class, [
-				'label' => 'mango-sylius.admin.form.channel.contactPhone',
-				'required' => false,
-			])
-			->add('timezone', EntityType::class, [
-				'label' => 'mango-sylius.admin.form.channel.timezone',
-				'required' => false,
-				'class' => TimezoneEntity::class,
-			]);
-	}
+    public function buildForm(
+        FormBuilderInterface $builder,
+        array $options,
+    ): void {
+        $builder
+            ->add('bccEmail', EmailType::class, [
+                'label' => 'mango-sylius.admin.form.channel.bccEmail',
+                'required' => false,
+                'constraints' => [
+                    new Email([
+                        'groups' => ['sylius'],
+                    ]),
+                ],
+            ])
+            ->add('contactPhone', EmailType::class, [
+                'label' => 'mango-sylius.admin.form.channel.contactPhone',
+                'required' => false,
+            ])
+            ->add('timezone', EntityType::class, [
+                'label' => 'mango-sylius.admin.form.channel.timezone',
+                'required' => false,
+                'class' => TimezoneEntity::class,
+            ]);
+    }
 
-	/** @return array<int, string> */
-	public static function getExtendedTypes(): array
-	{
-		return [
-			\Sylius\Bundle\ChannelBundle\Form\Type\ChannelType::class,
-		];
-	}
+    /** @return array<int, string> */
+    public static function getExtendedTypes(): array
+    {
+        return [
+            \Sylius\Bundle\ChannelBundle\Form\Type\ChannelType::class,
+        ];
+    }
 }

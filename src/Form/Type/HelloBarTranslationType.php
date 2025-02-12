@@ -11,21 +11,21 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class HelloBarTranslationType extends AbstractResourceType
 {
-	/**
-	 * {@inheritdoc}
-	 */
-	public function buildForm(FormBuilderInterface $builder, array $options): void
-	{
-		$builder
-			->add('title', TextType::class, ['required' => false])
-			->add('content', TextareaType::class, ['required' => false]);
-	}
+    /**
+     * @inheritdoc
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('title', TextType::class, ['required' => false])
+            ->add('content', TextareaType::class, ['required' => false]);
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getBlockPrefix(): string
-	{
-		return 'hello_bar_translation';
-	}
+    /**
+     * @inheritdoc
+     */
+    public function getBlockPrefix(): string
+    {
+        return 'hello_bar_translation';
+    }
 }

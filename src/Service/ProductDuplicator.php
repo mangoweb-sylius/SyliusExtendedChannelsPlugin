@@ -22,342 +22,377 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProductDuplicator implements ProductDuplicatorInterface
 {
-	/**
-	 * @var ImageUploaderInterface
-	 */
-	private $imageUploader;
-	/**
-	 * @var ProductRepositoryInterface
-	 */
-	private $productRepository;
-	/**
-	 * @var ProductVariantRepositoryInterface
-	 */
-	private $productVariantRepository;
-	/**
-	 * @var DataManager
-	 */
-	private $dataManager;
+    /** @var ImageUploaderInterface */
+    private $imageUploader;
 
-	public function __construct(
-		ImageUploaderInterface $imageUploader,
-		ProductVariantRepositoryInterface $productVariantRepository,
-		ProductRepositoryInterface $productRepository,
-		DataManager $dataManager
-	) {
-		$this->imageUploader = $imageUploader;
-		$this->productRepository = $productRepository;
-		$this->productVariantRepository = $productVariantRepository;
-		$this->dataManager = $dataManager;
-	}
+    /** @var ProductRepositoryInterface */
+    private $productRepository;
 
-	public function duplicateProduct(ProductInterface $oldEntity): ProductInterface
-	{
-		$class = get_class($oldEntity);
-		$newEntity = new $class();
-		assert($newEntity instanceof ProductInterface);
+    /** @var ProductVariantRepositoryInterface */
+    private $productVariantRepository;
 
-		assert($oldEntity->getCode() !== null);
+    /** @var DataManager */
+    private $dataManager;
 
-		$newEntity->setCode($this->generateProductCode($oldEntity->getCode()));
+    public function __construct(
+        ImageUploaderInterface $imageUploader,
+        ProductVariantRepositoryInterface $productVariantRepository,
+        ProductRepositoryInterface $productRepository,
+        DataManager $dataManager,
+    ) {
+        $this->imageUploader = $imageUploader;
+        $this->productRepository = $productRepository;
+        $this->productVariantRepository = $productVariantRepository;
+        $this->dataManager = $dataManager;
+    }
 
-		$newEntity->setEnabled(false);
-		$newEntity->setVariantSelectionMethod($oldEntity->getVariantSelectionMethod());
+    public function duplicateProduct(ProductInterface $oldEntity): ProductInterface
+    {
+        $class = get_class($oldEntity);
+        $newEntity = new $class();
+        assert($newEntity instanceof ProductInterface);
 
-		$newEntity->setMainTaxon($oldEntity->getMainTaxon());
+        assert($oldEntity->getCode() !== null);
 
-		$this->duplicateProductAssociations($newEntity, $oldEntity);
-		$this->duplicateProductTranslations($newEntity, $oldEntity);
-		$this->duplicateProductAttributes($newEntity, $oldEntity);
-		$this->duplicateProductChannels($newEntity, $oldEntity);
-		$this->duplicateProductTaxons($newEntity, $oldEntity);
-		$this->duplicateProductImages($newEntity, $oldEntity);
+        $newEntity->setCode($this->generateProductCode($oldEntity->getCode()));
 
-		$this->duplicateProductVariants($newEntity, $oldEntity);
+        $newEntity->setEnabled(false);
+        $newEntity->setVariantSelectionMethod($oldEntity->getVariantSelectionMethod());
 
-		return $newEntity;
-	}
+        $newEntity->setMainTaxon($oldEntity->getMainTaxon());
 
-	public function duplicateProductVariant(ProductInterface $product, ProductVariantInterface $oldEntity): ProductVariantInterface
-	{
-		$class = get_class($oldEntity);
-		$newEntity = new $class();
-		assert($newEntity instanceof ProductVariantInterface);
+        $this->duplicateProductAssociations($newEntity, $oldEntity);
+        $this->duplicateProductTranslations($newEntity, $oldEntity);
+        $this->duplicateProductAttributes($newEntity, $oldEntity);
+        $this->duplicateProductChannels($newEntity, $oldEntity);
+        $this->duplicateProductTaxons($newEntity, $oldEntity);
+        $this->duplicateProductImages($newEntity, $oldEntity);
 
-		$newEntity->setProduct($product);
+        $this->duplicateProductVariants($newEntity, $oldEntity);
 
-		assert($oldEntity->getCode() !== null);
-		$newEntity->setCode($this->generateProductVariantCode($oldEntity->getCode()));
+        return $newEntity;
+    }
 
-		$newEntity->setTracked($oldEntity->isTracked());
-		$newEntity->setDepth($oldEntity->getDepth());
-		$newEntity->setHeight($oldEntity->getHeight());
-		$newEntity->setWidth($oldEntity->getWidth());
-		$newEntity->setWeight($oldEntity->getWeight());
-		$newEntity->setShippingRequired($oldEntity->isShippingRequired());
+    public function duplicateProductVariant(
+        ProductInterface $product,
+        ProductVariantInterface $oldEntity,
+    ): ProductVariantInterface {
+        $class = get_class($oldEntity);
+        $newEntity = new $class();
+        assert($newEntity instanceof ProductVariantInterface);
 
-		$newEntity->setShippingCategory($oldEntity->getShippingCategory());
-		$newEntity->setTaxCategory($oldEntity->getTaxCategory());
+        $newEntity->setProduct($product);
 
-		$this->duplicateProductVariantTranslations($newEntity, $oldEntity);
-		$this->duplicateOptionValues($newEntity, $oldEntity);
-		$this->duplicateChannelPricings($newEntity, $oldEntity);
+        assert($oldEntity->getCode() !== null);
+        $newEntity->setCode($this->generateProductVariantCode($oldEntity->getCode()));
 
-		return $newEntity;
-	}
+        $newEntity->setTracked($oldEntity->isTracked());
+        $newEntity->setDepth($oldEntity->getDepth());
+        $newEntity->setHeight($oldEntity->getHeight());
+        $newEntity->setWidth($oldEntity->getWidth());
+        $newEntity->setWeight($oldEntity->getWeight());
+        $newEntity->setShippingRequired($oldEntity->isShippingRequired());
 
-	public function duplicateProductImages(ProductInterface $newEntity, ProductInterface $oldEntity): void
-	{
-		foreach ($oldEntity->getImages() as $image) {
-			assert($image instanceof ProductImageInterface);
-			$newEntity->addImage($this->duplicateProductImage($newEntity, $image));
-		}
-	}
+        $newEntity->setShippingCategory($oldEntity->getShippingCategory());
+        $newEntity->setTaxCategory($oldEntity->getTaxCategory());
 
-	public function duplicateProductAssociations(ProductInterface $newEntity, ProductInterface $oldEntity): void
-	{
-		foreach ($oldEntity->getAssociations() as $association) {
-			$newEntity->addAssociation($this->duplicateProductAssociation($newEntity, $association));
-		}
-	}
+        $this->duplicateProductVariantTranslations($newEntity, $oldEntity);
+        $this->duplicateOptionValues($newEntity, $oldEntity);
+        $this->duplicateChannelPricings($newEntity, $oldEntity);
 
-	public function duplicateProductAttributes(ProductInterface $newEntity, ProductInterface $oldEntity): void
-	{
-		foreach ($oldEntity->getAttributes() as $attribute) {
-			$newEntity->addAttribute($this->duplicateProductAttribute($attribute));
-		}
-	}
+        return $newEntity;
+    }
 
-	public function duplicateProductTaxons(ProductInterface $newEntity, ProductInterface $oldEntity): void
-	{
-		foreach ($oldEntity->getProductTaxons() as $productTaxon) {
-			$newEntity->addProductTaxon($this->duplicateProductTaxon($newEntity, $productTaxon));
-		}
-	}
+    public function duplicateProductImages(
+        ProductInterface $newEntity,
+        ProductInterface $oldEntity,
+    ): void {
+        foreach ($oldEntity->getImages() as $image) {
+            assert($image instanceof ProductImageInterface);
+            $newEntity->addImage($this->duplicateProductImage($newEntity, $image));
+        }
+    }
 
-	public function duplicateProductTranslations(ProductInterface $newEntity, ProductInterface $oldEntity): void
-	{
-		foreach ($oldEntity->getTranslations() as $translation) {
-			assert($translation instanceof ProductTranslationInterface);
-			$newEntity->addTranslation($this->duplicateProductTranslation($newEntity, $translation));
-		}
-	}
+    public function duplicateProductAssociations(
+        ProductInterface $newEntity,
+        ProductInterface $oldEntity,
+    ): void {
+        foreach ($oldEntity->getAssociations() as $association) {
+            $newEntity->addAssociation($this->duplicateProductAssociation($newEntity, $association));
+        }
+    }
 
-	public function duplicateProductVariants(ProductInterface $newEntity, ProductInterface $oldEntity): void
-	{
-		foreach ($oldEntity->getVariants() as $variant) {
-			assert($variant instanceof ProductVariantInterface);
-			$newEntity->addVariant($this->duplicateProductVariant($newEntity, $variant));
-		}
-	}
+    public function duplicateProductAttributes(
+        ProductInterface $newEntity,
+        ProductInterface $oldEntity,
+    ): void {
+        foreach ($oldEntity->getAttributes() as $attribute) {
+            $newEntity->addAttribute($this->duplicateProductAttribute($attribute));
+        }
+    }
 
-	public function duplicateProductVariantTranslations(ProductVariantInterface $newEntity, ProductVariantInterface $oldEntity): void
-	{
-		foreach ($oldEntity->getTranslations() as $translation) {
-			assert($translation instanceof ProductVariantTranslationInterface);
-			$newEntity->addTranslation($this->duplicateProductVariantTranslation($newEntity, $translation));
-		}
-	}
+    public function duplicateProductTaxons(
+        ProductInterface $newEntity,
+        ProductInterface $oldEntity,
+    ): void {
+        foreach ($oldEntity->getProductTaxons() as $productTaxon) {
+            $newEntity->addProductTaxon($this->duplicateProductTaxon($newEntity, $productTaxon));
+        }
+    }
 
-	public function duplicateProductChannels(ProductInterface $newEntity, ProductInterface $oldEntity): void
-	{
-		foreach ($oldEntity->getChannels() as $channel) {
-			$newEntity->addChannel($channel);
-		}
-	}
+    public function duplicateProductTranslations(
+        ProductInterface $newEntity,
+        ProductInterface $oldEntity,
+    ): void {
+        foreach ($oldEntity->getTranslations() as $translation) {
+            assert($translation instanceof ProductTranslationInterface);
+            $newEntity->addTranslation($this->duplicateProductTranslation($newEntity, $translation));
+        }
+    }
 
-	public function duplicateOptionValues(ProductVariantInterface $newEntity, ProductVariantInterface $oldEntity): void
-	{
-		foreach ($oldEntity->getOptionValues() as $optionValue) {
-			$newEntity->addOptionValue($optionValue);
-		}
-	}
+    public function duplicateProductVariants(
+        ProductInterface $newEntity,
+        ProductInterface $oldEntity,
+    ): void {
+        foreach ($oldEntity->getVariants() as $variant) {
+            assert($variant instanceof ProductVariantInterface);
+            $newEntity->addVariant($this->duplicateProductVariant($newEntity, $variant));
+        }
+    }
 
-	public function duplicateChannelPricings(ProductVariantInterface $newEntity, ProductVariantInterface $oldEntity): void
-	{
-		foreach ($oldEntity->getChannelPricings() as $pricing) {
-			$newEntity->addChannelPricing($this->duplicateChannelPricing($newEntity, $pricing));
-		}
-	}
+    public function duplicateProductVariantTranslations(
+        ProductVariantInterface $newEntity,
+        ProductVariantInterface $oldEntity,
+    ): void {
+        foreach ($oldEntity->getTranslations() as $translation) {
+            assert($translation instanceof ProductVariantTranslationInterface);
+            $newEntity->addTranslation($this->duplicateProductVariantTranslation($newEntity, $translation));
+        }
+    }
 
-	public function duplicateChannelPricing(ProductVariantInterface $productVariant, ChannelPricingInterface $pricing): ChannelPricingInterface
-	{
-		$class = get_class($pricing);
-		$newEntity = new $class();
-		assert($newEntity instanceof ChannelPricingInterface);
+    public function duplicateProductChannels(
+        ProductInterface $newEntity,
+        ProductInterface $oldEntity,
+    ): void {
+        foreach ($oldEntity->getChannels() as $channel) {
+            $newEntity->addChannel($channel);
+        }
+    }
 
-		$newEntity->setOriginalPrice($pricing->getOriginalPrice());
-		$newEntity->setPrice($pricing->getPrice());
-		$newEntity->setChannelCode($pricing->getChannelCode());
-		$newEntity->setProductVariant($productVariant);
+    public function duplicateOptionValues(
+        ProductVariantInterface $newEntity,
+        ProductVariantInterface $oldEntity,
+    ): void {
+        foreach ($oldEntity->getOptionValues() as $optionValue) {
+            $newEntity->addOptionValue($optionValue);
+        }
+    }
 
-		return $newEntity;
-	}
+    public function duplicateChannelPricings(
+        ProductVariantInterface $newEntity,
+        ProductVariantInterface $oldEntity,
+    ): void {
+        foreach ($oldEntity->getChannelPricings() as $pricing) {
+            $newEntity->addChannelPricing($this->duplicateChannelPricing($newEntity, $pricing));
+        }
+    }
 
-	public function duplicateProductVariantTranslation(ProductVariantInterface $productVariant, ProductVariantTranslationInterface $translation): ProductVariantTranslationInterface
-	{
-		$class = get_class($translation);
-		$newEntity = new $class();
-		assert($newEntity instanceof ProductVariantTranslationInterface);
+    public function duplicateChannelPricing(
+        ProductVariantInterface $productVariant,
+        ChannelPricingInterface $pricing,
+    ): ChannelPricingInterface {
+        $class = get_class($pricing);
+        $newEntity = new $class();
+        assert($newEntity instanceof ChannelPricingInterface);
 
-		$newEntity->setLocale($translation->getLocale());
-		$newEntity->setName($translation->getName());
-		$newEntity->setTranslatable($productVariant);
+        $newEntity->setOriginalPrice($pricing->getOriginalPrice());
+        $newEntity->setPrice($pricing->getPrice());
+        $newEntity->setChannelCode($pricing->getChannelCode());
+        $newEntity->setProductVariant($productVariant);
 
-		return $newEntity;
-	}
+        return $newEntity;
+    }
 
-	public function duplicateProductTaxon(ProductInterface $product, ProductTaxonInterface $productTaxon): ProductTaxonInterface
-	{
-		$class = get_class($productTaxon);
-		$newEntity = new $class();
-		assert($newEntity instanceof ProductTaxonInterface);
+    public function duplicateProductVariantTranslation(
+        ProductVariantInterface $productVariant,
+        ProductVariantTranslationInterface $translation,
+    ): ProductVariantTranslationInterface {
+        $class = get_class($translation);
+        $newEntity = new $class();
+        assert($newEntity instanceof ProductVariantTranslationInterface);
 
-		$newEntity->setProduct($product);
-		$newEntity->setTaxon($productTaxon->getTaxon());
+        $newEntity->setLocale($translation->getLocale());
+        $newEntity->setName($translation->getName());
+        $newEntity->setTranslatable($productVariant);
 
-		return $newEntity;
-	}
+        return $newEntity;
+    }
 
-	public function duplicateProductAttribute(AttributeValueInterface $attributeValue): AttributeValueInterface
-	{
-		$class = get_class($attributeValue);
-		$newEntity = new $class();
-		assert($newEntity instanceof AttributeValueInterface);
+    public function duplicateProductTaxon(
+        ProductInterface $product,
+        ProductTaxonInterface $productTaxon,
+    ): ProductTaxonInterface {
+        $class = get_class($productTaxon);
+        $newEntity = new $class();
+        assert($newEntity instanceof ProductTaxonInterface);
 
-		$newEntity->setAttribute($attributeValue->getAttribute());
-		$newEntity->setValue($attributeValue->getValue());
-		$newEntity->setLocaleCode($attributeValue->getLocaleCode());
+        $newEntity->setProduct($product);
+        $newEntity->setTaxon($productTaxon->getTaxon());
 
-		return $newEntity;
-	}
+        return $newEntity;
+    }
 
-	public function duplicateProductAssociation(ProductInterface $product, ProductAssociationInterface $association): ProductAssociationInterface
-	{
-		$class = get_class($association);
-		$newEntity = new $class();
-		assert($newEntity instanceof ProductAssociationInterface);
+    public function duplicateProductAttribute(AttributeValueInterface $attributeValue): AttributeValueInterface
+    {
+        $class = get_class($attributeValue);
+        $newEntity = new $class();
+        assert($newEntity instanceof AttributeValueInterface);
 
-		$newEntity->addAssociatedProduct($product);
-		$newEntity->setOwner($association->getOwner());
-		$newEntity->setType($association->getType());
+        $newEntity->setAttribute($attributeValue->getAttribute());
+        $newEntity->setValue($attributeValue->getValue());
+        $newEntity->setLocaleCode($attributeValue->getLocaleCode());
 
-		return $newEntity;
-	}
+        return $newEntity;
+    }
 
-	public function duplicateProductTranslation(ProductInterface $product, ProductTranslationInterface $translation): ProductTranslationInterface
-	{
-		$class = get_class($translation);
-		$newEntity = new $class();
-		assert($newEntity instanceof ProductTranslationInterface);
+    public function duplicateProductAssociation(
+        ProductInterface $product,
+        ProductAssociationInterface $association,
+    ): ProductAssociationInterface {
+        $class = get_class($association);
+        $newEntity = new $class();
+        assert($newEntity instanceof ProductAssociationInterface);
 
-		assert($translation->getSlug() !== null);
-		assert($translation->getLocale() !== null);
+        $newEntity->addAssociatedProduct($product);
+        $newEntity->setOwner($association->getOwner());
+        $newEntity->setType($association->getType());
 
-		$newEntity->setSlug($this->generateSlug($translation->getSlug(), $translation->getLocale()));
+        return $newEntity;
+    }
 
-		$newEntity->setTranslatable($product);
-		$newEntity->setName($translation->getName());
-		$newEntity->setLocale($translation->getLocale());
-		$newEntity->setShortDescription($translation->getShortDescription());
-		$newEntity->setDescription($translation->getDescription());
-		$newEntity->setMetaDescription($translation->getMetaDescription());
-		$newEntity->setMetaKeywords($translation->getMetaKeywords());
+    public function duplicateProductTranslation(
+        ProductInterface $product,
+        ProductTranslationInterface $translation,
+    ): ProductTranslationInterface {
+        $class = get_class($translation);
+        $newEntity = new $class();
+        assert($newEntity instanceof ProductTranslationInterface);
 
-		return $newEntity;
-	}
+        assert($translation->getSlug() !== null);
+        assert($translation->getLocale() !== null);
 
-	public function duplicateProductImage(ProductInterface $product, ProductImageInterface $image): ProductImageInterface
-	{
-		$class = get_class($image);
-		$newEntity = new $class();
-		assert($newEntity instanceof ProductImageInterface);
+        $newEntity->setSlug($this->generateSlug($translation->getSlug(), $translation->getLocale()));
 
-		$newEntity->setOwner($product);
-		$newEntity->setType($image->getType());
+        $newEntity->setTranslatable($product);
+        $newEntity->setName($translation->getName());
+        $newEntity->setLocale($translation->getLocale());
+        $newEntity->setShortDescription($translation->getShortDescription());
+        $newEntity->setDescription($translation->getDescription());
+        $newEntity->setMetaDescription($translation->getMetaDescription());
+        $newEntity->setMetaKeywords($translation->getMetaKeywords());
 
-		assert($image->getPath() !== null);
-		$binaryFile = $this->dataManager->find('sylius_shop_product_original', $image->getPath());
+        return $newEntity;
+    }
 
-		$temp = tmpfile();
-		fwrite($temp, $binaryFile->getContent());
-		fseek($temp, 0);
-		$newEntity->setFile(new UploadedFile(stream_get_meta_data($temp)['uri'], $image->getPath()));
-		$this->imageUploader->upload($newEntity);
-		fclose($temp);
+    public function duplicateProductImage(
+        ProductInterface $product,
+        ProductImageInterface $image,
+    ): ProductImageInterface {
+        $class = get_class($image);
+        $newEntity = new $class();
+        assert($newEntity instanceof ProductImageInterface);
 
-		return $newEntity;
-	}
+        $newEntity->setOwner($product);
+        $newEntity->setType($image->getType());
 
-	private function generateSlug(string $slug, string $locale): string
-	{
-		$i = 0;
-		do {
-			if ($i === 0) {
-				$newSlug = $slug . '-copy';
-			} else {
-				$newSlug = $slug . '-' . $i;
-			}
-			++$i;
-		} while (!$this->isSlugUnique($newSlug, $locale));
+        assert($image->getPath() !== null);
+        $binaryFile = $this->dataManager->find('sylius_shop_product_original', $image->getPath());
 
-		return $newSlug;
-	}
+        $temp = tmpfile();
+        fwrite($temp, (string) $binaryFile->getContent());
+        fseek($temp, 0);
+        /** @var array{uri: string} $metadata */
+        $metadata = stream_get_meta_data($temp);
+        $newEntity->setFile(new UploadedFile($metadata['uri'], $image->getPath()));
+        $this->imageUploader->upload($newEntity);
+        fclose($temp);
 
-	private function generateProductCode(string $code): string
-	{
-		$i = 0;
-		do {
-			if ($i === 0) {
-				$newCode = $code . '-copy';
-			} else {
-				$newCode = $code . '-copy-' . $i;
-			}
-			++$i;
-		} while (!$this->isProductCodeIsUnique($newCode));
+        return $newEntity;
+    }
 
-		return $newCode;
-	}
+    private function generateSlug(
+        string $slug,
+        string $locale,
+    ): string {
+        $i = 0;
+        do {
+            if ($i === 0) {
+                $newSlug = $slug . '-copy';
+            } else {
+                $newSlug = $slug . '-' . $i;
+            }
+            ++$i;
+        } while (!$this->isSlugUnique($newSlug, $locale));
 
-	private function generateProductVariantCode(string $code): string
-	{
-		$i = 0;
-		do {
-			if ($i === 0) {
-				$newCode = $code . '-copy';
-			} else {
-				$newCode = $code . '-copy-' . $i;
-			}
-			++$i;
-		} while (!$this->isProductVariantCodeIsUnique($newCode));
+        return $newSlug;
+    }
 
-		return $newCode;
-	}
+    private function generateProductCode(string $code): string
+    {
+        $i = 0;
+        do {
+            if ($i === 0) {
+                $newCode = $code . '-copy';
+            } else {
+                $newCode = $code . '-copy-' . $i;
+            }
+            ++$i;
+        } while (!$this->isProductCodeIsUnique($newCode));
 
-	private function isProductCodeIsUnique(string $code): bool
-	{
-		return count($this->productRepository->findBy(['code' => $code])) === 0;
-	}
+        return $newCode;
+    }
 
-	private function isProductVariantCodeIsUnique(string $code): bool
-	{
-		return count($this->productVariantRepository->findBy(['code' => $code])) === 0;
-	}
+    private function generateProductVariantCode(string $code): string
+    {
+        $i = 0;
+        do {
+            if ($i === 0) {
+                $newCode = $code . '-copy';
+            } else {
+                $newCode = $code . '-copy-' . $i;
+            }
+            ++$i;
+        } while (!$this->isProductVariantCodeIsUnique($newCode));
 
-	private function isSlugUnique(string $slug, string $locale): bool
-	{
-		/** @var EntityRepository $repository */
-		$repository = $this->productRepository;
-		$count = (int) $repository->createQueryBuilder('o')
-			->select('COUNT(o)')
-			->join('o.translations', 't')
-			->where('t.slug = :slug')
-			->andWhere('t.locale = :locale')
-			->setParameter('slug', $slug)
-			->setParameter('locale', $locale)
-			->getQuery()
-			->getSingleScalarResult();
+        return $newCode;
+    }
 
-		return $count === 0;
-	}
+    private function isProductCodeIsUnique(string $code): bool
+    {
+        return count($this->productRepository->findBy(['code' => $code])) === 0;
+    }
+
+    private function isProductVariantCodeIsUnique(string $code): bool
+    {
+        return count($this->productVariantRepository->findBy(['code' => $code])) === 0;
+    }
+
+    private function isSlugUnique(
+        string $slug,
+        string $locale,
+    ): bool {
+        /** @var EntityRepository $repository */
+        $repository = $this->productRepository;
+        $count = (int) $repository->createQueryBuilder('o')
+            ->select('COUNT(o)')
+            ->join('o.translations', 't')
+            ->where('t.slug = :slug')
+            ->andWhere('t.locale = :locale')
+            ->setParameter('slug', $slug)
+            ->setParameter('locale', $locale)
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return $count === 0;
+    }
 }
