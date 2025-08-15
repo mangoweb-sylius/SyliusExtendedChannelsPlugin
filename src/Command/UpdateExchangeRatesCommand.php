@@ -16,24 +16,11 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class UpdateExchangeRatesCommand extends Command
 {
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
-    /** @var ExchangeRateRepositoryInterface */
-    private $exchangeRateRepository;
-
-    /** @var LoggerInterface */
-    private $logger;
-
     public function __construct(
-        EntityManagerInterface $entityManager,
-        LoggerInterface $logger,
-        ExchangeRateRepositoryInterface $exchangeRateRepository,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly LoggerInterface $logger,
+        private readonly ExchangeRateRepositoryInterface $exchangeRateRepository,
     ) {
-        $this->entityManager = $entityManager;
-        $this->logger = $logger;
-        $this->exchangeRateRepository = $exchangeRateRepository;
-
         parent::__construct();
     }
 

@@ -3,12 +3,11 @@
   "scripts": {
     "build": "encore dev",
     "build:prod": "encore production",
+    "postinstall": "semantic-ui-css-patch",
     "lint": "yarn lint:js",
     "watch": "encore dev --watch"
   },
   "devDependencies": {
-    "@symfony/webpack-encore": "^3.1.0",
-    "sass-loader": "^13.0.0",
-    "sass": "^1.0.0"
+    "@sylius-ui/frontend": "^1.0.3"
   }
 }

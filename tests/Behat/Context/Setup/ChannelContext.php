@@ -12,8 +12,8 @@ use Tests\MangoSylius\ExtendedChannelsPlugin\Entity\Channel;
 final class ChannelContext implements Context
 {
     public function __construct(
-        private EntityManagerInterface $channelManager,
-        private SharedStorageInterface $sharedStorage,
+        private readonly EntityManagerInterface $channelManager,
+        private readonly SharedStorageInterface $sharedStorage,
     ) {
     }
 

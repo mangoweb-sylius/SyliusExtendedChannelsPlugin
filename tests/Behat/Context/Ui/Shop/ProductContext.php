@@ -15,8 +15,8 @@ use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 final class ProductContext implements Context
 {
     public function __construct(
-        private ProductRepositoryInterface $productRepository,
-        private ChannelRepositoryInterface $channelRepository,
+        private readonly ProductRepositoryInterface $productRepository,
+        private readonly ChannelRepositoryInterface $channelRepository,
     ) {
     }
 

@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 final class CommandContext implements Context
 {
-    public function __construct(private KernelInterface $kernel)
+    public function __construct(private readonly KernelInterface $kernel)
     {
     }
 

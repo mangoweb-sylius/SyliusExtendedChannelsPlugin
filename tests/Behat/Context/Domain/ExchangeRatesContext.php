@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
 
 final class ExchangeRatesContext implements Context
 {
-    public function __construct(private ExchangeRateRepositoryInterface $exchangeRateRepository)
+    public function __construct(private readonly ExchangeRateRepositoryInterface $exchangeRateRepository)
     {
     }
 

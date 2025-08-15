@@ -22,33 +22,13 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProductDuplicator implements ProductDuplicatorInterface
 {
-    /** @var ImageUploaderInterface */
-    private $imageUploader;
-
-    /** @var ProductRepositoryInterface */
-    private $productRepository;
-
-    /** @var ProductVariantRepositoryInterface */
-    private $productVariantRepository;
-
-    /** @var DataManager */
-    private $dataManager;
-
-    public function __construct(
-        ImageUploaderInterface $imageUploader,
-        ProductVariantRepositoryInterface $productVariantRepository,
-        ProductRepositoryInterface $productRepository,
-        DataManager $dataManager,
-    ) {
-        $this->imageUploader = $imageUploader;
-        $this->productRepository = $productRepository;
-        $this->productVariantRepository = $productVariantRepository;
-        $this->dataManager = $dataManager;
+    public function __construct(private readonly ImageUploaderInterface $imageUploader, private readonly ProductVariantRepositoryInterface $productVariantRepository, private readonly ProductRepositoryInterface $productRepository, private readonly DataManager $dataManager)
+    {
     }
 
     public function duplicateProduct(ProductInterface $oldEntity): ProductInterface
     {
-        $class = get_class($oldEntity);
+        $class = $oldEntity::class;
         $newEntity = new $class();
         assert($newEntity instanceof ProductInterface);
 
@@ -77,7 +57,7 @@ class ProductDuplicator implements ProductDuplicatorInterface
         ProductInterface $product,
         ProductVariantInterface $oldEntity,
     ): ProductVariantInterface {
-        $class = get_class($oldEntity);
+        $class = $oldEntity::class;
         $newEntity = new $class();
         assert($newEntity instanceof ProductVariantInterface);
 
@@ -201,7 +181,7 @@ class ProductDuplicator implements ProductDuplicatorInterface
         ProductVariantInterface $productVariant,
         ChannelPricingInterface $pricing,
     ): ChannelPricingInterface {
-        $class = get_class($pricing);
+        $class = $pricing::class;
         $newEntity = new $class();
         assert($newEntity instanceof ChannelPricingInterface);
 
@@ -217,7 +197,7 @@ class ProductDuplicator implements ProductDuplicatorInterface
         ProductVariantInterface $productVariant,
         ProductVariantTranslationInterface $translation,
     ): ProductVariantTranslationInterface {
-        $class = get_class($translation);
+        $class = $translation::class;
         $newEntity = new $class();
         assert($newEntity instanceof ProductVariantTranslationInterface);
 
@@ -232,7 +212,7 @@ class ProductDuplicator implements ProductDuplicatorInterface
         ProductInterface $product,
         ProductTaxonInterface $productTaxon,
     ): ProductTaxonInterface {
-        $class = get_class($productTaxon);
+        $class = $productTaxon::class;
         $newEntity = new $class();
         assert($newEntity instanceof ProductTaxonInterface);
 
@@ -244,7 +224,7 @@ class ProductDuplicator implements ProductDuplicatorInterface
 
     public function duplicateProductAttribute(AttributeValueInterface $attributeValue): AttributeValueInterface
     {
-        $class = get_class($attributeValue);
+        $class = $attributeValue::class;
         $newEntity = new $class();
         assert($newEntity instanceof AttributeValueInterface);
 
@@ -259,7 +239,7 @@ class ProductDuplicator implements ProductDuplicatorInterface
         ProductInterface $product,
         ProductAssociationInterface $association,
     ): ProductAssociationInterface {
-        $class = get_class($association);
+        $class = $association::class;
         $newEntity = new $class();
         assert($newEntity instanceof ProductAssociationInterface);
 
@@ -274,7 +254,7 @@ class ProductDuplicator implements ProductDuplicatorInterface
         ProductInterface $product,
         ProductTranslationInterface $translation,
     ): ProductTranslationInterface {
-        $class = get_class($translation);
+        $class = $translation::class;
         $newEntity = new $class();
         assert($newEntity instanceof ProductTranslationInterface);
 
@@ -298,7 +278,7 @@ class ProductDuplicator implements ProductDuplicatorInterface
         ProductInterface $product,
         ProductImageInterface $image,
     ): ProductImageInterface {
-        $class = get_class($image);
+        $class = $image::class;
         $newEntity = new $class();
         assert($newEntity instanceof ProductImageInterface);
 

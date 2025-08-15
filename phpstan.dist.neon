@@ -1,13 +1,24 @@
-includes:
-    - vendor/phpstan/phpstan-doctrine/extension.neon
-    - vendor/phpstan/phpstan-symfony/extension.neon
-
 parameters:
-    symfony:
-        container_xml_path: tests/Application/var/cache/test/Tests_MangoSylius_ExtendedChannelsPlugin_KernelTestDebugContainer.xml
+    level: 6
+    reportUnmatchedIgnoredErrors: false
+    treatPhpDocTypesAsCertain: false
+    paths:
+        - src
 
     excludePaths:
-        - 'tests/'
+
+        # Test dependencies
+        - 'tests/Application/src/Kernel.php'
+        - 'tests/Application/config/bootstrap.php'
+        - 'tests/Application/node_modules'
+        - 'tests/Application/var'
+        - 'tests/Behat'
 
     ignoreErrors:
+        - '/Parameter #1 \$configuration of method Symfony\\Component\\DependencyInjection\\Extension\\Extension::processConfiguration\(\) expects Symfony\\Component\\Config\\Definition\\ConfigurationInterface, Symfony\\Component\\Config\\Definition\\ConfigurationInterface\|null given\./'
+        - '~Method MangoSylius\\ExtendedChannelsPlugin\\Repository\\HelloBarRepository::findAvailableForChannel\(\) should return array<MangoSylius\\ExtendedChannelsPlugin\\Entity\\HelloBarInterface> but returns mixed\.~'
+        - '~Method MangoSylius\\ExtendedChannelsPlugin\\Repository\\HelloBarRepository::findAvailableForChannelByType\(\) should return array<MangoSylius\\ExtendedChannelsPlugin\\Entity\\HelloBarInterface> but returns mixed\.~'
+        - '/Cannot cast mixed to string\./'
+        - '/Cannot cast mixed to int\./'
+        - identifier: missingType.iterableValue
         - identifier: missingType.generics

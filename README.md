@@ -58,17 +58,19 @@ Extended Channels Plugin
 1. Add resource to `config/packeges/_sylius.yaml`
 
     ```yaml
+    # config/packages/_sylius.yaml
     imports:
          ...
          - { resource: "@MangoSyliusExtendedChannelsPlugin/config/resources.yaml" }
     ```
    
-1. Add routing to `config/_routes.yaml`
+1. Add routing to `config/routes.yaml`
 
     ```yaml
-    mango_sylius_extended_channels:
-        resource: '@MangoSyliusExtendedChannelsPlugin/config/routing.yaml'
-        prefix: /admin
+    # config/routes.yaml
+    mango_extended_channels_plugin:
+        resource: "@MangoSyliusExtendedChannelsPlugin/config/routing.yaml"
+        prefix: "/%sylius_admin.path_name%"
     ```
 
 

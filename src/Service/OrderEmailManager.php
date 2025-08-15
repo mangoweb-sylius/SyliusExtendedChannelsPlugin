@@ -14,8 +14,8 @@ use Sylius\Component\Mailer\Sender\SenderInterface;
 final class OrderEmailManager implements OrderEmailManagerInterface
 {
     public function __construct(
-        private SenderInterface $emailSender,
-        private ChannelContextInterface $channelContext,
+        private readonly SenderInterface $emailSender,
+        private readonly ChannelContextInterface $channelContext,
     ) {
     }
 

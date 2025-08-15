@@ -1,4 +1,4 @@
-.PHONY: run init
+.PHONY: run init var yarn
 
 APP_ENV ?= dev
 

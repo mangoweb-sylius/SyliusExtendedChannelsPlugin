@@ -22,39 +22,14 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class UpdateProductPriceByExchangeRatesCommand extends Command
 {
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
-    /** @var LoggerInterface */
-    private $logger;
-
-    /** @var ExchangeRateRepositoryInterface */
-    private $exchangeRateRepository;
-
-    /** @var ProductVariantRepositoryInterface */
-    private $productVariantRepository;
-
-    /** @var ChannelRepositoryInterface */
-    private $channelRepository;
-
-    /** @var CurrencyConverter */
-    private $currencyConverter;
-
     public function __construct(
-        EntityManagerInterface $entityManager,
-        LoggerInterface $logger,
-        ExchangeRateRepositoryInterface $exchangeRateRepository,
-        ProductVariantRepositoryInterface $productVariantRepository,
-        ChannelRepositoryInterface $channelRepository,
-        CurrencyConverter $currencyConverter,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly LoggerInterface $logger,
+        private readonly ExchangeRateRepositoryInterface $exchangeRateRepository,
+        private readonly ProductVariantRepositoryInterface $productVariantRepository,
+        private readonly ChannelRepositoryInterface $channelRepository,
+        private readonly CurrencyConverter $currencyConverter,
     ) {
-        $this->entityManager = $entityManager;
-        $this->logger = $logger;
-        $this->exchangeRateRepository = $exchangeRateRepository;
-        $this->productVariantRepository = $productVariantRepository;
-        $this->channelRepository = $channelRepository;
-        $this->currencyConverter = $currencyConverter;
-
         parent::__construct();
     }
 

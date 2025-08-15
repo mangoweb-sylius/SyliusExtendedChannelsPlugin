@@ -1,5 +1,33 @@
 # CHANGELOG
 
+## v1.6.0 (2025-08-15)
+
+#### Details
+
+- Add support for Sylius 1.14
+- Drop support for Sylius <= 1.13
+
+#### BC ⚠️ Breaking Changes on update:
+
+**Configuration file structure changes:**
+
+Change in `config/packages/_sylius.yaml`
+```diff
+-    - { resource: "@MangoSyliusExtendedChannelsPlugin/Resources/config/resources.yaml" }
++    - { resource: "@MangoSyliusExtendedChannelsPlugin/config/resources.yaml" }
+```
+- Change in `config/routes.yaml`
+
+```diff
+-    resource: "@MangoSyliusExtendedChannelsPlugin/Resources/config/routing.yaml"
++    resource: "@MangoSyliusExtendedChannelsPlugin/config/routing.yaml"
+```
+
+- Plugin configuration files moved from `src/Resources/config/` to root `config/` directory
+  - `src/Resources/config/services.yml` → `config/services.yaml`
+  - `src/Resources/config/routing.yml` → `config/routing.yaml`  
+  - `src/Resources/config/resources.yml` → `config/resources.yaml`
+
 ## v1.5.0 (2025-02-11)
 
 - Add support to Sylius 1.12, 1.13

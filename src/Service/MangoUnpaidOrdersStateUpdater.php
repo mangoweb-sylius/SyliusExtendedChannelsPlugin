@@ -22,10 +22,10 @@ class MangoUnpaidOrdersStateUpdater implements UnpaidOrdersStateUpdaterInterface
      * @param array<string> $expirationMethodCodes
      */
     public function __construct(
-        private OrderRepositoryInterface $orderRepository,
-        private Factory $stateMachineFactory,
-        private string $expirationPeriod,
-        private array $expirationMethodCodes,
+        private readonly OrderRepositoryInterface $orderRepository,
+        private readonly Factory $stateMachineFactory,
+        private readonly string $expirationPeriod,
+        private readonly array $expirationMethodCodes,
     ) {
     }
 
@@ -53,6 +53,7 @@ class MangoUnpaidOrdersStateUpdater implements UnpaidOrdersStateUpdaterInterface
             ->getQuery()
             ->getResult();
 
+        assert(is_iterable($expiredUnpaidOrders));
         foreach ($expiredUnpaidOrders as $expiredUnpaidOrder) {
             assert($expiredUnpaidOrder instanceof OrderInterface);
 
