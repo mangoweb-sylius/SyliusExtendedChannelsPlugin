@@ -20,7 +20,6 @@ init:
 	./bin-docker/php ./bin/console --env="$(APP_ENV)" doctrine:schema:update --force --complete --no-interaction
 	./bin-docker/php ./bin/console --env="$(APP_ENV)" doctrine:migration:sync-metadata-storage
 	./bin-docker/php ./bin/console --env="$(APP_ENV)" assets:install
-	./bin-docker/yarn install --pure-lockfile
 	./bin-docker/yarn --cwd=tests/Application install --pure-lockfile
 	GULP_ENV=prod ./bin-docker/yarn --cwd=tests/Application build
 	chmod -R 0777 tests/Application/var

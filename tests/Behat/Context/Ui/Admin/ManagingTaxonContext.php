@@ -45,4 +45,12 @@ final class ManagingTaxonContext implements Context
     {
         Assert::false((bool)$this->updatePage->isSingleResourceOnPage('external_link_checkbox'));
     }
+
+    /**
+     * @When I save my changes
+     */
+    public function iSaveMyChanges(): void
+    {
+        $this->updatePage->saveChanges();
+    }
 }

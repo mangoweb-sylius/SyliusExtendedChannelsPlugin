@@ -14,6 +14,7 @@
 		<service id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Channel\UpdatePageInterface"
 				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Channel\UpdatePage" parent="sylius.behat.page.admin.crud.update" public="false">
 			<argument type="string">sylius_admin_channel_update</argument>
+			<argument type="service" id="Sylius\Behat\Service\Helper\AutocompleteHelperInterface"/>
 		</service>
 
 		<service id="sylius_extended_channels.context.ui.admin.channel"
@@ -27,13 +28,13 @@
 		<service id="sylius_extended_channels.context.ui.admin.product"
 				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Admin\ManagingProductContext">
 			<argument type="service" id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Product\ShowPageInterface"/>
-			<argument type="service" id="sylius.behat.notification_checker"/>
+			<argument type="service" id="sylius.behat.notification_checker.admin"/>
 		</service>
 
 		<service id="sylius_extended_channels.context.ui.admin.product_variant"
 				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Admin\ManagingProductVariantContext">
 			<argument type="service" id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\ProductVariant\ShowPageInterface"/>
-			<argument type="service" id="sylius.behat.notification_checker"/>
+			<argument type="service" id="sylius.behat.notification_checker.admin"/>
 		</service>
 
 		<service id="sylius_extended_channels.context.ui.admin.taxon"
@@ -54,6 +55,7 @@
 		<service id="sylius_extended_channels.context.domain.command"
 				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Domain\CommandContext">
 			<argument type="service" id="kernel"/>
+			<argument type="service" id="sylius.console.command.install_sample_data"/>
 		</service>
 
 		<service id="sylius_extended_channels.context.ui.shop.product"
@@ -73,11 +75,11 @@
 			<argument type="service" id="doctrine.orm.entity_manager"/>
 			<argument type="service" id="sylius.behat.shared_storage"/>
 			<argument type="service" id="sylius.factory.customer"/>
-			<argument type="service" id="sylius.product_variant_resolver.default"/>
+			<argument type="service" id="sylius.resolver.product_variant.default"/>
 			<argument type="service" id="sylius.factory.order_item"/>
-			<argument type="service" id="sylius.order_item_quantity_modifier"/>
+			<argument type="service" id="sylius.modifier.order_item_quantity"/>
 			<argument type="service" id="sylius.factory.order"/>
-			<argument type="service" id="sm.factory"/>
+			<argument type="service" id="sylius_abstraction.state_machine"/>
 			<argument type="service" id="kernel"/>
 		</service>
 

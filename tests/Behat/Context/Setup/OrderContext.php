@@ -6,7 +6,7 @@ namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use Doctrine\ORM\EntityManagerInterface;
-use SM\Factory\FactoryInterface as StateMachineFactoryInterface;
+use Sylius\Abstraction\StateMachine\StateMachineInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
@@ -34,7 +34,7 @@ final class OrderContext implements Context
         private readonly FactoryInterface                   $orderItemFactory,
         private readonly OrderItemQuantityModifierInterface $itemQuantityModifier,
         private readonly FactoryInterface                   $orderFactory,
-        private readonly StateMachineFactoryInterface       $stateMachineFactory,
+        private readonly StateMachineInterface              $stateMachine,
     ) {
     }
 
@@ -201,6 +201,6 @@ final class OrderContext implements Context
         OrderInterface $order,
                        $transition,
     ) {
-        $this->stateMachineFactory->get($order, OrderCheckoutTransitions::GRAPH)->apply($transition);
+        $this->stateMachine->apply($order, OrderCheckoutTransitions::GRAPH, $transition);
     }
 }

@@ -201,9 +201,10 @@ class ProductDuplicator implements ProductDuplicatorInterface
         $newEntity = new $class();
         assert($newEntity instanceof ProductVariantTranslationInterface);
 
+        // Set locale FIRST before setting translatable to avoid hasTranslation() issues
         $newEntity->setLocale($translation->getLocale());
-        $newEntity->setName($translation->getName());
         $newEntity->setTranslatable($productVariant);
+        $newEntity->setName($translation->getName());
 
         return $newEntity;
     }
@@ -261,11 +262,12 @@ class ProductDuplicator implements ProductDuplicatorInterface
         assert($translation->getSlug() !== null);
         assert($translation->getLocale() !== null);
 
-        $newEntity->setSlug($this->generateSlug($translation->getSlug(), $translation->getLocale()));
-
-        $newEntity->setTranslatable($product);
-        $newEntity->setName($translation->getName());
+        // Set locale FIRST before setting translatable to avoid hasTranslation() issues
         $newEntity->setLocale($translation->getLocale());
+        $newEntity->setTranslatable($product);
+
+        $newEntity->setSlug($this->generateSlug($translation->getSlug(), $translation->getLocale()));
+        $newEntity->setName($translation->getName());
         $newEntity->setShortDescription($translation->getShortDescription());
         $newEntity->setDescription($translation->getDescription());
         $newEntity->setMetaDescription($translation->getMetaDescription());

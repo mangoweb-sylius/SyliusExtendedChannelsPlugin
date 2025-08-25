@@ -75,10 +75,25 @@ sylius_grid:
                     delete:
                         type: delete
 
-sylius_ui:
-    events:
-        sylius.admin.channel.form.first_column_content:
-            blocks:
-                general_host:
-                    template: '@MangoSyliusExtendedChannelsPlugin/Channel/extendedChannelForm.html.twig'
-                    priority: 10
+sylius_twig_hooks:
+    hooks:
+        'sylius_admin.channel.create.content.form.sections.general':
+            channel_extended:
+                template: '@MangoSyliusExtendedChannelsPlugin/Channel/extendedChannelForm.html.twig'
+                priority: 10
+        'sylius_admin.channel.update.content.form.sections.general':
+            channel_extended:
+                template: '@MangoSyliusExtendedChannelsPlugin/Channel/extendedChannelForm.html.twig'
+                priority: 10
+        'sylius_admin.taxon.create.content.sections.form.general':
+            taxon_extended:
+                template: '@MangoSyliusExtendedChannelsPlugin/Taxon/extendedTaxonForm.html.twig'
+                priority: 10
+        'sylius_admin.taxon.update.content.sections.form.general':
+            taxon_extended:
+                template: '@MangoSyliusExtendedChannelsPlugin/Taxon/extendedTaxonForm.html.twig'
+                priority: 10
+        'sylius_admin.product.update.content.header.title_block.actions':
+            duplicate:
+                template: '@MangoSyliusExtendedChannelsPlugin/Product/action_duplicate.html.twig'
+                priority: 150

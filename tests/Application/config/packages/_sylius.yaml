@@ -1,10 +1,8 @@
 imports:
     - { resource: "@SyliusCoreBundle/Resources/config/app/config.y*ml" }
-
+    - { resource: "@SyliusPayumBundle/Resources/config/app/config.y*ml" }
     - { resource: "@SyliusAdminBundle/Resources/config/app/config.y*ml" }
-
     - { resource: "@SyliusShopBundle/Resources/config/app/config.y*ml" }
-
     - { resource: "@SyliusApiBundle/Resources/config/app/config.y*ml" }
 
     - { resource: "@MangoSyliusExtendedChannelsPlugin/config/resources.yaml" }
@@ -12,7 +10,7 @@ imports:
 parameters:
     sylius_core.public_dir: '%kernel.project_dir%/public'
     sylius_order.order_expiration_period: '2 days'
-    sylius_order.expiration_method_codes: ['PM_CSOB']
+    sylius_order.expiration_method_codes: ['CSOB']
 
 sylius_channel:
     resources:
@@ -25,3 +23,6 @@ sylius_taxonomy:
         taxon:
             classes:
                 model: Tests\MangoSylius\ExtendedChannelsPlugin\Entity\Taxon
+
+sylius_api:
+    enabled: true

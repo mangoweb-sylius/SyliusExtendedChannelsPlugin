@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Taxon;
 
-use Sylius\Behat\Page\Admin\Channel\UpdatePage as BaseUpdatePage;
+use Sylius\Behat\Page\Admin\Crud\UpdatePage as BaseUpdatePage;
 
 final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
 {
@@ -21,7 +21,7 @@ final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
 	protected function getDefinedElements(): array
 	{
 		return array_merge(parent::getDefinedElements(), [
-			'external_link_checkbox' => '#sylius_taxon_externalLink',
+			'external_link_checkbox' => '#sylius_admin_taxon_externalLink',
 		]);
 	}
 

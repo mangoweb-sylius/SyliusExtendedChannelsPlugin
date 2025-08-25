@@ -10,7 +10,7 @@ Feature: Send an order email to bcc email
 		And the store has a product "Sig Sauer P226" priced at "$499.99"
 		And the store ships everywhere for free
 		And the store allows paying offline
-		And the channel has bcc email "sylius-bcc@mangoweb.cz"
+		And the channel has bcc email "sylius-bcc@example.com"
 
 	@ui
 	Scenario: Send order email to customer and to bcc email after complete checkout
@@ -19,4 +19,4 @@ Feature: Send an order email to bcc email
 		And I have proceeded order with "Free" shipping method and "Offline" payment
 		When I confirm my order
 		Then an email with the summary of order placed by "john@example.com" should be sent to him
-		And an email generated for order placed by "john@example.com" should be sent to "sylius-bcc@mangoweb.cz"
+		And an email generated for order placed by "john@example.com" should be sent to "sylius-bcc@example.com"

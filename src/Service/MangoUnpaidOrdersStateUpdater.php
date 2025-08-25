@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MangoSylius\ExtendedChannelsPlugin\Service;
 
 use Doctrine\ORM\EntityRepository;
-use SM\Factory\Factory;
+use Sylius\Abstraction\StateMachine\StateMachineInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Core\OrderCheckoutStates;
@@ -23,7 +23,7 @@ class MangoUnpaidOrdersStateUpdater implements UnpaidOrdersStateUpdaterInterface
      */
     public function __construct(
         private readonly OrderRepositoryInterface $orderRepository,
-        private readonly Factory $stateMachineFactory,
+        private readonly StateMachineInterface $stateMachine,
         private readonly string $expirationPeriod,
         private readonly array $expirationMethodCodes,
     ) {
@@ -88,7 +88,6 @@ class MangoUnpaidOrdersStateUpdater implements UnpaidOrdersStateUpdaterInterface
 
     private function cancelOrder(OrderInterface $expiredUnpaidOrder): void
     {
-        $stateMachine = $this->stateMachineFactory->get($expiredUnpaidOrder, OrderTransitions::GRAPH);
-        $stateMachine->apply(OrderTransitions::TRANSITION_CANCEL);
+        $this->stateMachine->apply($expiredUnpaidOrder, OrderTransitions::GRAPH, OrderTransitions::TRANSITION_CANCEL);
     }
 }

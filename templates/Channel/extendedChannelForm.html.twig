@@ -1,7 +1,11 @@
-<div class="ui attached segment">
-    <div class="two fields">
-        {{ form_row(form.bccEmail) }}
-        {{ form_row(form.contactPhone) }}
+<div class="row">
+    <div class="col-12 col-md-6">
+        {{ form_row(hookable_metadata.context.form.bccEmail, sylius_test_form_attribute('bcc-email')) }}
     </div>
-    {{ form_row(form.timezone) }}
+    <div class="col-12 col-md-6">
+        {{ form_row(hookable_metadata.context.form.contactPhone, sylius_test_form_attribute('contact-phone')) }}
+    </div>
+    <div class="col-12">
+        {{ form_row(hookable_metadata.context.form.timezone, sylius_test_form_attribute('timezone')) }}
+    </div>
 </div>

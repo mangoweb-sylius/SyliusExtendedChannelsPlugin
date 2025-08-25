@@ -24,7 +24,7 @@ services:
             $logger: '@logger'
 
     MangoSylius\ExtendedChannelsPlugin\Service\OrderEmailManager:
-        decorates: sylius.email_manager.order
+        decorates: sylius_shop.mailer.order_email_manager
         arguments:
             $emailSender: '@sylius.email_sender'
             $channelContext: '@sylius.context.channel'
@@ -32,12 +32,12 @@ services:
     MangoSylius\ExtendedChannelsPlugin\Form\Extension\TaxonTypeExtension:
         tags:
             -   name: form.type_extension
-                extended_type: Sylius\Bundle\TaxonomyBundle\Form\Type\TaxonType
+                extended_type: Sylius\Bundle\AdminBundle\Form\Type\TaxonType
 
     MangoSylius\ExtendedChannelsPlugin\Form\Extension\ExtendedChannelExtension:
         tags:
             - name: form.type_extension
-              extended_type: Sylius\Bundle\ChannelBundle\Form\Type\ChannelType
+              extended_type: Sylius\Bundle\AdminBundle\Form\Type\ChannelType
 
     MangoSylius\ExtendedChannelsPlugin\Form\Extension\ProductExtension:
         tags:
@@ -66,9 +66,6 @@ services:
         tags:
             - name: form.type
 
-    sylius.email_manager.order: '@MangoSylius\ExtendedChannelsPlugin\Service\OrderEmailManager'
-    Sylius\Bundle\ShopBundle\EmailManager\OrderEmailManagerInterface: '@MangoSylius\ExtendedChannelsPlugin\Service\OrderEmailManager'
-
     MangoSylius\ExtendedChannelsPlugin\Command\UpdateProductPriceByExchangeRatesCommand:
         tags:
             - name: 'console.command'
@@ -78,7 +75,7 @@ services:
             $exchangeRateRepository: '@sylius.repository.exchange_rate'
             $productVariantRepository: '@sylius.repository.product_variant'
             $channelRepository: '@sylius.repository.channel'
-            $currencyConverter: '@sylius.currency_converter'
+            $currencyConverter: '@sylius.converter.currency'
 
     MangoSylius\ExtendedChannelsPlugin\Command\UpdateExchangeRatesCommand:
         tags:
@@ -91,7 +88,7 @@ services:
     MangoSylius\ExtendedChannelsPlugin\Service\MangoUnpaidOrdersStateUpdater:
         arguments:
             $orderRepository: '@sylius.repository.order'
-            $stateMachineFactory: '@sm.factory'
+            $stateMachine: '@sylius_abstraction.state_machine'
             $expirationPeriod: '%sylius_order.order_expiration_period%'
             $expirationMethodCodes: '%sylius_order.expiration_method_codes%'
 
@@ -106,10 +103,6 @@ services:
 
     MangoSylius\ExtendedChannelsPlugin\Menu\AdminMenuListener:
         tags:
-            - name: kernel.event_listener
-              event: sylius.menu.admin.product.update
-              method: addButtonsToProduct
-
             - name: kernel.event_listener
               event: sylius.menu.admin.main
               method: addAdminMenuItems
@@ -139,7 +132,7 @@ services:
 
     MangoSylius\ExtendedChannelsPlugin\Service\ProductDuplicator:
         arguments:
-            $imageUploader: '@sylius.image_uploader'
+            $imageUploader: '@sylius.uploader.image'
             $productRepository: '@sylius.repository.product'
             $productVariantRepository: '@sylius.repository.product_variant'
             $dataManager: '@liip_imagine.data.manager'

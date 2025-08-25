@@ -26,8 +26,8 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
 	protected function getDefinedElements(): array
 	{
 		return array_merge(parent::getDefinedElements(), [
-			'code' => '#sylius_product_variant_code',
-			'duplicate-button' => '.item .ui.labeled.icon.button.primary',
+			'code' => '#sylius_admin_product_variant_code',
+			'duplicate-button' => 'a[href*="duplicate-product-variant"]',
 		]);
 	}
 }
