@@ -28,7 +28,7 @@ class UpdateExchangeRatesCommand extends Command
     {
         $this
             ->setName('mango:exchange-rates:update')
-            ->addArgument('exchangeratesUrl', InputArgument::OPTIONAL, 'URL', 'https://api.exchangeratesapi.io/latest?base=%currency%')
+            ->addArgument('exchangeratesUrl', InputArgument::OPTIONAL, 'URL', 'https://open.er-api.com/v6/latest/%currency%')
             ->setDescription('Update exchange rates.');
     }
 
@@ -44,7 +44,7 @@ class UpdateExchangeRatesCommand extends Command
         foreach ($exchangeRates as $exchangeRate) {
             assert($exchangeRate instanceof ExchangeRateInterface);
             assert($exchangeRate->getSourceCurrency() !== null);
-            $currencies[] = (string) $exchangeRate->getSourceCurrency()->getCode();
+            $currencies[] = strtoupper((string) $exchangeRate->getSourceCurrency()->getCode());
         }
 
         $exchangeRatesUrl = $input->getArgument('exchangeratesUrl');

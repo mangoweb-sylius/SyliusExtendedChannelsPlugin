@@ -11,6 +11,7 @@
     },
     "require-dev": {
         "behat/behat": "^3.16",
+        "dbrekelmans/bdi": "^1.4",
         "dmore/behat-chrome-extension": "^1.4",
         "dmore/chrome-mink-driver": "^2.9",
         "friends-of-behat/mink": "^1.11",

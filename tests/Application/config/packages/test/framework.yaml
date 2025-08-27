@@ -2,3 +2,17 @@ framework:
     test: ~
     session:
         storage_factory_id: session.storage.factory.mock_file
+        cookie_secure: false
+        cookie_samesite: lax
+#
+#when@test:
+#    framework:
+#        test: true
+#        session:
+#            storage_factory_id: session.storage.factory.mock_file
+#
+#when@panther:
+#    framework:
+#        test: true
+#        session:
+#            storage_factory_id: session.storage.factory.mock_file

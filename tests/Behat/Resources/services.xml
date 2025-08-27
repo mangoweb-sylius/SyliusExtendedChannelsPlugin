@@ -115,5 +115,42 @@
 		<service id="sylius.behat.email_checker" class="Sylius\Component\Core\Test\Services\EmailChecker">
 			<argument>%kernel.cache_dir%/spool</argument>
 		</service>
+
+		<service id="mango_sylius.behat.page.admin.product.extended_index"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Product\ExtendedIndexPage"
+				 parent="sylius.behat.page.admin.product.index"
+				 public="true">
+			<tag name="sylius.behat.page" />
+		</service>
+
+		<service id="mango_sylius.behat.page.admin.bulk_manage_product_categories.form"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\BulkManageProductCategories\FormPage"
+				 public="true">
+			<argument type="service" id="behat.mink.default_session" />
+			<argument type="service" id="behat.mink.parameters" />
+			<argument type="service" id="router" />
+			<tag name="sylius.behat.page" />
+		</service>
+
+		<service id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Admin\ManagingBulkProductCategoriesContext"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Admin\ManagingBulkProductCategoriesContext"
+				 public="true">
+			<argument type="service" id="mango_sylius.behat.page.admin.product.extended_index"/>
+			<argument type="service" id="mango_sylius.behat.page.admin.bulk_manage_product_categories.form"/>
+			<argument type="service" id="sylius.behat.notification_checker.admin"/>
+			<argument type="service" id="sylius.repository.product"/>
+			<argument type="service" id="sylius.context.locale"/>
+			<argument type="service" id="translator"/>
+			<argument type="service" id="doctrine.orm.entity_manager"/>
+			<tag name="fob.context_service"/>
+		</service>
+
+		<service id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Setup\ProductTaxonContext"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Setup\ProductTaxonContext"
+				 public="true">
+			<argument type="service" id="sylius.factory.product_taxon"/>
+			<argument type="service" id="doctrine.orm.entity_manager"/>
+			<tag name="fob.context_service"/>
+		</service>
 	</services>
 </container>

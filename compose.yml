@@ -53,12 +53,6 @@ services:
             # To find out used port use `docker ps` and look for PORTS column to see mapped host port, including IP it can be for example 0.0.0.0:32772 which is roughly equivalent to 127.0.0.1:32772 for internal network requests
             - "${MYSQL_HOST_MAPPING_PORT:-0}:3306"
 
-    mailhog:
-        image: mailhog/mailhog:latest
-        ports:
-            - "${MAILHOG_WEB_PORT:-8025}:8025"  # Web interface
-            - "${MAILHOG_SMTP_PORT:-1025}:1025" # SMTP server
-
 #    postgres:
 #        image: postgres:${POSTGRES_VERSION:-16}-alpine
 #        environment:
@@ -71,6 +65,12 @@ services:
 #            - database_data:/var/lib/postgresql/data:rw
 #        networks:
 #            - sylius
+
+    mailhog:
+        image: mailhog/mailhog:latest
+        ports:
+            - "${MAILHOG_WEB_PORT:-8025}:8025"  # Web interface
+            - "${MAILHOG_SMTP_PORT:-1025}:1025" # SMTP server
 
 # volumes:
 #    database_data:

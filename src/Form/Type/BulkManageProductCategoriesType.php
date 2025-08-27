@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace MangoSylius\ExtendedChannelsPlugin\Form\Type;
 
+use Sylius\Bundle\AdminBundle\Form\Type\TaxonAutocompleteType;
 use Sylius\Bundle\CoreBundle\Form\Type\Taxon\ProductTaxonAutocompleteChoiceType;
-use Sylius\Bundle\TaxonomyBundle\Form\Type\TaxonAutocompleteChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,7 +22,7 @@ final class BulkManageProductCategoriesType extends AbstractType
         array $options,
     ): void {
         $builder
-            ->add('mainTaxon', TaxonAutocompleteChoiceType::class, [
+            ->add('mainTaxon', TaxonAutocompleteType::class, [
                 'label' => 'sylius.form.product.main_taxon',
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {

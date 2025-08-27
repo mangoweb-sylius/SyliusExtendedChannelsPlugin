@@ -54,7 +54,7 @@ class UpdateProductPriceByExchangeRatesCommand extends Command
         $targetChannelParam = $input->getArgument('targetChannel');
 
         $round = $input->getOption('round');
-        if ($round !== null && is_string($round)) {
+        if (is_string($round)) {
             $decimals = (int) $round;
         } else {
             $decimals = 2;

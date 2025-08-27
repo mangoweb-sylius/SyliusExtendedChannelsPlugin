@@ -16,20 +16,10 @@
     <php>
         <server name="IS_DOCTRINE_ORM_SUPPORTED" value="true" />
 
-        <!-- ###+ symfony/framework-bundle ### -->
-        <env name="APP_ENV" value="dev"/>
+        <env name="APP_ENV" value="test"/>
         <env name="APP_SECRET" value="e1095c7366122a383edf4e168730a6d5"/>
-        <!-- ###- symfony/framework-bundle ### -->
-
-        <!-- ###+ symfony/mailer ### -->
-        <env name="MAILER_DSN" value="null://null"/>
-        <!-- ###- symfony/mailer ### -->
-
-        <!-- ###+ symfony/swiftmailer-bundle ### -->
-        <!-- For Gmail as a transport, use: "gmail://username:password@localhost" -->
-        <!-- For a generic SMTP server, use: "smtp://localhost:25?encryption=&auth_mode=" -->
-        <!-- Delivery is disabled by default via "null://localhost" -->
-        <env name="MAILER_URL" value="null://localhost"/>
-        <!-- ###- symfony/swiftmailer-bundle ### -->
     </php>
+    <extensions>
+        <bootstrap class="Symfony\Component\Panther\ServerExtension"/>
+    </extensions>
 </phpunit>

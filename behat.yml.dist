@@ -4,18 +4,55 @@ imports:
 
 default:
     extensions:
+        Robertfausk\Behat\PantherExtension: ~
+
         Behat\MinkExtension:
-            base_url: "http://localhost:8080/"
+            base_url: 'http://127.0.0.1:9080' # same port as uses Panther
             default_session: symfony
+            javascript_session: panther
             sessions:
                 symfony:
                     symfony: ~
+                panther:
+                    panther:
+                        manager_options:
+                            connection_timeout_in_ms: 5000
+                            request_timeout_in_ms: 120000
+                            chromedriver_binary: '/usr/bin/chromedriver'
+                            chromedriver_arguments:
+                                - --log-path=tests/Application/var/log/chromedriver.log
+                                - --verbose
+                            capabilities:
+                                acceptSslCerts: true
+                                acceptInsecureCerts: true
+                                unexpectedAlertBehaviour: accept
+                        options:
+                            webServerDir: '%paths.base%/tests/Application/public'
+                            env:
+                                APP_ENV: test
+                            browser_arguments:
+                                - --window-size=1200,1000
+                                - --headless
+                                - --no-sandbox
+                                - --disable-dev-shm-usage
+                                - --disable-gpu
+                                - --disable-infobars
+                                - --disable-features=TranslateUI
+                                - --disable-translate
+                                - --disable-popup-blocking
+                                - --disable-blink-features=AutomationControlled
+                                - --disable-component-extensions-with-background-pages
+                                - --disable-background-networking
+                                - --disable-dev-tools
+                                - --disable-extensions
+                                - --disable-password-manager-leak-detection
             show_auto: false # do not automatically open browser on error
 
         FriendsOfBehat\SymfonyExtension:
             bootstrap: tests/Application/config/bootstrap.php
             kernel:
                 class: Tests\MangoSylius\ExtendedChannelsPlugin\Kernel
+                path: tests/Application/src/Kernel.php
 
         FriendsOfBehat\VariadicExtension: ~
 

@@ -15,7 +15,7 @@ Feature: Update product prices on another channel using exchange rates
 
 
 	@ui
-	Scenario: Run comman and check prices
+	Scenario: Run command and check prices
 		Given I update product prices on channels "Web-EU" and "Web-GB"
 		Then check that the product "Screwdriver" has price "€10.00" on channel "Web-EU"
 		And check that the product "Screwdriver" has price "€12.00" on channel "Web-GB"

@@ -23,15 +23,15 @@ Extended Channels Plugin
 
 * Duplicate product and product variant
 * Bulk action to set categories for products
-* Mark Taxon as external link so taxonomy can be used for creating custom menus with links anywhere
+* Mark Taxon as an external link so taxonomy can be used for creating custom menus with links anywhere
 * Download current exchange rates
 * Update product prices using downloaded or custom exchange rates
-* Set channel timezone
-* Set channel phone
-* Send copy of order mail to custom email address per channel
+* Set channel timezone (see [Optional](#Optional) bellow for loading timezones data)
+* Set channel phone (deprecated, use standard Sylius _Contact phone number_ instead)
+* Send a copy of order email to a custom email address (BCC) per channel
 * When SMTP is unavailable, it prevents error 500 on order submit but logs the error and submits the order
-* Cancel unpaid orders for certain payment method
-* Allows to change the code for the product and product variant
+* Cancel unpaid orders for a certain payment method
+* Allows changing code for the product and product variant
 * Administration for Hello Bars (you can use your own types)
 
 <p align="center">

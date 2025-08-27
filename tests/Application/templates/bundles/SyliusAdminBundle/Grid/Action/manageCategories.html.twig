@@ -1,7 +1,0 @@
-<form action="{{ options.link.url|default(path(options.link.route)) }}" method="get" id="bulk-setProductCategories">
-	{# hack - get bulk items ids via JS #}
-	<button class="ui labeled icon button" type="submit" disabled onclick="$('#bulkProductsIds').val($('input[name=\'ids[]\']:checked').map(function (index, input) { return input.value; }).toArray().join(','))">
-		<i class="icon folder"></i> {{ action.label|trans }}
-	</button>
-	<input type="hidden" name="bulkProductsIds" value="" id="bulkProductsIds" />
-</form>

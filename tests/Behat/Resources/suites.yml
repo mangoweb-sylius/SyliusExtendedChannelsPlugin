@@ -7,3 +7,4 @@ imports:
     - suites/download_current_exchange_rates.yml
     - suites/duplicate_product.yml
     - suites/duplicate_product_variant.yml
+    - suites/bulk_manage_product_categories.yml

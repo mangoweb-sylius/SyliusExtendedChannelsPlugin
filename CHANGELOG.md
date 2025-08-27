@@ -1,5 +1,25 @@
 # CHANGELOG
 
+## v2.0.0 (2025-08-26)
+
+#### Details
+
+- Add support for Sylius 2.0
+- Drop support for Sylius <= 1.14
+
+#### BC ⚠️ Breaking Changes on update:
+
+**Configuration file structure changes:**
+
+Change in `config/packages/_sylius.yaml`
+```diff
+-    - { resource: "@MangoSyliusExtendedChannelsPlugin/config/resources.yaml" }
++    - { resource: "@MangoSyliusExtendedChannelsPlugin/config/config.yaml" }
+```
+
+#### Deprecations
+- Custom channel phone number is no more meaningful, use standard _Contact phone number_ instead
+
 ## v1.6.0 (2025-08-15)
 
 #### Details

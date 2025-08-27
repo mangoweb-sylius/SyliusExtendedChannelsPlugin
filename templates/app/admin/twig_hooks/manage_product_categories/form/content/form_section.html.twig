@@ -1,0 +1,188 @@
+{% set form = hookable_metadata.context.form %}
+{% set productIds = hookable_metadata.context.productIds %}
+
+{{ form_errors(form) }}
+<form method="post">
+    <div class="row">
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{{ 'sylius.form.product.main_taxon'|trans }}</h3>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="mb-3">
+                        <label class="form-label"
+                            for="mangoweb_extended_channels_main_taxon_action_label">{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions_label'|trans }}</label>
+                        <select id="mangoweb_extended_channels_main_taxon_action_label" name="main_taxon_action" class="form-select" data-test-main-taxon-action-select>
+                            <option
+                                value="ignore" data-test-main-taxon-action="ignore">{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions.ignore'|trans }}</option>
+                            <option
+                                value="replace" data-test-main-taxon-action="replace">{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions.replace'|trans }}</option>
+                            <option
+                                value="add" data-test-main-taxon-action="add">{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions.add'|trans }}</option>
+                            <option
+                                value="remove" data-test-main-taxon-action="remove">{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions.remove'|trans }}</option>
+                            <option
+                                value="remove_all" data-test-main-taxon-action="remove_all">{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions.remove_all'|trans }}</option>
+                        </select>
+                    </div>
+
+                    {{ form_row(form.mainTaxon, sylius_test_form_attribute('bulk-main-taxon-field')) }}
+
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{{ 'sylius.ui.taxons'|trans }}</h3>
+                </div>
+
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label"
+                            for="mangoweb_extended_channels_taxons_action_label">{{ 'mango-sylius.admin.manage_product_categories.taxons_actions_label'|trans }}</label>
+                        <select id="mangoweb_extended_channels_taxons_action_label" name="taxons_action" class="form-select" data-test-taxons-action-select>
+                            <option
+                                value="ignore" data-test-taxons-action="ignore">{{ 'mango-sylius.admin.manage_product_categories.taxons_actions.ignore'|trans }}</option>
+                            <option
+                                value="replace" data-test-taxons-action="replace">{{ 'mango-sylius.admin.manage_product_categories.taxons_actions.replace'|trans }}</option>
+                            <option
+                                value="add" data-test-taxons-action="add">{{ 'mango-sylius.admin.manage_product_categories.taxons_actions.add'|trans }}</option>
+                            <option
+                                value="remove" data-test-taxons-action="remove">{{ 'mango-sylius.admin.manage_product_categories.taxons_actions.remove'|trans }}</option>
+                            <option
+                                value="remove_all" data-test-taxons-action="remove_all">{{ 'mango-sylius.admin.manage_product_categories.taxons_actions.remove_all'|trans }}</option>
+                        </select>
+                    </div>
+
+                    {% include '@SyliusAdmin/product/form/sections/taxonomy/product_taxons.html.twig' %}
+                </div>
+            </div>
+            <input type="hidden" name="bulkProductsIds" value="{{ productIds }}">
+            <div class="d-flex gap-3">
+                <button type="submit" class="btn btn-primary" data-test-bulk-save-button>
+                    {{ ux_icon('tabler:device-floppy', {'class': 'icon'}) }}
+                    {{ 'sylius.ui.save_changes'|trans }}
+                </button>
+                <a href="{{ path('sylius_admin_product_index') }}" class="btn btn-secondary">
+                    {{ 'sylius.ui.cancel'|trans }}
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions_help_title'|trans }} {{ ux_icon('tabler:help', {'class': 'icon'}) }}</h3>
+                </div>
+
+                <div class="card-body" id="main-taxon-help-container">
+                    <div class="help-section" data-help-for="ignore">
+                        <h4><strong>{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions.ignore'|trans }}</strong></h4>
+                        <p>{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions_help.ignore'|trans }}</p>
+                    </div>
+                    <div class="help-section" data-help-for="replace">
+                        <h4><strong>{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions.replace'|trans }}</strong></h4>
+                        <p>{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions_help.replace'|trans }}</p>
+                    </div>
+                    <div class="help-section" data-help-for="add">
+                        <h4><strong>{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions.add'|trans }}</strong></h4>
+                        <p>{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions_help.add'|trans }}</p>
+                    </div>
+                    <div class="help-section" data-help-for="remove">
+                        <h4><strong>{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions.remove'|trans }}</strong></h4>
+                        <p>{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions_help.remove'|trans }}</p>
+                    </div>
+                    <div class="help-section" data-help-for="remove_all">
+                        <h4><strong>{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions.remove_all'|trans }}</strong></h4>
+                        <p>{{ 'mango-sylius.admin.manage_product_categories.main_taxon_actions_help.remove_all'|trans }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{{ 'mango-sylius.admin.manage_product_categories.taxons_actions_help_title'|trans }} {{ ux_icon('tabler:help', {'class': 'icon'}) }}</h3>
+                </div>
+
+                <div class="card-body" id="taxons-help-container">
+                    <div class="help-section" data-help-for="ignore">
+                        <h4><strong>{{ 'mango-sylius.admin.manage_product_categories.taxons_actions.ignore'|trans }}</strong></h4>
+                        <p>{{ 'mango-sylius.admin.manage_product_categories.taxons_actions_help.ignore'|trans }}</p>
+                    </div>
+                    <div class="help-section" data-help-for="replace">
+                        <h4><strong>{{ 'mango-sylius.admin.manage_product_categories.taxons_actions.replace'|trans }}</strong></h4>
+                        <p>{{ 'mango-sylius.admin.manage_product_categories.taxons_actions_help.replace'|trans }}</p>
+                    </div>
+                    <div class="help-section" data-help-for="add">
+                        <h4><strong>{{ 'mango-sylius.admin.manage_product_categories.taxons_actions.add'|trans }}</strong></h4>
+                        <p>{{ 'mango-sylius.admin.manage_product_categories.taxons_actions_help.add'|trans }}</p>
+                    </div>
+                    <div class="help-section" data-help-for="remove">
+                        <h4><strong>{{ 'mango-sylius.admin.manage_product_categories.taxons_actions.remove'|trans }}</strong></h4>
+                        <p>{{ 'mango-sylius.admin.manage_product_categories.taxons_actions_help.remove'|trans }}</p>
+                    </div>
+                    <div class="help-section" data-help-for="remove_all">
+                        <h4><strong>{{ 'mango-sylius.admin.manage_product_categories.taxons_actions.remove_all'|trans }}</strong></h4>
+                        <p>{{ 'mango-sylius.admin.manage_product_categories.taxons_actions_help.remove_all'|trans }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<style>
+.help-section {
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.3s ease;
+    font-size: smaller;
+}
+.help-section p {
+    margin-bottom: 0;
+}
+
+.help-section.highlighted {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    function highlightHelpSection(selectId, containerId) {
+        const select = document.getElementById(selectId);
+        const container = document.getElementById(containerId);
+
+        if (!select || !container) return;
+
+        function updateHighlight() {
+            // Remove all existing highlights in this container
+            const allSections = container.querySelectorAll('.help-section');
+            allSections.forEach(section => section.classList.remove('highlighted'));
+
+            // Highlight the selected section
+            const selectedValue = select.value;
+            if (selectedValue) {
+                const targetSection = container.querySelector(`[data-help-for="${selectedValue}"]`);
+                if (targetSection) {
+                    targetSection.classList.add('highlighted');
+                }
+            }
+        }
+
+        // Listen for changes
+        select.addEventListener('change', updateHighlight);
+
+        // Initial highlight
+        updateHighlight();
+    }
+
+    // Initialize highlighting for both dropdowns
+    highlightHelpSection('mangoweb_extended_channels_main_taxon_action_label', 'main-taxon-help-container');
+    highlightHelpSection('mangoweb_extended_channels_taxons_action_label', 'taxons-help-container');
+});
+</script>

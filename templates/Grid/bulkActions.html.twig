@@ -1,10 +1,15 @@
-<div class="ui labeled icon floating dropdown primary link button" tabindex="0">
-	<i class="ellipsis vertical icon"></i><span class="text">{{ 'mango-sylius.admin.grid.bulk_actions'|trans }}</span>
-	<div class="menu left transition hidden">
-		{% for action in definition.getEnabledActions('bulk') %}
-			<div class="item">
-				{{ sylius_grid_render_bulk_action(grid, action, null) }}
-			</div>
-		{% endfor %}
-	</div>
+<div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" id="bulkActionsDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-test-bulk-actions-dropdown>
+        <i class="bi bi-three-dots-vertical"></i>
+        <span class="text">{{ 'mango-sylius.admin.grid.bulk_actions'|trans }}</span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="bulkActionsDropdown">
+        {% for action in definition.getEnabledActions('bulk') %}
+            <li>
+                <div class="dropdown-item" data-test-bulk-action="{{ action.name }}">
+                    {{ sylius_grid_render_bulk_action(grid, action, null) }}
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
 </div>
