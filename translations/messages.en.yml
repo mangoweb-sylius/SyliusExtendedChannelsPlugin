@@ -55,4 +55,5 @@ mango-sylius:
 
 mangoweb_extended_channels_plugin:
     ui:
-        hello_bars: Hello Bar
+        hello_bars: Hello Bars
+        hello_bar: Hello Bar

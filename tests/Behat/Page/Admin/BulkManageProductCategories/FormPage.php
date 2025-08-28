@@ -6,6 +6,7 @@ namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\BulkManagePr
 
 use Behat\Mink\Element\NodeElement;
 use Sylius\Behat\Page\SymfonyPage;
+use Sylius\Behat\Service\DriverHelper;
 use Webmozart\Assert\Assert;
 
 final class FormPage extends SymfonyPage implements FormPageInterface
@@ -69,6 +70,7 @@ final class FormPage extends SymfonyPage implements FormPageInterface
     public function saveChanges(): void
     {
         $this->getElement('save_button')->press();
+        DriverHelper::waitForPageToLoad($this->getSession());
     }
 
     protected function getDefinedElements(): array

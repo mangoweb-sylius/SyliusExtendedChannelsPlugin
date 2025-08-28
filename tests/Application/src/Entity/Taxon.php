@@ -9,10 +9,6 @@ use MangoSylius\ExtendedChannelsPlugin\Model\ExternalLinkTaxonInterface;
 use MangoSylius\ExtendedChannelsPlugin\Model\ExternalLinkTaxonTrait;
 use Sylius\Component\Core\Model\Taxon as SyliusTaxon;
 
-/**
- * @ORM\Table(name="sylius_taxon")
- * @ORM\Entity
- */
 #[ORM\Table(name: "sylius_taxon")]
 #[ORM\Entity]
 class Taxon extends SyliusTaxon implements ExternalLinkTaxonInterface

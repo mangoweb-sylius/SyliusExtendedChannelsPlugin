@@ -8,6 +8,7 @@ use Behat\Behat\Context\Context;
 use Doctrine\ORM\EntityManagerInterface;
 use Facebook\WebDriver\Exception\StaleElementReferenceException;
 use Sylius\Behat\NotificationType;
+use Sylius\Behat\Service\DriverHelper;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Product\ExtendedIndexPageInterface;

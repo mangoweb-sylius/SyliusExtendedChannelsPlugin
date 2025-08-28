@@ -1,4 +1,4 @@
-.PHONY: run init var yarn
+.PHONY: run init var yarn ci
 
 APP_ENV ?= dev
 
@@ -42,7 +42,6 @@ init-tests:
 	./bin-docker/php ./bin/console --env=test doctrine:schema:update --force --complete --no-interaction
 	./bin-docker/php ./bin/console --env=test doctrine:migration:sync-metadata-storage
 	./bin-docker/php ./bin/console --env=test assets:install
-	./bin-docker/yarn install --pure-lockfile
 	./bin-docker/yarn --cwd=tests/Application install --pure-lockfile
 	GULP_ENV=prod ./bin-docker/yarn --cwd=tests/Application build
 	@make var
@@ -108,6 +107,9 @@ var:
 	touch tests/Application/var/log/test.log
 	touch tests/Application/var/log/dev.log
 	chmod -R 0777 tests/Application/var
+	docker compose run --rm --user root php rm -fr tests/Application/public/media/cache
+	mkdir -p tests/Application/public/media/cache
+	chmod -R 0777 tests/Application/public/media/cache
 
 fixtures: schema-reset bare-fixtures var
 

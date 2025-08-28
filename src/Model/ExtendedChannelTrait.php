@@ -9,15 +9,12 @@ use MangoSylius\ExtendedChannelsPlugin\Entity\TimezoneEntity;
 
 trait ExtendedChannelTrait
 {
-    /** @ORM\ManyToOne(targetEntity="MangoSylius\ExtendedChannelsPlugin\Entity\TimezoneEntity") */
     #[ORM\ManyToOne(targetEntity: TimezoneEntity::class)]
     private ?TimezoneEntity $timezone = null;
 
-    /** @ORM\Column(type="string", nullable=true) */
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $bccEmail = null;
 
-    /** @ORM\Column(type="string", nullable=true) */
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $contactPhone = null;
 

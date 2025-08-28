@@ -11,6 +11,11 @@ parameters:
     sylius_core.public_dir: '%kernel.project_dir%/public'
     sylius_order.order_expiration_period: '2 days'
     sylius_order.expiration_method_codes: ['CSOB']
+    mangoweb_sylius_extended_channels_hello_bar_types:
+        error: 'Error'
+        success: 'Success'
+        info: 'Info'
+        warning: 'Warning'
 
 sylius_channel:
     resources:

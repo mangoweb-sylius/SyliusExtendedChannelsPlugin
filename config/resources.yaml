@@ -54,6 +54,10 @@ sylius_grid:
                 options:
                     class: "%mangoweb_extended_channels_plugin.model.hello_bar.class%"
             fields:
+                title:
+                    type: string
+                    label: sylius.ui.title
+                    sortable: ~
                 messageType:
                     type: string
                     label: mango-sylius.admin.hello_bar.message_type

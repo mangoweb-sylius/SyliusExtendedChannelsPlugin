@@ -68,6 +68,7 @@
 				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Setup\ChannelContext">
 			<argument type="service" id="doctrine.orm.entity_manager"/>
 			<argument type="service" id="sylius.behat.shared_storage"/>
+			<argument type="service" id="sylius.factory.channel"/>
 		</service>
 
 		<service id="sylius_extended_channels.context.setup.order"
@@ -150,6 +151,44 @@
 				 public="true">
 			<argument type="service" id="sylius.factory.product_taxon"/>
 			<argument type="service" id="doctrine.orm.entity_manager"/>
+			<tag name="fob.context_service"/>
+		</service>
+
+		<!-- Hello Bar Services -->
+		<service id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\HelloBar\IndexPageInterface"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\HelloBar\IndexPage"
+				 parent="sylius.behat.page.admin.crud.index" public="false">
+			<argument type="string">mangoweb_extended_channels_plugin_admin_hello_bar_index</argument>
+		</service>
+
+		<service id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\HelloBar\CreatePageInterface"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\HelloBar\CreatePage"
+				 parent="sylius.behat.page.admin.crud.create" public="false">
+			<argument type="string">mangoweb_extended_channels_plugin_admin_hello_bar_create</argument>
+		</service>
+
+		<service id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\HelloBar\UpdatePageInterface"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\HelloBar\UpdatePage"
+				 parent="sylius.behat.page.admin.crud.update" public="false">
+			<argument type="string">mangoweb_extended_channels_plugin_admin_hello_bar_update</argument>
+		</service>
+
+		<service id="sylius_extended_channels.context.setup.hello_bar"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Setup\HelloBarContext"
+				 public="true">
+			<argument type="service" id="mangoweb_extended_channels_plugin.factory.hello_bar"/>
+			<argument type="service" id="mangoweb_extended_channels_plugin.repository.hello_bar"/>
+			<argument type="service" id="doctrine.orm.entity_manager"/>
+			<tag name="fob.context_service"/>
+		</service>
+
+		<service id="sylius_extended_channels.context.ui.admin.managing_hello_bars"
+				 class="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Admin\ManagingHelloBarsContext"
+				 public="true">
+			<argument type="service" id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\HelloBar\IndexPageInterface"/>
+			<argument type="service" id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\HelloBar\CreatePageInterface"/>
+			<argument type="service" id="Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\HelloBar\UpdatePageInterface"/>
+			<argument type="service" id="mangoweb_extended_channels_plugin.repository.hello_bar"/>
 			<tag name="fob.context_service"/>
 		</service>
 	</services>

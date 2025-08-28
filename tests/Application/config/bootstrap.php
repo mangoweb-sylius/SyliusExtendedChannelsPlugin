@@ -6,6 +6,8 @@ use Symfony\Component\Dotenv\Dotenv;
 
 require dirname(__DIR__) . '../../../vendor/autoload.php';
 
+ini_set('memory_limit', '512M');
+
 if (($_SERVER['APP_ENV'] ?? '') === 'test') {
     /* to avoid Behat errors like
      * --- Failed scenarios: 8192: Function libxml_disable_entity_loader() is deprecated in vendor/symfony/dom-crawler/Crawler.php line 1183
