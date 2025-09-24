@@ -1,5 +1,7 @@
 .PHONY: run init var yarn ci
 
+MAKEFLAGS += --no-print-directory # to disable "make: Entering directory ..." messages
+
 APP_ENV ?= dev
 
 run: init

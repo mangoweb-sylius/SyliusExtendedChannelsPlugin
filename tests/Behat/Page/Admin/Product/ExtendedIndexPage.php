@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Product;
 
 use Sylius\Behat\Page\Admin\Product\IndexPage;
+use Sylius\Behat\Service\DriverHelper;
 use Webmozart\Assert\Assert;
 
 final class ExtendedIndexPage extends IndexPage implements ExtendedIndexPageInterface
@@ -31,5 +32,8 @@ final class ExtendedIndexPage extends IndexPage implements ExtendedIndexPageInte
         $submitButton = $form->find('css', 'button[type="submit"]');
         Assert::notNull($submitButton, 'Submit button not found');
         $submitButton->click();
+
+        // Wait for page load/redirect to complete
+        DriverHelper::waitForPageToLoad($session);
     }
 }

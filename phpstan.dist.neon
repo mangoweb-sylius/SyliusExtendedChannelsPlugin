@@ -22,3 +22,6 @@ parameters:
         - '/Cannot cast mixed to int\./'
         - identifier: missingType.iterableValue
         - identifier: missingType.generics
+        - identifier: instanceof.alwaysTrue
+        - identifier: varTag.nativeType
+        - identifier: function.alreadyNarrowedType

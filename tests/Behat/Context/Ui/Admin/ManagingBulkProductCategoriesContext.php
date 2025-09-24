@@ -92,7 +92,14 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
             $productIds[] = $product3->getId();
         }
         Assert::true(
-            $this->bulkManageCategoriesPage->isOpen(['bulkProductsIds' => $productIds])
+            $this->bulkManageCategoriesPage->isOpen(['bulkProductsIds' => $productIds]),
+            sprintf(
+                'Bulk manage product categories page is not open with products "%s", "%s"%s, current URL is %s',
+                $productName1,
+                $productName2,
+                $productName3 !== null ? sprintf(' and "%s"', $productName3) : '',
+                $this->bulkManageCategoriesPage->getCurrentUrl(),
+            ),
         );
     }
 

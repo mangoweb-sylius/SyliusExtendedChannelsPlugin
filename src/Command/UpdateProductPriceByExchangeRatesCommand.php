@@ -123,12 +123,12 @@ class UpdateProductPriceByExchangeRatesCommand extends Command
             $sourcePricing = $variant->getChannelPricingForChannel($sourceChannel);
             $targetPricing = $variant->getChannelPricingForChannel($targetChannel);
             if ($sourcePricing === null) {
-                $io->warning('Missing source pricing for variant ID ' . $variant->getId());
+                $io->warning('Missing source pricing for variant ID ' . (int) $variant->getId());
 
                 continue;
             }
             if ($targetPricing === null) {
-                $io->warning('Missing source pricing for variant ID ' . $variant->getId());
+                $io->warning('Missing source pricing for variant ID ' . (int) $variant->getId());
 
                 continue;
             }

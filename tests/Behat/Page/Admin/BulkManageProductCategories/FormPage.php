@@ -18,13 +18,17 @@ final class FormPage extends SymfonyPage implements FormPageInterface
 
     public function isOpen(array $urlParameters = []): bool
     {
-        $currentUrl = $this->getSession()->getCurrentUrl();
+        $currentUrl = $this->getCurrentUrl();
         $expectedUrl = $this->getUrl($urlParameters);
+        $expectedPath = parse_url($expectedUrl, PHP_URL_PATH);
 
         // Check if URL contains the expected path pattern
-        $isOpen = strpos($currentUrl, '/admin/bulk-set-product-categories/') !== false;
+        return str_contains($currentUrl, $expectedPath);
+    }
 
-        return $isOpen;
+    public function getCurrentUrl(): string
+    {
+        return $this->getSession()->getCurrentUrl();
     }
 
     public function setMainTaxon(string $taxonName): void
