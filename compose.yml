@@ -2,7 +2,7 @@ services:
     php:
         build: ./.docker/php
         environment:
-            APP_ENV: "dev"
+            APP_ENV: "${APP_ENV:-dev}"
             DATABASE_URL: "mysql://root:mysql@mysql/sylius_%kernel.environment%?charset=utf8mb4"
             #            DATABASE_URL: "pgsql://root:postgres@postgres/sylius_%kernel.environment%?charset=utf8" # When using postgres
             MAILER_DSN: "smtp://mailhog:1025"
