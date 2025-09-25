@@ -1,27 +1,17 @@
-/vendor/
 /node_modules/
-/composer.lock
-/yarn.lock
 /.env
 /.envrc
-
-/etc/build/*
-!/etc/build/.gitkeep
-
-/tests/Application/yarn.lock
+/vendor
+/composer.lock
+/symfony.lock
 
 compose.override.yaml
-/deploy/
-/docker/
-/etc/
 
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
-/public/bundles/
-/var/
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
@@ -32,10 +22,3 @@ compose.override.yaml
 ###> lexik/jwt-authentication-bundle ###
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
-
-###> symfony/webpack-encore-bundle ###
-/node_modules/
-/public/build/
-npm-debug.log
-yarn-error.log
-###< symfony/webpack-encore-bundle ###

@@ -37,8 +37,6 @@ jobs:
 
             -   name: Start services
                 run: docker compose up --detach --wait
-                env:
-                    APP_ENV: test
 
             -   name: Update Composer
                 run: docker compose exec --no-TTY php composer self-update
@@ -58,32 +56,22 @@ jobs:
                 run: docker compose exec --no-TTY php timeout 60s sh -c 'while ! nc -z mysql 3306; do sleep 0.1; done'
 
             -   name: Install dependencies (prefer-dist)
-                run: docker compose exec --no-TTY php composer update --no-interaction --prefer-dist --no-plugins
+                run: |
+                    docker compose exec --no-TTY php rm -fr vendor composer.lock
+                    docker compose exec --no-TTY php composer update --no-interaction --prefer-dist
+                    docker compose exec --no-TTY php bash -c 'vendor/bin/bdi detect drivers'
+                    docker compose exec --no-TTY php bash -c '
+                        cd tests/Application &&
+                        bin/console doctrine:database:create --if-not-exists --env=test -vvv &&
+                        bin/console doctrine:schema:update --complete --force --env=test -vvv &&
+                        bin/console cache:clear --env=test -vvv &&
+                        bin/console assets:install --env=test -vvv &&
+                        yarn install &&
+                        yarn build
+                        '
 
-            -   name: Upload prefer-dist composer.lock artifacts
-                uses: actions/upload-artifact@v4
-                if: always()
-                with:
-                    name: composer--prefer-dist-locks-php${{ matrix.php_version }}-sylius${{ matrix.sylius_version }}-symfony${{ matrix.symfony_version }}
-                    path: composer.lock
-
-            -   name: Setup test database
-                run: docker compose exec --no-TTY php bash -c '
-                    cd tests/Application &&
-                    bin/console doctrine:database:create --if-not-exists --env=test -vvv &&
-                    bin/console doctrine:schema:update --complete --force --env=test -vvv
-                    '
-
-            -   name: Warmup cache
-                run: docker compose exec --no-TTY php bash -c 'cd tests/Application && bin/console cache:clear --env=test -vvv'
-
-            -   name: Install assets
-                run: docker compose exec --no-TTY php bash -c '
-                    cd tests/Application &&
-                    bin/console assets:install --env=test -vvv &&
-                    yarn install &&
-                    yarn build
-                    '
+            -   name: Create weirdly required manifest.json file
+                run: docker compose exec --no-TTY php bash -c 'echo "{}" > tests/Application/public/build/manifest.json'
 
             -   name: PHPStan
                 run: docker compose exec --no-TTY php bash -c 'APP_ENV=test bin/phpstan.sh'
@@ -95,12 +83,27 @@ jobs:
                 run: docker compose exec --no-TTY php bash -c 'APP_ENV=test bin/symfony-lint.sh'
 
             -   name: Behat tests
-                run: docker compose exec --no-TTY php bash -c 'APP_ENV=test bin/behat.sh'
+                run: docker compose exec --no-TTY php bash -c 'bin/behat.sh -vvv'
+
+            -   name: Upload prefer-dist composer.lock artifacts
+                uses: actions/upload-artifact@v4
+                if: always()
+                with:
+                    name: composer--prefer-dist-locks-php${{ matrix.php_version }}-sylius${{ matrix.sylius_version }}-symfony${{ matrix.symfony_version }}
+                    path: composer.lock
+
+            -   name: Upload prefer-dist logs artifacts
+                uses: actions/upload-artifact@v4
+                if: always()
+                with:
+                    name: composer--prefer-dist-logs-php${{ matrix.php_version }}-sylius${{ matrix.sylius_version }}-symfony${{ matrix.symfony_version }}
+                    path: tests/Application/var/log/*
 
             -   name: Test with prefer-lowest dependencies
                 run: |
                     docker compose exec --no-TTY php rm -fr vendor composer.lock
                     docker compose exec --no-TTY php composer update --no-interaction --prefer-lowest --no-plugins
+                    docker compose exec --no-TTY php bash -c 'vendor/bin/bdi detect drivers'
                     docker compose exec --no-TTY php bash -c '
                         cd tests/Application &&
                         bin/console doctrine:database:create --if-not-exists --env=test -vvv &&
@@ -110,9 +113,18 @@ jobs:
                         yarn install &&
                         yarn build
                         '
-                    docker compose exec --no-TTY php bash -c 'APP_ENV=test bin/ecs.sh --clear-cache'
-                    docker compose exec --no-TTY php bash -c 'APP_ENV=test bin/symfony-lint.sh'
-                    docker compose exec --no-TTY php bash -c 'APP_ENV=test bin/behat.sh'
+
+            -   name: Create weirdly required manifest.json file
+                run: docker compose exec --no-TTY php bash -c 'echo "{}" > tests/Application/public/build/manifest.json'
+
+            -   name: ECS
+                run: docker compose exec --no-TTY php bash -c 'APP_ENV=test bin/ecs.sh --clear-cache'
+
+            -   name: Symfony lint
+                run: docker compose exec --no-TTY php bash -c 'APP_ENV=test bin/symfony-lint.sh'
+
+            -   name: Behat tests
+                run: docker compose exec --no-TTY php bash -c 'APP_ENV=test bin/behat.sh -vvv'
 
             -   name: Upload prefer-lowest composer.lock artifacts
                 uses: actions/upload-artifact@v4
@@ -120,6 +132,13 @@ jobs:
                 with:
                     name: composer-prefer-lowest-locks-php${{ matrix.php_version }}-sylius${{ matrix.sylius_version }}-symfony${{ matrix.symfony_version }}
                     path: composer.lock
+
+            -   name: Upload prefer-lowest logs artifacts
+                uses: actions/upload-artifact@v4
+                if: always()
+                with:
+                    name: composer-prefer-lowest-logs-php${{ matrix.php_version }}-sylius${{ matrix.sylius_version }}-symfony${{ matrix.symfony_version }}
+                    path: tests/Application/var/log/*
 
             -   name: Stop services
                 if: always()
