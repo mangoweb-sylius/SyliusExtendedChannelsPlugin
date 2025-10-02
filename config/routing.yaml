@@ -1,0 +1,31 @@
+mango_sylius_admin_duplicate_product:
+    path: /duplicate-product/{id}
+    defaults:
+        _controller: MangoSylius\ExtendedChannelsPlugin\Controller\DuplicateController::duplicateProduct
+
+mango_sylius_admin_duplicate_product_variant:
+    path: /duplicate-product-variant/{id}
+    defaults:
+        _controller: MangoSylius\ExtendedChannelsPlugin\Controller\DuplicateController::duplicateProductVariant
+
+mangoweb_extended_channels_plugin_hello_bar:
+    resource: |
+        alias: mangoweb_extended_channels_plugin.hello_bar
+        section: admin
+        path: hello_bar
+        templates: "@SyliusAdmin\\shared\\crud"
+        redirect: update
+        grid: mangoweb_extended_channels_plugin_hello_bar
+        vars:
+            all:
+                header: mango-sylius.admin.hello_bar.header
+                subheader: mango-sylius.admin.hello_bar.subheader
+                templates:
+                    form: '@MangoSyliusExtendedChannelsPlugin/HelloBar/_form.html.twig'
+        permission: true
+    type: sylius.resource
+
+mangoweb_sylius_admin_bulk_manage_product_categories:
+    path: /bulk-set-product-categories/
+    defaults:
+        _controller: MangoSylius\ExtendedChannelsPlugin\Controller\ManageProductCategoriesController::bulkManageProductCategories

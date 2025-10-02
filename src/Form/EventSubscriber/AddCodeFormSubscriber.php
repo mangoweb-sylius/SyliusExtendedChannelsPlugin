@@ -13,20 +13,16 @@ use Symfony\Component\Form\FormEvents;
 
 final class AddCodeFormSubscriber implements EventSubscriberInterface
 {
-    private string $type;
-
-    /** @var array<string, mixed> */
-    private array $options;
+    private readonly string $type;
 
     /**
      * @param array<string, mixed> $options
      */
     public function __construct(
         ?string $type = null,
-        array $options = [],
+        private readonly array $options = [],
     ) {
         $this->type = $type ?? TextType::class;
-        $this->options = $options;
     }
 
     /**

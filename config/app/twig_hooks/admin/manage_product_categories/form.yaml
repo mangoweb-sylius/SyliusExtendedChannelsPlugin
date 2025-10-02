@@ -1,0 +1,49 @@
+sylius_twig_hooks:
+    hooks:
+        # Main manage product categories form page structure
+        'app_admin.manage_product_categories.form':
+            sidebar:
+                template: '@SyliusAdmin/shared/crud/common/sidebar.html.twig'
+                priority: 200
+            # Disable navbar to prevent conflicts with main Sylius admin navbar
+            navbar:
+                enabled: false
+            content:
+                template: '@SyliusAdmin/shared/crud/common/content.html.twig'
+                priority: 0
+
+        'app_admin.manage_product_categories.form.content':
+            flashes:
+                template: '@SyliusAdmin/shared/crud/common/content/flashes.html.twig'
+                priority: 300
+            header:
+                template: '@SyliusAdmin/shared/crud/common/content/header.html.twig'
+                priority: 200
+            form_section:
+                component: 'sylius_admin:product:form:product_taxons'
+                props:
+                    template: '@MangoSyliusExtendedChannelsPlugin/app/admin/twig_hooks/manage_product_categories/form/content/form_section.html.twig'
+                configuration:
+                    auto_open: false
+                priority: 100
+            footer:
+                template: '@SyliusAdmin/shared/crud/common/content/footer.html.twig'
+                priority: -100
+            # Disable grid component to avoid "resources" property error
+            grid:
+                enabled: false
+
+        'app_admin.manage_product_categories.form.content.header':
+            breadcrumbs:
+                template: '@MangoSyliusExtendedChannelsPlugin/app/admin/twig_hooks/manage_product_categories/form/content/header/breadcrumbs.html.twig'
+                priority: 100
+            title_block:
+                template: '@SyliusAdmin/shared/crud/common/content/header/title_block.html.twig'
+                priority: 0
+
+        'app_admin.manage_product_categories.form.content.header.title_block':
+            title:
+                template: '@MangoSyliusExtendedChannelsPlugin/app/admin/twig_hooks/manage_product_categories/form/content/header/title_block/title.html.twig'
+                priority: 100
+            actions:
+                enabled: false

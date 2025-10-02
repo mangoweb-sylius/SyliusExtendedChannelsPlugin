@@ -5,15 +5,18 @@ declare(strict_types=1);
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Domain;
 
 use Behat\Behat\Context\Context;
-use Sylius\Bundle\CoreBundle\Command\InstallSampleDataCommand;
+use Sylius\Bundle\CoreBundle\Console\Command\InstallSampleDataCommand;
 use Sylius\Component\Core\Formatter\StringInflector;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-final class CommandContext implements Context
+final readonly class CommandContext implements Context
 {
-    public function __construct(private KernelInterface $kernel)
+    public function __construct(
+        private KernelInterface          $kernel,
+        private InstallSampleDataCommand $installSampleDataCommand,
+    )
     {
     }
 
@@ -25,7 +28,7 @@ final class CommandContext implements Context
         string $arg2,
     ) {
         $application = new Application($this->kernel);
-        $application->add(new InstallSampleDataCommand());
+        $application->add($this->installSampleDataCommand);
         $command = $application->find('mango:product:update-price');
         $tester  = new CommandTester($command);
         $tester->execute([
@@ -40,7 +43,7 @@ final class CommandContext implements Context
     public function iCancelOrders()
     {
         $application = new Application($this->kernel);
-        $application->add(new InstallSampleDataCommand());
+        $application->add($this->installSampleDataCommand);
         $command = $application->find('mango:cancel-unpaid-orders');
         $tester  = new CommandTester($command);
         $tester->execute([]);
@@ -52,7 +55,7 @@ final class CommandContext implements Context
     public function iUpdateExchangeRates()
     {
         $application = new Application($this->kernel);
-        $application->add(new InstallSampleDataCommand());
+        $application->add($this->installSampleDataCommand);
         $command = $application->find('mango:exchange-rates:update');
         $tester  = new CommandTester($command);
         $tester->execute([

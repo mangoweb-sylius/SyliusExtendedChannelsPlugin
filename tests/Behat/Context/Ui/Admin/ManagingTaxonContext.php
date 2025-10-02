@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
 
 final class ManagingTaxonContext implements Context
 {
-    public function __construct(private UpdatePageInterface $updatePage)
+    public function __construct(private readonly UpdatePageInterface $updatePage)
     {
     }
 
@@ -44,5 +44,13 @@ final class ManagingTaxonContext implements Context
     public function thisTaxonShouldBeUnmarkedAsExternalLink()
     {
         Assert::false((bool)$this->updatePage->isSingleResourceOnPage('external_link_checkbox'));
+    }
+
+    /**
+     * @When I save my changes
+     */
+    public function iSaveMyChanges(): void
+    {
+        $this->updatePage->saveChanges();
     }
 }

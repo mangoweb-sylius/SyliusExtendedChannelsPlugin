@@ -13,11 +13,6 @@ use Sylius\Component\Resource\Model\TranslatableInterface;
 use Sylius\Component\Resource\Model\TranslatableTrait;
 use Sylius\Component\Resource\Model\TranslationInterface;
 
-/**
- * @ORM\Entity
- *
- * @ORM\Table(name="mangoweb_hello_bar")
- */
 #[ORM\Entity]
 #[ORM\Table(name: 'mangoweb_hello_bar')]
 class HelloBar implements ResourceInterface, TranslatableInterface, HelloBarInterface
@@ -27,43 +22,24 @@ class HelloBar implements ResourceInterface, TranslatableInterface, HelloBarInte
         getTranslation as private doGetTranslation;
     }
 
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    /** @ORM\Column(type="datetime", nullable=true) */
     #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $startsAt = null;
 
-    /** @ORM\Column(type="datetime", nullable=true) */
     #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $endsAt = null;
 
-    /**
-     * @var Collection|ChannelInterface[]
-     *
-     * @ORM\ManyToMany(targetEntity="Sylius\Component\Core\Model\Channel")
-     *
-     * @ORM\JoinTable(name="mangoweb_hello_bar_channel",
-     *     joinColumns={@ORM\JoinColumn(name="mangoweb_hello_bar_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="channel_id", referencedColumnName="id")}
-     * )
-     */
+    /** @var Collection<ChannelInterface> */
     #[ORM\ManyToMany(targetEntity: ChannelInterface::class)]
     #[ORM\JoinTable(name: 'mangoweb_hello_bar_channel')]
     #[ORM\JoinColumn(name: 'mangoweb_hello_bar_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'channel_id', referencedColumnName: 'id')]
     protected Collection $channels;
 
-    /** @ORM\Column(type="string", nullable=false) */
     #[ORM\Column(type: 'string', nullable: false)]
     protected ?string $messageType = null;
 

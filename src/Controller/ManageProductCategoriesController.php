@@ -91,6 +91,9 @@ class ManageProductCategoriesController
 
         foreach ($productIds as $productId) {
             $product = $this->productRepository->find($productId);
+            if ($product === null) {
+                continue;
+            }
             assert($product instanceof ProductInterface);
 
             $this->manageMainTaxon($product, $dummyProduct, $mainTaxonAction);

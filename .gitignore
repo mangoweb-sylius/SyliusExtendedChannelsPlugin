@@ -1,29 +1,17 @@
-
-/vendor/
 /node_modules/
+/.env
+/.envrc
+/vendor
 /composer.lock
+/symfony.lock
 
-/etc/build/*
-!/etc/build/.gitkeep
-
-/tests/Application/yarn.lock
-
-docker-compose.override.yaml
-docker-compose.override.dist.yaml
-docker-compose.yaml
-/bin-docker/
-/deploy/
-/docker/
-/etc/
+compose.override.yaml
 
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
-/public/bundles/
-/var/
-/vendor/
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###

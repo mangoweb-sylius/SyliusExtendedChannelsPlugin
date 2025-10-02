@@ -10,7 +10,7 @@ use MangoSylius\ExtendedChannelsPlugin\Model\ExternalLinkTaxonInterface;
 
 final class TaxonContext implements Context
 {
-    public function __construct(private EntityManagerInterface $entityManager)
+    public function __construct(private readonly EntityManagerInterface $entityManager)
     {
     }
 

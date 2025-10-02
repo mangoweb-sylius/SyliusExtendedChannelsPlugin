@@ -6,15 +6,17 @@
 !/public/media/image/
 /public/media/image/*
 !/public/media/image/.gitkeep
+/public/bundles
+/var/
 
 /node_modules
+
+yarn.lock
 
 ###> symfony/framework-bundle ###
 /.env.*.local
 /.env.local
 /.env.local.php
-/public/bundles
-/var/
 /vendor/
 ###< symfony/framework-bundle ###
 

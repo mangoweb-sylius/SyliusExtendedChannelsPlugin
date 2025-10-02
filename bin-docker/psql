@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+source "${DIR}/_tty.sh"
+
+if [ "$(docker compose ps postgres | grep --count Up)" -gt 0 ]; then
+	docker_compose_exec \
+		postgres psql "$@"
+else
+	docker_compose_run \
+		--entrypoint=psql \
+		postgres "$@"
+fi

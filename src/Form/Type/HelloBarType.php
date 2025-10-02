@@ -19,7 +19,7 @@ final class HelloBarType extends AbstractResourceType
      * @param array<string> $validationGroups
      */
     public function __construct(
-        private array $helloBarTypes,
+        private readonly array $helloBarTypes,
         string $dataClass,
         array $validationGroups = [],
     ) {

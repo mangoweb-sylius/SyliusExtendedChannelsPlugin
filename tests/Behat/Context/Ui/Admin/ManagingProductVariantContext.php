@@ -13,8 +13,8 @@ use Webmozart\Assert\Assert;
 final class ManagingProductVariantContext implements Context
 {
     public function __construct(
-        private ShowPageInterface            $showPage,
-        private NotificationCheckerInterface $notificationChecker,
+        private readonly ShowPageInterface            $showPage,
+        private readonly NotificationCheckerInterface $notificationChecker,
     ) {
     }
 

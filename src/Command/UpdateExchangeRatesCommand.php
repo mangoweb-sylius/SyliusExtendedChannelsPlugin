@@ -16,24 +16,11 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class UpdateExchangeRatesCommand extends Command
 {
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
-    /** @var ExchangeRateRepositoryInterface */
-    private $exchangeRateRepository;
-
-    /** @var LoggerInterface */
-    private $logger;
-
     public function __construct(
-        EntityManagerInterface $entityManager,
-        LoggerInterface $logger,
-        ExchangeRateRepositoryInterface $exchangeRateRepository,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly LoggerInterface $logger,
+        private readonly ExchangeRateRepositoryInterface $exchangeRateRepository,
     ) {
-        $this->entityManager = $entityManager;
-        $this->logger = $logger;
-        $this->exchangeRateRepository = $exchangeRateRepository;
-
         parent::__construct();
     }
 
@@ -41,7 +28,7 @@ class UpdateExchangeRatesCommand extends Command
     {
         $this
             ->setName('mango:exchange-rates:update')
-            ->addArgument('exchangeratesUrl', InputArgument::OPTIONAL, 'URL', 'https://api.exchangeratesapi.io/latest?base=%currency%')
+            ->addArgument('exchangeratesUrl', InputArgument::OPTIONAL, 'URL', 'https://open.er-api.com/v6/latest/%currency%')
             ->setDescription('Update exchange rates.');
     }
 
@@ -57,7 +44,7 @@ class UpdateExchangeRatesCommand extends Command
         foreach ($exchangeRates as $exchangeRate) {
             assert($exchangeRate instanceof ExchangeRateInterface);
             assert($exchangeRate->getSourceCurrency() !== null);
-            $currencies[] = (string) $exchangeRate->getSourceCurrency()->getCode();
+            $currencies[] = strtoupper((string) $exchangeRate->getSourceCurrency()->getCode());
         }
 
         $exchangeRatesUrl = $input->getArgument('exchangeratesUrl');

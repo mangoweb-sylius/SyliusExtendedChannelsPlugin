@@ -23,15 +23,15 @@ Extended Channels Plugin
 
 * Duplicate product and product variant
 * Bulk action to set categories for products
-* Mark Taxon as external link so taxonomy can be used for creating custom menus with links anywhere
+* Mark Taxon as an external link so taxonomy can be used for creating custom menus with links anywhere
 * Download current exchange rates
 * Update product prices using downloaded or custom exchange rates
-* Set channel timezone
-* Set channel phone
-* Send copy of order mail to custom email address per channel
+* Set channel timezone (see [Optional](#Optional) bellow for loading timezones data)
+* Set channel phone (deprecated, use standard Sylius _Contact phone number_ instead)
+* Send a copy of order email to a custom email address (BCC) per channel
 * When SMTP is unavailable, it prevents error 500 on order submit but logs the error and submits the order
-* Cancel unpaid orders for certain payment method
-* Allows to change the code for the product and product variant
+* Cancel unpaid orders for a certain payment method
+* Allows changing code for the product and product variant
 * Administration for Hello Bars (you can use your own types)
 
 <p align="center">
@@ -58,17 +58,19 @@ Extended Channels Plugin
 1. Add resource to `config/packeges/_sylius.yaml`
 
     ```yaml
+    # config/packages/_sylius.yaml
     imports:
          ...
-         - { resource: "@MangoSyliusExtendedChannelsPlugin/Resources/config/resources.yml" }
+         - { resource: "@MangoSyliusExtendedChannelsPlugin/config/resources.yaml" }
     ```
    
-1. Add routing to `config/_routes.yaml`
+1. Add routing to `config/routes.yaml`
 
     ```yaml
-    mango_sylius_extended_channels:
-        resource: '@MangoSyliusExtendedChannelsPlugin/Resources/config/routing.yml'
-        prefix: /admin
+    # config/routes.yaml
+    mango_extended_channels_plugin:
+        resource: "@MangoSyliusExtendedChannelsPlugin/config/routing.yaml"
+        prefix: "/%sylius_admin.path_name%"
     ```
 
 
@@ -88,7 +90,7 @@ Run `src/Migrations/basic-data/timezones-data.sql` for load the timezones table.
   ```
 
 
-* Update Product prices by exchange rates, from `sourceChannel` (primary value, won't be changed) to `targetChannel`. You can run this after the previous command to update by downloaded rates or you can run it without the previous one to update the prices with your custom exchange rates set in Sylius admin.
+* Update Product prices by exchange rates, from `sourceChannel` (primary value, won't be changed) to `targetChannel`. You can run this after the previous command to update by downloaded rates, or you can run it without the previous one to update the prices with your custom exchange rates set in Sylius admin.
 
    ```bash
    mango:product:update-price sourceChannel targetChannel

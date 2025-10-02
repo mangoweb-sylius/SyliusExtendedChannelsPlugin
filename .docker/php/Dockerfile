@@ -1,10 +1,14 @@
+ARG PHP_VERSION=8.3
+
 FROM node:20-alpine AS node
 
-FROM ghcr.io/sylius/sylius-php:8.3-xdebug-alpine
+FROM ghcr.io/sylius/sylius-php:${PHP_VERSION}-xdebug-alpine
 
 RUN apk add --no-cache \
     bash \
-    make
+    make \
+    chromium \
+    chromium-chromedriver
 
 COPY --from=node /usr/lib /usr/lib
 COPY --from=node /usr/local/share /usr/local/share

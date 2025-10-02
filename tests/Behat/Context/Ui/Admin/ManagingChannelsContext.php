@@ -15,9 +15,9 @@ use Webmozart\Assert\Assert;
 final class ManagingChannelsContext implements Context
 {
     public function __construct(
-        private UpdatePageInterface $updatePage,
-        private SharedStorageInterface $sharedStorage,
-        private EntityManagerInterface $entityManager,
+        private readonly UpdatePageInterface $updatePage,
+        private readonly SharedStorageInterface $sharedStorage,
+        private readonly EntityManagerInterface $entityManager,
     ) {
     }
 

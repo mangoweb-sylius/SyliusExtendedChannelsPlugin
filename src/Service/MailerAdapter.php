@@ -22,7 +22,7 @@ class MailerAdapter extends AbstractAdapter
 {
     public function __construct(
         protected MailerInterface $mailer,
-        private LoggerInterface $logger,
+        private readonly LoggerInterface $logger,
         EventDispatcherInterface $dispatcher,
     ) {
         $this->setEventDispatcher($dispatcher);

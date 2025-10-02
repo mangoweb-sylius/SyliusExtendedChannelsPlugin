@@ -27,7 +27,7 @@ final class TaxonTypeExtension extends AbstractTypeExtension
     public static function getExtendedTypes(): array
     {
         return [
-            \Sylius\Bundle\TaxonomyBundle\Form\Type\TaxonType::class,
+            \Sylius\Bundle\AdminBundle\Form\Type\TaxonType::class,
         ];
     }
 }

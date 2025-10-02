@@ -1,0 +1,8 @@
+<form action="{{ options.link.url|default(path(options.link.route)) }}" method="get" id="bulk-setProductCategories">
+    {# hack - get bulk items ids via JS #}
+    <button class="btn btn-primary" type="submit" disabled data-check-all-action="index"
+            onclick="document.getElementById('bulkProductsIds').value = Array.from(document.querySelectorAll('input.form-check-input:checked')).map(function(input) { return input.value; }).join(',')">
+        <i class="glyphicon glyphicon-folder-open"></i> {{ action.label|trans }}
+    </button>
+    <input type="hidden" name="bulkProductsIds" value="" id="bulkProductsIds"/>
+</form>

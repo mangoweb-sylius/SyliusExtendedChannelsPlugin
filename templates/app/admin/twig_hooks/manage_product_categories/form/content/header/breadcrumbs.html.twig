@@ -1,0 +1,9 @@
+{% import '@SyliusAdmin/shared/helper/breadcrumbs.html.twig' as breadcrumb %}
+
+{% set breadcrumbs = [
+    { name: 'sylius.ui.administration'|trans, url: path('sylius_admin_dashboard') },
+    { name: 'sylius.ui.products'|trans, url: path('sylius_admin_product_index') },
+    { name: 'mango-sylius.admin.product.manage_categories'|trans },
+] %}
+
+{{ breadcrumb.breadcrumbs(breadcrumbs) }}

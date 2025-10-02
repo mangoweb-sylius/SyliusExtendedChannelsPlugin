@@ -1,0 +1,9 @@
+{% set productIdsCount = hookable_metadata.context.productIdsCount %}
+
+<h1 class="ui header">
+    <i class="circular folder icon"></i>
+    <div class="content">
+        {{ 'mango-sylius.admin.product.manage_categories'|trans }}
+        <div class="sub header">{{ 'mango-sylius.admin.selected_products_count'|trans }}: {{ productIdsCount }}</div>
+    </div>
+</h1>

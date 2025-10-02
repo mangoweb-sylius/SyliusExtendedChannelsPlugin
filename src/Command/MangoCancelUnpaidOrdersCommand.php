@@ -12,33 +12,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MangoCancelUnpaidOrdersCommand extends Command
 {
-    /** @var MangoUnpaidOrdersStateUpdater */
-    private $unpaidCartsStateUpdater;
-
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
-    /** @var array<string> */
-    private array $expirationMethodCodes;
-
-    /** @var string */
-    private $expirationPeriod;
-
     /**
      * @param array<string> $expirationMethodCodes
      */
     public function __construct(
-        MangoUnpaidOrdersStateUpdater $unpaidCartsStateUpdater,
-        EntityManagerInterface $entityManager,
-        string $expirationPeriod,
-        array $expirationMethodCodes,
+        private readonly MangoUnpaidOrdersStateUpdater $unpaidCartsStateUpdater,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly string $expirationPeriod,
+        private readonly array $expirationMethodCodes,
     ) {
         parent::__construct();
-
-        $this->unpaidCartsStateUpdater = $unpaidCartsStateUpdater;
-        $this->entityManager = $entityManager;
-        $this->expirationMethodCodes = $expirationMethodCodes;
-        $this->expirationPeriod = $expirationPeriod;
     }
 
     /**

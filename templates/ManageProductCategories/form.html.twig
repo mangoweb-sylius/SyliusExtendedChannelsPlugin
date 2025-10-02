@@ -1,0 +1,19 @@
+{% extends '@SyliusAdmin/shared/layout/base.html.twig' %}
+
+{% block title %}
+    {{ 'mango-sylius.admin.product.manage_categories'|trans }}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {% set prefixes = [
+        'app_admin.manage_product_categories.form',
+        'sylius_admin.common.index'
+    ] %}
+
+    {% hook prefixes with {
+        form: form,
+        productIds: productIds,
+        productIdsCount: productIdsCount,
+    } %}
+{% endblock body %}

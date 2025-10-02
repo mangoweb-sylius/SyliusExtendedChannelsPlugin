@@ -13,8 +13,8 @@ use Twig\TwigFunction;
 class HelloBarExtension extends AbstractExtension
 {
     public function __construct(
-        private ChannelContextInterface $channelContext,
-        private HelloBarRepositoryInterface $helloBarRepository,
+        private readonly ChannelContextInterface $channelContext,
+        private readonly HelloBarRepositoryInterface $helloBarRepository,
     ) {
     }
 
@@ -24,8 +24,8 @@ class HelloBarExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('mangoweb_sylius_available_hello_bars', [$this, 'getAvailableHelloBars']),
-            new TwigFunction('mangoweb_sylius_available_hello_bars_by_type', [$this, 'getAvailableHelloBarsByType']),
+            new TwigFunction('mangoweb_sylius_available_hello_bars', $this->getAvailableHelloBars(...)),
+            new TwigFunction('mangoweb_sylius_available_hello_bars_by_type', $this->getAvailableHelloBarsByType(...)),
         ];
     }
 

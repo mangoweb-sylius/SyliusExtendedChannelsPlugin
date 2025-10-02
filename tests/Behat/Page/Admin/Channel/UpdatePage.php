@@ -31,9 +31,9 @@ final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
 	protected function getDefinedElements(): array
 	{
 		return array_merge(parent::getDefinedElements(), [
-			'phone' => '#sylius_channel_contactPhone',
-			'bccEmail' => '#sylius_channel_bccEmail',
-			'timezone' => '#sylius_channel_timezone',
+			'phone' => '#sylius_admin_channel_contactPhone',
+			'bccEmail' => '#sylius_admin_channel_bccEmail',
+			'timezone' => '#sylius_admin_channel_timezone',
 		]);
 	}
 }
