@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 final class OrderContext implements Context
 {
     public function __construct(
-        private readonly SharedStorageInterface   $sharedStorage,
+        private readonly SharedStorageInterface $sharedStorage,
         private readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }

@@ -20,7 +20,7 @@ final class EmailContext implements Context
      */
     public function anEmailGeneratedForOrderShouldBeSentTo(
         OrderInterface $order,
-        string         $arg2,
+        string $arg2,
     ): void {
         Assert::true($this->emailChecker->hasMessageTo('Your order no. ' . $order->getNumber() . ' has been successfully placed.', $arg2));
     }

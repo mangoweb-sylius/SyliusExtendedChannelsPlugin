@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v2.1.0 (2026-01-27)
+
+#### Details
+
+- Add support for Sylius 2.1 and 2.2
+- Drop support for Sylius 2.0
+- Require PHP 8.3+ and Symfony 7.4
+
 ## v2.0.0 (2025-08-26)
 
 #### Details

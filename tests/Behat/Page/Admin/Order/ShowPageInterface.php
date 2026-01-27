@@ -8,5 +8,5 @@ use FriendsOfBehat\PageObjectExtension\Page\SymfonyPageInterface;
 
 interface ShowPageInterface extends SymfonyPageInterface
 {
-	public function resendOrderEmail(): void;
+    public function resendOrderEmail(): void;
 }

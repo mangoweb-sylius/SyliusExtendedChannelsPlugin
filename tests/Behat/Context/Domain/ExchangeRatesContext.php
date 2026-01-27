@@ -20,7 +20,7 @@ final class ExchangeRatesContext implements Context
     public function theExchangeRateOfToShouldBe(
         string $currencyCode1,
         string $currencyCode2,
-        float  $ration,
+        float $ration,
     ) {
         $exchangeRate = $this->exchangeRateRepository->findOneWithCurrencyPair($currencyCode1, $currencyCode2);
         assert($exchangeRate !== null);

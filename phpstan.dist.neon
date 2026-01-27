@@ -10,8 +10,8 @@ parameters:
         # Test dependencies
         - 'tests/Application/src/Kernel.php'
         - 'tests/Application/config/bootstrap.php'
-        - 'tests/Application/node_modules'
-        - 'tests/Application/var'
+        - 'tests/Application/node_modules (?)'
+        - 'tests/Application/var (?)'
         - 'tests/Behat'
 
     ignoreErrors:
@@ -25,3 +25,4 @@ parameters:
         - identifier: instanceof.alwaysTrue
         - identifier: varTag.nativeType
         - identifier: function.alreadyNarrowedType
+        - identifier: trait.unused

@@ -20,9 +20,9 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                sylius_version: ["2.0"]
-                symfony_version: ["6.4", "7.1"]
-                php_version: ["8.2", "8.3"]
+                sylius_version: ["2.1", "2.2"]
+                symfony_version: ["7.4"]
+                php_version: ["8.3"]
 
         # Steps represent a sequence of tasks that will be executed as part of the job
         steps:
@@ -47,7 +47,7 @@ jobs:
             -   name: Install Symfony version
                 run: docker compose exec --no-TTY php bash -c '
                     grep -o -E "\"(symfony/[^\"]+)\"" composer.json |
-                    grep -v -E "(symfony/flex|symfony/webpack-encore-bundle|symfony/debug-bundle|symfony/web-profiler-bundle|symfony/panther)" |
+                    grep -v -E "(symfony/flex|symfony/webpack-encore-bundle|symfony/debug-bundle|symfony/web-profiler-bundle|symfony/panther|symfony/maker-bundle)" |
                     xargs printf "%s:${{ matrix.symfony_version }}.* " |
                     xargs composer require --no-interaction --no-update
                     '

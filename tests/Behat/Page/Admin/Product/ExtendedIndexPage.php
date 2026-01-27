@@ -14,9 +14,9 @@ final class ExtendedIndexPage extends IndexPage implements ExtendedIndexPageInte
     {
         // Use the exact same pattern as Sylius checkResourceOnPage method
         $tableAccessor = $this->getTableAccessor();
-        $table         = $this->getElement('table');
-        $resourceRow   = $tableAccessor->getRowWithFields($table, ['name' => $productName]);
-        $bulkCheckbox  = $resourceRow->find('css', '.form-check-input');
+        $table = $this->getElement('table');
+        $resourceRow = $tableAccessor->getRowWithFields($table, ['name' => $productName]);
+        $bulkCheckbox = $resourceRow->find('css', '.form-check-input');
         Assert::notNull($bulkCheckbox);
         $bulkCheckbox->click();
     }
@@ -25,8 +25,8 @@ final class ExtendedIndexPage extends IndexPage implements ExtendedIndexPageInte
     {
         $locator = '#bulk-' . preg_replace('~^bulk-~', '', $actionName);
         $session = $this->getSession();
-        $page    = $session->getPage();
-        $form    = $page->find('css', $locator);
+        $page = $session->getPage();
+        $form = $page->find('css', $locator);
         Assert::notNull($form, "Form not found by locator '{$locator}'");
 
         $submitButton = $form->find('css', 'button[type="submit"]');

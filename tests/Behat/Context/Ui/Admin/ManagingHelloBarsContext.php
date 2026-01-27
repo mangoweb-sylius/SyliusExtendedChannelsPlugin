@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
-use Doctrine\ORM\EntityManagerInterface;
-use MangoSylius\ExtendedChannelsPlugin\Repository\HelloBarRepositoryInterface;
-use Sylius\Behat\Service\Resolver\CurrentPageResolverInterface;
 use Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\HelloBar\CreatePageInterface;
 use Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\HelloBar\IndexPageInterface;
 use Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\HelloBar\UpdatePageInterface;
@@ -16,7 +13,7 @@ use Webmozart\Assert\Assert;
 final class ManagingHelloBarsContext implements Context
 {
     public function __construct(
-        private readonly IndexPageInterface  $indexPage,
+        private readonly IndexPageInterface $indexPage,
         private readonly CreatePageInterface $createPage,
         private readonly UpdatePageInterface $updatePage,
     ) {
@@ -144,7 +141,6 @@ final class ManagingHelloBarsContext implements Context
         $this->indexPage->open();
         $this->indexPage->deleteResourceByName($helloBar);
     }
-
 
     /**
      * @Then there should be :count Hello bar(s) in the registry

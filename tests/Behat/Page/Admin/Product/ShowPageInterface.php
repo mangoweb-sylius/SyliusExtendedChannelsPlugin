@@ -8,7 +8,7 @@ use FriendsOfBehat\PageObjectExtension\Page\SymfonyPageInterface;
 
 interface ShowPageInterface extends SymfonyPageInterface
 {
-	public function duplicateProduct(): void;
+    public function duplicateProduct(): void;
 
-	public function getCodeValue(): string;
+    public function getCodeValue(): string;
 }

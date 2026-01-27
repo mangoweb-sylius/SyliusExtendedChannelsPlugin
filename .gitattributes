@@ -1,0 +1,13 @@
+/.docker export-ignore
+/.editorconfig export-ignore
+/.gitattributes export-ignore
+/.github export-ignore
+/behat.yml.dist export-ignore
+/compose.yaml export-ignore
+/doc export-ignore
+/ecs.php export-ignore
+/features export-ignore
+/Makefile export-ignore
+/phpstan.dist.neon export-ignore
+/phpunit.xml.dist export-ignore
+/tests export-ignore

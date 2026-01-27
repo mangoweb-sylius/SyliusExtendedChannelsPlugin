@@ -27,7 +27,7 @@ final class ManagingTaxonContext implements Context
      */
     public function thisTaxonShouldBeMarkedAsExternalLink()
     {
-        Assert::true((bool)$this->updatePage->isSingleResourceOnPage('external_link_checkbox'));
+        Assert::true((bool) $this->updatePage->isSingleResourceOnPage('external_link_checkbox'));
     }
 
     /**
@@ -43,7 +43,7 @@ final class ManagingTaxonContext implements Context
      */
     public function thisTaxonShouldBeUnmarkedAsExternalLink()
     {
-        Assert::false((bool)$this->updatePage->isSingleResourceOnPage('external_link_checkbox'));
+        Assert::false((bool) $this->updatePage->isSingleResourceOnPage('external_link_checkbox'));
     }
 
     /**
