@@ -45,14 +45,14 @@ class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
         $actualEndDate = $this->getElement('endsAt_date')->getValue();
         $actualEndTime = $this->getElement('endsAt_time')->getValue();
 
-        return ($actualStartDate . ' ' . $actualStartTime) === $startDate
-            && ($actualEndDate . ' ' . $actualEndTime) === $endDate;
+        return ($actualStartDate . ' ' . $actualStartTime) === $startDate &&
+            ($actualEndDate . ' ' . $actualEndTime) === $endDate;
     }
 
     protected function getDefinedElements(): array
     {
         return array_merge(parent::getDefinedElements(), [
-            'title' => "#hello_bar_translations_en_US_title",
+            'title' => '#hello_bar_translations_en_US_title',
             'content' => '#hello_bar_translations_en_US_content',
             'messageType' => '#hello_bar_messageType',
             'startsAt_date' => '#hello_bar_startsAt_date',

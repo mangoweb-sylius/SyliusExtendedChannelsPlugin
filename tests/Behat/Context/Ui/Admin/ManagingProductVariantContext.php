@@ -13,7 +13,7 @@ use Webmozart\Assert\Assert;
 final class ManagingProductVariantContext implements Context
 {
     public function __construct(
-        private readonly ShowPageInterface            $showPage,
+        private readonly ShowPageInterface $showPage,
         private readonly NotificationCheckerInterface $notificationChecker,
     ) {
     }
@@ -31,7 +31,7 @@ final class ManagingProductVariantContext implements Context
      */
     public function theCodeFieldShouldEndWith($arg1)
     {
-        $code  = $this->showPage->getCodeValue();
+        $code = $this->showPage->getCodeValue();
         $parts = explode('-', $code);
 
         Assert::eq(end($parts), 'copy');

@@ -27,14 +27,14 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 final class OrderContext implements Context
 {
     public function __construct(
-        private readonly EntityManagerInterface             $entityManager,
-        private readonly SharedStorageInterface             $sharedStorage,
-        private readonly FactoryInterface                   $customerFactory,
-        private readonly ProductVariantResolverInterface    $variantResolver,
-        private readonly FactoryInterface                   $orderItemFactory,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly SharedStorageInterface $sharedStorage,
+        private readonly FactoryInterface $customerFactory,
+        private readonly ProductVariantResolverInterface $variantResolver,
+        private readonly FactoryInterface $orderItemFactory,
         private readonly OrderItemQuantityModifierInterface $itemQuantityModifier,
-        private readonly FactoryInterface                   $orderFactory,
-        private readonly StateMachineInterface              $stateMachine,
+        private readonly FactoryInterface $orderFactory,
+        private readonly StateMachineInterface $stateMachine,
     ) {
     }
 
@@ -42,12 +42,12 @@ final class OrderContext implements Context
      * @Given /^the guest customer placed order with number "([^"]+)" with ("[^"]+" product) for "([^"]+)" and ("[^"]+" based shipping address) with ("[^"]+" shipping method) and ("[^"]+" payment)$/
      */
     public function theGuestCustomerPlacedOrderWithNumberWithProductForAndBasedShippingAddressWithShippingMethodAndPayment(
-        string                  $number,
-        ProductInterface        $product,
-        string                  $email,
-        AddressInterface        $address,
+        string $number,
+        ProductInterface $product,
+        string $email,
+        AddressInterface $address,
         ShippingMethodInterface $shippingMethod,
-        PaymentMethodInterface  $paymentMethod,
+        PaymentMethodInterface $paymentMethod,
     ) {
         /** @var CustomerInterface $customer */
         $customer = $this->customerFactory->createNew();
@@ -66,7 +66,7 @@ final class OrderContext implements Context
      */
     public function thisOrderIsDaysOld(
         OrderInterface $order,
-        int            $days,
+        int $days,
     ) {
         $date = new \DateTime();
         $date = $date->modify('-' . $days . ' day');
@@ -79,12 +79,12 @@ final class OrderContext implements Context
     }
 
     private function placeOrder(
-        ProductInterface        $product,
+        ProductInterface $product,
         ShippingMethodInterface $shippingMethod,
-        AddressInterface        $address,
-        PaymentMethodInterface  $paymentMethod,
-        CustomerInterface       $customer,
-        string                  $number,
+        AddressInterface $address,
+        PaymentMethodInterface $paymentMethod,
+        CustomerInterface $customer,
+        string $number,
     ): void {
         /** @var ProductVariantInterface $variant */
         $variant = $this->variantResolver->getVariant($product);
@@ -119,9 +119,9 @@ final class OrderContext implements Context
      */
     private function createOrder(
         CustomerInterface $customer,
-                          $number = null,
-        ChannelInterface  $channel = null,
-                          $localeCode = null,
+        $number = null,
+        ChannelInterface $channel = null,
+        $localeCode = null,
     ) {
         $order = $this->createCart($customer, $channel, $localeCode);
 
@@ -141,8 +141,8 @@ final class OrderContext implements Context
      */
     private function createCart(
         CustomerInterface $customer,
-        ChannelInterface  $channel = null,
-                          $localeCode = null,
+        ChannelInterface $channel = null,
+        $localeCode = null,
     ) {
         /** @var OrderInterface $order */
         $order = $this->orderFactory->createNew();
@@ -163,10 +163,10 @@ final class OrderContext implements Context
     }
 
     private function checkoutUsing(
-        OrderInterface          $order,
+        OrderInterface $order,
         ShippingMethodInterface $shippingMethod,
-        AddressInterface        $address,
-        PaymentMethodInterface  $paymentMethod,
+        AddressInterface $address,
+        PaymentMethodInterface $paymentMethod,
     ) {
         $order->setShippingAddress($address);
         $order->setBillingAddress(clone $address);
@@ -177,9 +177,9 @@ final class OrderContext implements Context
     }
 
     private function proceedSelectingShippingAndPaymentMethod(
-        OrderInterface          $order,
+        OrderInterface $order,
         ShippingMethodInterface $shippingMethod,
-        PaymentMethodInterface  $paymentMethod,
+        PaymentMethodInterface $paymentMethod,
     ) {
         foreach ($order->getShipments() as $shipment) {
             $shipment->setMethod($shippingMethod);
@@ -199,7 +199,7 @@ final class OrderContext implements Context
      */
     private function applyTransitionOnOrderCheckout(
         OrderInterface $order,
-                       $transition,
+        $transition,
     ) {
         $this->stateMachine->apply($order, OrderCheckoutTransitions::GRAPH, $transition);
     }

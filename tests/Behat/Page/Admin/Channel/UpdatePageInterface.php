@@ -8,11 +8,11 @@ use Sylius\Behat\Page\Admin\Channel\UpdatePageInterface as BaseUpdatePageInterfa
 
 interface UpdatePageInterface extends BaseUpdatePageInterface
 {
-	public function isSingleResourceOnPage(string $elementName);
+    public function isSingleResourceOnPage(string $elementName);
 
-	public function changeBccEmail(string $bccEmail): void;
+    public function changeBccEmail(string $bccEmail): void;
 
-	public function changePhone(string $phoneNumber): void;
+    public function changePhone(string $phoneNumber): void;
 
-	public function changeTimezone(int $timezone): void;
+    public function changeTimezone(int $timezone): void;
 }

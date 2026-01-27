@@ -8,9 +8,9 @@ use Sylius\Behat\Page\Admin\Crud\UpdatePageInterface as BaseUpdatePageInterface;
 
 interface UpdatePageInterface extends BaseUpdatePageInterface
 {
-	public function markTaxonAsExternalLink(): void;
+    public function markTaxonAsExternalLink(): void;
 
-	public function unmarkTaxonAsExternalLink(): void;
+    public function unmarkTaxonAsExternalLink(): void;
 
-	public function isSingleResourceOnPage(string $elemName);
+    public function isSingleResourceOnPage(string $elemName);
 }

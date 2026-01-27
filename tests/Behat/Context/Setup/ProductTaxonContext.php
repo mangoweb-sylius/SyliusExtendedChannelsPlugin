@@ -18,9 +18,8 @@ final readonly class ProductTaxonContext implements Context
 {
     public function __construct(
         private FactoryInterface $productTaxonFactory,
-        private ObjectManager    $objectManager,
-    )
-    {
+        private ObjectManager $objectManager,
+    ) {
     }
 
     /**
@@ -35,7 +34,7 @@ final readonly class ProductTaxonContext implements Context
             return;
         }
 
-        $productTaxon = $this->createProductTaxon($taxon, $product, (int)$position - 1);
+        $productTaxon = $this->createProductTaxon($taxon, $product, (int) $position - 1);
         $product->addProductTaxon($productTaxon);
 
         $this->objectManager->persist($product);
@@ -74,9 +73,8 @@ final readonly class ProductTaxonContext implements Context
      */
     public function itBelongsToAndAnd(
         ProductInterface $product,
-        iterable         $taxons,
-    ): void
-    {
+        iterable $taxons,
+    ): void {
         foreach ($taxons as $taxon) {
             if ($product->hasTaxon($taxon)) {
                 continue;
@@ -100,10 +98,9 @@ final readonly class ProductTaxonContext implements Context
     }
 
     private function createProductTaxon(
-        TaxonInterface   $taxon,
+        TaxonInterface $taxon,
         ProductInterface $product,
-    ): ProductTaxonInterface
-    {
+    ): ProductTaxonInterface {
         /** @var ProductTaxonInterface $productTaxon */
         $productTaxon = $this->productTaxonFactory->createNew();
         $productTaxon->setProduct($product);

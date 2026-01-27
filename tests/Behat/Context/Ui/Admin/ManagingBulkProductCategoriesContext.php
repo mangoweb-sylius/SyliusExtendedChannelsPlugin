@@ -8,28 +8,26 @@ use Behat\Behat\Context\Context;
 use Doctrine\ORM\EntityManagerInterface;
 use Facebook\WebDriver\Exception\StaleElementReferenceException;
 use Sylius\Behat\NotificationType;
-use Sylius\Behat\Service\DriverHelper;
-use Sylius\Component\Locale\Context\LocaleContextInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Product\ExtendedIndexPageInterface;
 use Sylius\Behat\Service\NotificationCheckerInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
+use Sylius\Component\Locale\Context\LocaleContextInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\BulkManageProductCategories\FormPageInterface;
+use Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Product\ExtendedIndexPageInterface;
 use Webmozart\Assert\Assert;
 
 final readonly class ManagingBulkProductCategoriesContext implements Context
 {
     public function __construct(
-        private ExtendedIndexPageInterface   $productIndexPage,
-        private FormPageInterface            $bulkManageCategoriesPage,
+        private ExtendedIndexPageInterface $productIndexPage,
+        private FormPageInterface $bulkManageCategoriesPage,
         private NotificationCheckerInterface $notificationChecker,
-        private ProductRepositoryInterface   $productRepository,
-        private LocaleContextInterface       $localeContext,
-        private TranslatorInterface          $translator,
-        private EntityManagerInterface       $entityManager,
-    )
-    {
+        private ProductRepositoryInterface $productRepository,
+        private LocaleContextInterface $localeContext,
+        private TranslatorInterface $translator,
+        private EntityManagerInterface $entityManager,
+    ) {
     }
 
     /**
@@ -46,8 +44,7 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
     public function iSelectTheProductsForBulkAction(
         string $productName1,
         string $productName2,
-    ): void
-    {
+    ): void {
         $this->productIndexPage->selectBulkAction($productName1);
         $this->productIndexPage->selectBulkAction($productName2);
     }
@@ -59,8 +56,7 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
         string $productName1,
         string $productName2,
         string $productName3,
-    ): void
-    {
+    ): void {
         $this->productIndexPage->selectBulkAction($productName1);
         $this->productIndexPage->selectBulkAction($productName2);
         $this->productIndexPage->selectBulkAction($productName3);
@@ -79,11 +75,10 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
      * @Then I should be on the bulk manage product categories page with selected products :productName1, :productName2 and :productName3
      */
     public function iShouldBeOnTheBulkManageProductCategoriesPage(
-        string  $productName1,
-        string  $productName2,
+        string $productName1,
+        string $productName2,
         ?string $productName3 = null,
-    ): void
-    {
+    ): void {
         $product1 = $this->getProductByName($productName1);
         $product2 = $this->getProductByName($productName2);
         $product3 = $productName3 !== null ? $this->getProductByName($productName3) : null;
@@ -109,8 +104,7 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
     public function iSetMainTaxonToWithAction(
         string $taxonName,
         string $action,
-    ): void
-    {
+    ): void {
         $this->bulkManageCategoriesPage->setMainTaxon($taxonName);
         $this->bulkManageCategoriesPage->setMainTaxonAction($action);
     }
@@ -130,8 +124,7 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
         string $taxonName1,
         string $taxonName2,
         string $action,
-    ): void
-    {
+    ): void {
         $this->bulkManageCategoriesPage->selectTaxon($taxonName1);
         $this->bulkManageCategoriesPage->selectTaxon($taxonName2);
         $this->bulkManageCategoriesPage->setTaxonsAction($action);
@@ -143,8 +136,7 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
     public function iSetTaxonsToSingleWithAction(
         string $taxonName,
         string $action,
-    ): void
-    {
+    ): void {
         $this->bulkManageCategoriesPage->selectTaxon($taxonName);
         $this->bulkManageCategoriesPage->setTaxonsAction($action);
     }
@@ -171,18 +163,20 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
      */
     public function iShouldBeNotifiedThatTheCategoriesHaveBeenSuccessfullySaved(): void
     {
-        for ($attempts = 0; $attempts < 5; $attempts++) {
+        for ($attempts = 0; $attempts < 5; ++$attempts) {
             try {
                 $this->notificationChecker->checkNotification(
                     $this->translator->trans('mango-sylius.admin.manage_product_categories.saved'),
                     NotificationType::success(),
                 );
+
                 return;
             } catch (StaleElementReferenceException $staleElementReferenceException) {
                 // Wait a bit for the notification to appear in DOM to prevent StaleElementReferenceException
                 usleep(100000); // 100ms
             }
         }
+
         throw $staleElementReferenceException;
     }
 
@@ -200,8 +194,7 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
     public function theProductShouldHaveAsItsMainTaxon(
         string $productName,
         string $taxonName,
-    ): void
-    {
+    ): void {
         $product = $this->getProductByName($productName);
         $mainTaxon = $product->getMainTaxon();
 
@@ -225,8 +218,7 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
         string $productName,
         string $taxonName1,
         string $taxonName2,
-    ): void
-    {
+    ): void {
         $product = $this->getProductByName($productName);
         $productTaxons = $product->getTaxons();
 
@@ -259,8 +251,7 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
         string $taxonName1,
         string $taxonName2,
         string $taxonName3,
-    ): void
-    {
+    ): void {
         $product = $this->getProductByName($productName);
         $productTaxons = $product->getTaxons();
 
@@ -281,8 +272,7 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
     public function theProductShouldBelongToTaxonOnly(
         string $productName,
         string $taxonName,
-    ): void
-    {
+    ): void {
         $product = $this->getProductByName($productName);
         $productTaxons = $product->getTaxons();
 
@@ -301,7 +291,6 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
         $product = $this->getProductByName($productName);
         Assert::count($product->getTaxons(), 0, sprintf('Product "%s" should not belong to any taxon', $productName));
     }
-
 
     private function getProductByName(string $productName): ProductInterface
     {

@@ -8,8 +8,8 @@ use Behat\Behat\Context\Context;
 use Doctrine\ORM\EntityManagerInterface;
 use MangoSylius\ExtendedChannelsPlugin\Entity\TimezoneEntity;
 use Sylius\Behat\Service\SharedStorageInterface;
-use Tests\MangoSylius\ExtendedChannelsPlugin\Entity\Channel;
 use Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Channel\UpdatePageInterface;
+use Tests\MangoSylius\ExtendedChannelsPlugin\Entity\Channel;
 use Webmozart\Assert\Assert;
 
 final class ManagingChannelsContext implements Context
@@ -49,12 +49,12 @@ final class ManagingChannelsContext implements Context
      */
     public function thisChannelTimezoneShouldBe(
         Channel $channel,
-        string  $timezone,
+        string $timezone,
     ): void {
         $this->iWantToModifyChannel($channel);
         $timezoneEntity = $this->findTimezoneEntityByName($timezone);
         \assert($timezoneEntity !== null);
-        Assert::eq($this->updatePage->isSingleResourceOnPage('timezone'), (string)$timezoneEntity->getId());
+        Assert::eq($this->updatePage->isSingleResourceOnPage('timezone'), (string) $timezoneEntity->getId());
     }
 
     /**
@@ -70,7 +70,7 @@ final class ManagingChannelsContext implements Context
      */
     public function thisChannelBccEmailShouldBe(
         Channel $channel,
-        string  $bccEmail,
+        string $bccEmail,
     ): void {
         $this->iWantToModifyChannel($channel);
 
@@ -90,7 +90,7 @@ final class ManagingChannelsContext implements Context
      */
     public function thisChannelPhoneShouldBe(
         Channel $channel,
-        string  $phoneNumber,
+        string $phoneNumber,
     ): void {
         $this->iWantToModifyChannel($channel);
 

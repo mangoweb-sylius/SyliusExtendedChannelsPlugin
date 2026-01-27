@@ -12,8 +12,6 @@ if [ ! -f tests/Application/var/cache/dev/Tests_MangoSylius_ExtendedChannelsPlug
   php bin/console --env=dev cache:warmup --no-optional-warmers
 fi
 
-XDEBUG_MODE=off php --no-php-ini --define memory_limit=1G vendor/bin/phpstan analyse \
+XDEBUG_MODE=off php --no-php-ini --define memory_limit=2G vendor/bin/phpstan analyse \
     --debug \
-    --level max \
-    src tests \
     "$@"

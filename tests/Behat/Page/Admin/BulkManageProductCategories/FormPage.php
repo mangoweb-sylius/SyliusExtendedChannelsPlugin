@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\BulkManageProductCategories;
 
-use Behat\Mink\Element\NodeElement;
-use Sylius\Behat\Page\SymfonyPage;
+use FriendsOfBehat\PageObjectExtension\Page\SymfonyPage;
 use Sylius\Behat\Service\DriverHelper;
 use Webmozart\Assert\Assert;
 
@@ -20,7 +19,7 @@ final class FormPage extends SymfonyPage implements FormPageInterface
     {
         $currentUrl = $this->getCurrentUrl();
         $expectedUrl = $this->getUrl($urlParameters);
-        $expectedPath = parse_url($expectedUrl, PHP_URL_PATH);
+        $expectedPath = parse_url($expectedUrl, \PHP_URL_PATH);
 
         // Check if URL contains the expected path pattern
         return str_contains($currentUrl, $expectedPath);
@@ -37,16 +36,16 @@ final class FormPage extends SymfonyPage implements FormPageInterface
         $mainTaxonControl->click();
         $mainTaxonControl->waitFor(
             5,
-            fn() => $this->getElement('main_taxon_dropdown')->isVisible()
-                && !$this->getElement('main_taxon_dropdown')->hasClass('spinner')
+            fn () => $this->getElement('main_taxon_dropdown')->isVisible() &&
+                !$this->getElement('main_taxon_dropdown')->hasClass('spinner'),
         );
 
         $this->getElement('main_taxon_dropdown')
-            ->waitFor(5, fn() => $this->getElement('main_taxon_dropdown')->hasClass('active'));
+            ->waitFor(5, fn () => $this->getElement('main_taxon_dropdown')->hasClass('active'));
 
         $mainTaxonOption = $this->getElement('main_taxon_dropdown')->find(
             'xpath',
-            sprintf('.//div[normalize-space(text())="%s"]', $taxonName)
+            sprintf('.//div[normalize-space(text())="%s"]', $taxonName),
         );
         Assert::notNull($mainTaxonOption, sprintf('Option with taxon name "%s" not found in the dropdown.', $taxonName));
 

@@ -6,7 +6,6 @@ namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use Doctrine\Persistence\ObjectManager;
-use MangoSylius\ExtendedChannelsPlugin\Entity\HelloBar;
 use MangoSylius\ExtendedChannelsPlugin\Entity\HelloBarInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
@@ -15,11 +14,10 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 final readonly class HelloBarContext implements Context
 {
     public function __construct(
-        private FactoryInterface    $helloBarFactory,
+        private FactoryInterface $helloBarFactory,
         private RepositoryInterface $helloBarRepository,
-        private ObjectManager       $objectManager,
-    )
-    {
+        private ObjectManager $objectManager,
+    ) {
     }
 
     /**
@@ -67,6 +65,5 @@ final readonly class HelloBarContext implements Context
 
         $this->helloBarRepository->add($helloBar);
         $this->objectManager->flush();
-
     }
 }

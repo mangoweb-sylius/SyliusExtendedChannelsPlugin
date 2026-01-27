@@ -41,7 +41,7 @@ final class ProductContext implements Context
         $pricing = $variant->getChannelPricingForChannel($channel);
         assert($pricing !== null);
 
-        $price = (int)filter_var($price, FILTER_SANITIZE_NUMBER_INT);
+        $price = (int) filter_var($price, \FILTER_SANITIZE_NUMBER_INT);
         assert($pricing->getPrice() === $price);
     }
 }

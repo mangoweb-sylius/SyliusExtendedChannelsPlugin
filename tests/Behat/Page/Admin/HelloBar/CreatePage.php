@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\HelloBar;
 
 use Sylius\Behat\Page\Admin\Crud\CreatePage as BaseCreatePage;
-use Webmozart\Assert\Assert;
 
 class CreatePage extends BaseCreatePage implements CreatePageInterface
 {
