@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v1.6.0
+
+- Add support for Sylius 1.14
+- Drop support for Sylius 1.12, 1.13
+
 ## v1.5.0 (2025-02-11)
 
 - Add support to Sylius 1.12, 1.13

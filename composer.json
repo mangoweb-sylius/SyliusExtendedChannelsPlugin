@@ -7,7 +7,7 @@
     "require": {
         "ext-json": "*",
         "php": "^8.0",
-        "sylius/sylius": "1.12.*|1.13.*"
+        "sylius/sylius": "1.14.*"
     },
     "require-dev": {
         "behat/behat": "^3.9.0",
@@ -83,7 +83,8 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "phpstan/extension-installer": true,
-            "symfony/flex": true
+            "symfony/flex": true,
+            "php-http/discovery": true
         }
     },
     "scripts": {
