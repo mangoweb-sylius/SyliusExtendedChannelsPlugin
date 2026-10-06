@@ -20,9 +20,20 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                sylius_version: ["2.1", "2.2"]
-                symfony_version: ["7.4"]
-                php_version: ["8.3"]
+                sylius_version: ["2.3"]
+                symfony_version: ["7.4", "8.1"]
+                php_version: ["8.3", "8.4"]
+                # Symfony 8 requires PHP 8.4
+                exclude:
+                    -   php_version: "8.3"
+                        symfony_version: "8.1"
+                include:
+                    -   sylius_version: "2.1"
+                        symfony_version: "7.4"
+                        php_version: "8.3"
+                    -   sylius_version: "2.2"
+                        symfony_version: "7.4"
+                        php_version: "8.3"
 
         # Steps represent a sequence of tasks that will be executed as part of the job
         steps:
@@ -45,12 +56,17 @@ jobs:
                 run: docker compose exec --no-TTY php composer require "sylius/sylius:${{ matrix.sylius_version }}.*" --no-interaction --no-update --no-scripts
 
             -   name: Install Symfony version
-                run: docker compose exec --no-TTY php bash -c '
-                    grep -o -E "\"(symfony/[^\"]+)\"" composer.json |
-                    grep -v -E "(symfony/flex|symfony/webpack-encore-bundle|symfony/debug-bundle|symfony/web-profiler-bundle|symfony/panther|symfony/maker-bundle)" |
-                    xargs printf "%s:${{ matrix.symfony_version }}.* " |
-                    xargs composer require --no-interaction --no-update
-                    '
+                run: |
+                    docker compose exec --no-TTY php composer config extra.symfony.require "${{ matrix.symfony_version }}.*"
+                    docker compose exec --no-TTY php composer global config --no-plugins allow-plugins.symfony/flex true
+                    docker compose exec --no-TTY php composer global require --no-progress --no-scripts --no-plugins symfony/flex
+
+            # Sylius 2.1 and 2.2 Behat contexts need Behat 3, their admin and shop assets Encore 5
+            -   name: Install Behat 3 and Encore 5
+                if: matrix.sylius_version == '2.1' || matrix.sylius_version == '2.2'
+                run: |
+                    docker compose exec --no-TTY php composer require --dev "behat/behat:^3.34" --no-interaction --no-update --no-scripts
+                    docker compose exec --no-TTY php bash -c 'cd tests/Application && npm pkg set "devDependencies.@symfony/webpack-encore=^5.0.1"'
 
             -   name: Wait for database
                 run: docker compose exec --no-TTY php timeout 60s sh -c 'while ! nc -z mysql 3306; do sleep 0.1; done'
@@ -102,7 +118,7 @@ jobs:
             -   name: Test with prefer-lowest dependencies
                 run: |
                     docker compose exec --no-TTY php rm -fr vendor composer.lock
-                    docker compose exec --no-TTY php composer update --no-interaction --prefer-lowest --no-plugins
+                    docker compose exec --no-TTY php composer update --no-interaction --prefer-lowest
                     docker compose exec --no-TTY php bash -c 'vendor/bin/bdi detect drivers'
                     docker compose exec --no-TTY php bash -c '
                         cd tests/Application &&

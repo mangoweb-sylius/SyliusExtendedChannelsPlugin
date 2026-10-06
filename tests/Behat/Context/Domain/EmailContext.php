@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Domain;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Then;
 use Sylius\Behat\Service\Checker\EmailCheckerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Webmozart\Assert\Assert;
@@ -15,9 +16,7 @@ final class EmailContext implements Context
     {
     }
 
-    /**
-     * @Then /^an email generated for (order placed by "[^"]+") should be sent to "([^"]+)"$/
-     */
+    #[Then('/^an email generated for (order placed by "[^"]+") should be sent to "([^"]+)"$/')]
     public function anEmailGeneratedForOrderShouldBeSentTo(
         OrderInterface $order,
         string $arg2,

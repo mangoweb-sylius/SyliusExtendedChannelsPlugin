@@ -38,7 +38,7 @@ final class HelloBarType extends AbstractResourceType
                 'entry_type' => HelloBarTranslationType::class,
                 'validation_groups' => ['sylius'],
                 'constraints' => [
-                    new Valid(['groups' => ['sylius']]),
+                    new Valid(groups: ['sylius']),
                 ],
             ])
             ->add('channels', ChannelChoiceType::class, [

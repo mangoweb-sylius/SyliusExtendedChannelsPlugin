@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Shop;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Given;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Formatter\StringInflector;
 use Sylius\Component\Core\Model\ChannelInterface;
@@ -20,9 +21,7 @@ final class ProductContext implements Context
     ) {
     }
 
-    /**
-     * @Given /^check that the product "([^"]+)" has price "([^"]+)" on channel "([^"]+)"$/
-     */
+    #[Given('/^check that the product "([^"]+)" has price "([^"]+)" on channel "([^"]+)"$/')]
     public function checkThatTheProductHasPriceOnChannel(
         string $productName,
         string $price,

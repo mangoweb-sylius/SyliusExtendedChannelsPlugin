@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Shop;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Given;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -17,9 +18,7 @@ final class OrderContext implements Context
     ) {
     }
 
-    /**
-     * @Given shop send an email after finished order
-     */
+    #[Given('shop send an email after finished order')]
     public function shopSendAnEmailAfterFinishedOrder()
     {
         $order = $this->sharedStorage->get('order');

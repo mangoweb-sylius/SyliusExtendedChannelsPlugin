@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Given;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
@@ -20,9 +21,7 @@ final class ChannelContext implements Context
     ) {
     }
 
-    /**
-     * @Given the channel has bcc email :bccEmail
-     */
+    #[Given('the channel has bcc email :bccEmail')]
     public function theChannelHasBccEmail(string $bccEmail): void
     {
         /** @var Channel $channel */
@@ -35,9 +34,7 @@ final class ChannelContext implements Context
         $this->sharedStorage->set('channel', $channel);
     }
 
-    /**
-     * @Given the store operates on channels named :firstChannelName and :secondChannelName
-     */
+    #[Given('the store operates on channels named :firstChannelName and :secondChannelName')]
     public function theStoreOperatesOnChannelsNamedAnd(string $firstChannelName, string $secondChannelName): void
     {
         $this->createChannel($firstChannelName);
