@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Given;
 use Doctrine\Persistence\ObjectManager;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductTaxonInterface;
@@ -22,12 +23,10 @@ final readonly class ProductTaxonContext implements Context
     ) {
     }
 
-    /**
-     * @Given /^I assigned (this product) to ("[^"]+" taxon)$/
-     * @Given /^(it|this product) (belongs to "[^"]+")$/
-     * @Given /^(this product) is in ("[^"]+" taxon) at (\d)(?:st|nd|rd|th) position$/
-     * @Given the product :product belongs to taxon :taxon
-     */
+    #[Given('/^I assigned (this product) to ("[^"]+" taxon)$/')]
+    #[Given('/^(it|this product) (belongs to "[^"]+")$/')]
+    #[Given('/^(this product) is in ("[^"]+" taxon) at (\d)(?:st|nd|rd|th) position$/')]
+    #[Given('the product :product belongs to taxon :taxon')]
     public function itBelongsTo(ProductInterface $product, TaxonInterface $taxon, $position = null)
     {
         if ($product->hasTaxon($taxon)) {
@@ -41,9 +40,7 @@ final readonly class ProductTaxonContext implements Context
         $this->objectManager->flush();
     }
 
-    /**
-     * @Given /^(it|this product) (belongs to "[^"]+" and "[^"]+")$/
-     */
+    #[Given('/^(it|this product) (belongs to "[^"]+" and "[^"]+")$/')]
     public function itBelongsToAnd(ProductInterface $product, iterable $taxons)
     {
         foreach ($taxons as $taxon) {
@@ -58,19 +55,15 @@ final readonly class ProductTaxonContext implements Context
         $this->objectManager->flush();
     }
 
-    /**
-     * @Given the product :product has a main taxon :taxon
-     * @Given /^(this product) has a main (taxon "[^"]+")$/
-     */
+    #[Given('the product :product has a main taxon :taxon')]
+    #[Given('/^(this product) has a main (taxon "[^"]+")$/')]
     public function productHasMainTaxon(ProductInterface $product, TaxonInterface $taxon): void
     {
         $product->setMainTaxon($taxon);
         $this->objectManager->flush();
     }
 
-    /**
-     * @Given /^(it|this product) (belongs to "[^"]+" and "[^"]+" and "[^"]+")$/
-     */
+    #[Given('/^(it|this product) (belongs to "[^"]+" and "[^"]+" and "[^"]+")$/')]
     public function itBelongsToAndAnd(
         ProductInterface $product,
         iterable $taxons,
@@ -87,10 +80,8 @@ final readonly class ProductTaxonContext implements Context
         $this->objectManager->flush();
     }
 
-    /**
-     * @Given the product :product has no main taxon
-     * @Given /^(this product) has no main taxon$/
-     */
+    #[Given('the product :product has no main taxon')]
+    #[Given('/^(this product) has no main taxon$/')]
     public function theProductHasNoMainTaxon(ProductInterface $product): void
     {
         $product->setMainTaxon(null);

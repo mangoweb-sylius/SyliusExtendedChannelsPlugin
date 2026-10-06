@@ -24,9 +24,7 @@ final class ExtendedChannelExtension extends AbstractTypeExtension
                 'label' => 'mango-sylius.admin.form.channel.bccEmail',
                 'required' => false,
                 'constraints' => [
-                    new Email([
-                        'groups' => ['sylius'],
-                    ]),
+                    new Email(groups: ['sylius']),
                 ],
             ])
             ->add('contactPhone', TextType::class, [

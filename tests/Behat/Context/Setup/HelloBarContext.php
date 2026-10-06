@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Given;
 use Doctrine\Persistence\ObjectManager;
 use MangoSylius\ExtendedChannelsPlugin\Entity\HelloBarInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
@@ -20,25 +21,19 @@ final readonly class HelloBarContext implements Context
     ) {
     }
 
-    /**
-     * @Given there is a Hello bar with title :title
-     */
+    #[Given('there is a Hello bar with title :title')]
     public function thereIsAHelloBarWithTitle(string $title): void
     {
         $this->createHelloBar($title, 'Default content', 'info');
     }
 
-    /**
-     * @Given there is a Hello bar with title :title and content :content
-     */
+    #[Given('there is a Hello bar with title :title and content :content')]
     public function thereIsAHelloBarWithTitleAndContent(string $title, string $content): void
     {
         $this->createHelloBar($title, $content, 'info');
     }
 
-    /**
-     * @Given /^there are Hello bars with message types (.+)$/
-     */
+    #[Given('/^there are Hello bars with message types (.+)$/')]
     public function thereAreHelloBarsWithDifferentTypes(string $messageTypesString): void
     {
         preg_match_all('/"([^"]+)"/', $messageTypesString, $matches);

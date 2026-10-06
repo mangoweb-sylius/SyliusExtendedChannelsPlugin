@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Domain;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Given;
 use Sylius\Bundle\CoreBundle\Console\Command\InstallSampleDataCommand;
 use Sylius\Component\Core\Formatter\StringInflector;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -19,15 +20,13 @@ final readonly class CommandContext implements Context
     ) {
     }
 
-    /**
-     * @Given I update product prices on channels :arg1 and :arg2
-     */
+    #[Given('I update product prices on channels :arg1 and :arg2')]
     public function iUpdateProductPricesOnChannelsAnd(
         string $arg1,
         string $arg2,
     ) {
         $application = new Application($this->kernel);
-        $application->add($this->installSampleDataCommand);
+        $application->addCommand($this->installSampleDataCommand);
         $command = $application->find('mango:product:update-price');
         $tester = new CommandTester($command);
         $tester->execute([
@@ -36,25 +35,21 @@ final readonly class CommandContext implements Context
         ]);
     }
 
-    /**
-     * @Given I cancel orders
-     */
+    #[Given('I cancel orders')]
     public function iCancelOrders()
     {
         $application = new Application($this->kernel);
-        $application->add($this->installSampleDataCommand);
+        $application->addCommand($this->installSampleDataCommand);
         $command = $application->find('mango:cancel-unpaid-orders');
         $tester = new CommandTester($command);
         $tester->execute([]);
     }
 
-    /**
-     * @Given I update exchange rates
-     */
+    #[Given('I update exchange rates')]
     public function iUpdateExchangeRates()
     {
         $application = new Application($this->kernel);
-        $application->add($this->installSampleDataCommand);
+        $application->addCommand($this->installSampleDataCommand);
         $command = $application->find('mango:exchange-rates:update');
         $tester = new CommandTester($command);
         $tester->execute([

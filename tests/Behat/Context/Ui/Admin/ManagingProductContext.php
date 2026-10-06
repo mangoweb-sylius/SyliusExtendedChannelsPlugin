@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Then;
+use Behat\Step\When;
 use Sylius\Behat\NotificationType;
 use Sylius\Behat\Service\NotificationCheckerInterface;
 use Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Page\Admin\Product\ShowPageInterface;
@@ -18,17 +20,13 @@ final class ManagingProductContext implements Context
     ) {
     }
 
-    /**
-     * @When I duplicate the product
-     */
+    #[When('I duplicate the product')]
     public function iDuplicateTheProduct()
     {
         $this->showPage->duplicateProduct();
     }
 
-    /**
-     * @Then the code field should end with :arg1
-     */
+    #[Then('the code field should end with :arg1')]
     public function theCodeFieldShouldEndWith($arg1)
     {
         $code = $this->showPage->getCodeValue();
@@ -37,9 +35,7 @@ final class ManagingProductContext implements Context
         Assert::eq(end($parts), 'copy');
     }
 
-    /**
-     * @Then I should be notified that it has been successfully duplicated
-     */
+    #[Then('I should be notified that it has been successfully duplicated')]
     public function iShouldBeNotifiedThatItHasBeenSuccessfullyDuplicated()
     {
         $this->notificationChecker->checkNotification(

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v2.2.0 (2026-10-06)
+
+#### Details
+
+- Add support for Sylius 2.3 and Symfony 8
+
 ## v2.1.0 (2026-01-27)
 
 #### Details

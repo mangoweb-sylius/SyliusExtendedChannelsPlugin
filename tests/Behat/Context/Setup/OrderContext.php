@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Given;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Abstraction\StateMachine\StateMachineInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
@@ -38,9 +39,7 @@ final class OrderContext implements Context
     ) {
     }
 
-    /**
-     * @Given /^the guest customer placed order with number "([^"]+)" with ("[^"]+" product) for "([^"]+)" and ("[^"]+" based shipping address) with ("[^"]+" shipping method) and ("[^"]+" payment)$/
-     */
+    #[Given('/^the guest customer placed order with number "([^"]+)" with ("[^"]+" product) for "([^"]+)" and ("[^"]+" based shipping address) with ("[^"]+" shipping method) and ("[^"]+" payment)$/')]
     public function theGuestCustomerPlacedOrderWithNumberWithProductForAndBasedShippingAddressWithShippingMethodAndPayment(
         string $number,
         ProductInterface $product,
@@ -61,9 +60,7 @@ final class OrderContext implements Context
         $this->entityManager->flush();
     }
 
-    /**
-     * @Given /^(this order) is "([^"]+)" days old$/
-     */
+    #[Given('/^(this order) is "([^"]+)" days old$/')]
     public function thisOrderIsDaysOld(
         OrderInterface $order,
         int $days,

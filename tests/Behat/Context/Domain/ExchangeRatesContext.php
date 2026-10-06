@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Domain;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Given;
 use Sylius\Component\Currency\Repository\ExchangeRateRepositoryInterface;
 use Webmozart\Assert\Assert;
 
@@ -14,9 +15,7 @@ final class ExchangeRatesContext implements Context
     {
     }
 
-    /**
-     * @Given the exchange rate of :currencyCode1 to :currencyCode2 should be :ration
-     */
+    #[Given('the exchange rate of :currencyCode1 to :currencyCode2 should be :ration')]
     public function theExchangeRateOfToShouldBe(
         string $currencyCode1,
         string $currencyCode2,

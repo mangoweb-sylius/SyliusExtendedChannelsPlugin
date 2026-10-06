@@ -41,7 +41,9 @@ class ManageProductCategoriesController
 
     public function bulkManageProductCategories(Request $request): Response
     {
-        $bulkProductsIds = $request->get('bulkProductsIds', '');
+        $bulkProductsIds = $request->query->has('bulkProductsIds')
+            ? $request->query->get('bulkProductsIds')
+            : $request->request->get('bulkProductsIds', '');
         assert(is_string($bulkProductsIds));
         /** @var array<int> $productIds */
         $productIds = array_filter(explode(',', $bulkProductsIds));

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\MangoSylius\ExtendedChannelsPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Then;
+use Behat\Step\When;
 use Doctrine\ORM\EntityManagerInterface;
 use Facebook\WebDriver\Exception\StaleElementReferenceException;
 use Sylius\Behat\NotificationType;
@@ -30,17 +32,13 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
     ) {
     }
 
-    /**
-     * @When I browse products
-     */
+    #[When('I browse products')]
     public function iBrowseProducts(): void
     {
         $this->productIndexPage->open();
     }
 
-    /**
-     * @When I select the :productName1 and :productName2 products for bulk action
-     */
+    #[When('I select the :productName1 and :productName2 products for bulk action')]
     public function iSelectTheProductsForBulkAction(
         string $productName1,
         string $productName2,
@@ -49,9 +47,7 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
         $this->productIndexPage->selectBulkAction($productName2);
     }
 
-    /**
-     * @When I select the :productName1, :productName2 and :productName3 products for bulk action
-     */
+    #[When('I select the :productName1, :productName2 and :productName3 products for bulk action')]
     public function iSelectTheThreeProductsForBulkAction(
         string $productName1,
         string $productName2,
@@ -62,18 +58,14 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
         $this->productIndexPage->selectBulkAction($productName3);
     }
 
-    /**
-     * @When I choose bulk action :actionName
-     */
+    #[When('I choose bulk action :actionName')]
     public function iChooseBulkAction(string $actionName): void
     {
         $this->productIndexPage->chooseBulkAction($actionName);
     }
 
-    /**
-     * @Then I should be on the bulk manage product categories page with selected products :productName1 and :productName2
-     * @Then I should be on the bulk manage product categories page with selected products :productName1, :productName2 and :productName3
-     */
+    #[Then('I should be on the bulk manage product categories page with selected products :productName1 and :productName2')]
+    #[Then('I should be on the bulk manage product categories page with selected products :productName1, :productName2 and :productName3')]
     public function iShouldBeOnTheBulkManageProductCategoriesPage(
         string $productName1,
         string $productName2,
@@ -98,9 +90,7 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
         );
     }
 
-    /**
-     * @When I set main taxon to :taxonName with :action action
-     */
+    #[When('I set main taxon to :taxonName with :action action')]
     public function iSetMainTaxonToWithAction(
         string $taxonName,
         string $action,
@@ -109,17 +99,13 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
         $this->bulkManageCategoriesPage->setMainTaxonAction($action);
     }
 
-    /**
-     * @When I set main taxon with :action action
-     */
+    #[When('I set main taxon with :action action')]
     public function iSetMainTaxonWithAction(string $action): void
     {
         $this->bulkManageCategoriesPage->setMainTaxonAction($action);
     }
 
-    /**
-     * @When I set taxons to :taxonName1 and :taxonName2 with :action action
-     */
+    #[When('I set taxons to :taxonName1 and :taxonName2 with :action action')]
     public function iSetTaxonsToWithAction(
         string $taxonName1,
         string $taxonName2,
@@ -130,9 +116,7 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
         $this->bulkManageCategoriesPage->setTaxonsAction($action);
     }
 
-    /**
-     * @When I set taxons to :taxonName with :action action
-     */
+    #[When('I set taxons to :taxonName with :action action')]
     public function iSetTaxonsToSingleWithAction(
         string $taxonName,
         string $action,
@@ -141,26 +125,20 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
         $this->bulkManageCategoriesPage->setTaxonsAction($action);
     }
 
-    /**
-     * @When I set taxons with :action action
-     */
+    #[When('I set taxons with :action action')]
     public function iSetTaxonsWithAction(string $action): void
     {
         $this->bulkManageCategoriesPage->setTaxonsAction($action);
     }
 
-    /**
-     * @When I save the bulk categories changes
-     */
+    #[When('I save the bulk categories changes')]
     public function iSaveTheBulkCategoriesChanges(): void
     {
         $this->bulkManageCategoriesPage->saveChanges();
         $this->entityManager->clear();
     }
 
-    /**
-     * @Then I should be notified that the categories have been successfully saved
-     */
+    #[Then('I should be notified that the categories have been successfully saved')]
     public function iShouldBeNotifiedThatTheCategoriesHaveBeenSuccessfullySaved(): void
     {
         for ($attempts = 0; $attempts < 5; ++$attempts) {
@@ -180,17 +158,13 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
         throw $staleElementReferenceException;
     }
 
-    /**
-     * @Then I should be redirected to the product index page
-     */
+    #[Then('I should be redirected to the product index page')]
     public function iShouldBeRedirectedToTheProductIndexPage(): void
     {
         $this->productIndexPage->verify();
     }
 
-    /**
-     * @Then the :productName product should have :taxonName as its main taxon
-     */
+    #[Then('the :productName product should have :taxonName as its main taxon')]
     public function theProductShouldHaveAsItsMainTaxon(
         string $productName,
         string $taxonName,
@@ -202,18 +176,14 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
         Assert::eq($mainTaxon->getName(), $taxonName, sprintf('Product "%s" main taxon should be "%s", but is "%s"', $productName, $taxonName, $mainTaxon->getName()));
     }
 
-    /**
-     * @Then the :productName product should have no main taxon
-     */
+    #[Then('the :productName product should have no main taxon')]
     public function theProductShouldHaveNoMainTaxon(string $productName): void
     {
         $product = $this->getProductByName($productName);
         Assert::null($product->getMainTaxon(), sprintf('Product "%s" should not have a main taxon', $productName));
     }
 
-    /**
-     * @Then the :productName product should belong to :taxonName1 and :taxonName2 taxons
-     */
+    #[Then('the :productName product should belong to :taxonName1 and :taxonName2 taxons')]
     public function theProductShouldBelongToTaxons(
         string $productName,
         string $taxonName1,
@@ -243,9 +213,7 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
         );
     }
 
-    /**
-     * @Then the :productName product should belong to :taxonName1, :taxonName2 and :taxonName3 taxons
-     */
+    #[Then('the :productName product should belong to :taxonName1, :taxonName2 and :taxonName3 taxons')]
     public function theProductShouldBelongToThreeTaxons(
         string $productName,
         string $taxonName1,
@@ -266,9 +234,7 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
         Assert::count($taxonNames, 3, sprintf('Product "%s" should belong to exactly 3 taxons, but belongs to %d', $productName, count($taxonNames)));
     }
 
-    /**
-     * @Then the :productName product should belong to :taxonName taxon only
-     */
+    #[Then('the :productName product should belong to :taxonName taxon only')]
     public function theProductShouldBelongToTaxonOnly(
         string $productName,
         string $taxonName,
@@ -283,9 +249,7 @@ final readonly class ManagingBulkProductCategoriesContext implements Context
         Assert::eq($taxon->getName(), $taxonName, sprintf('Product "%s" should belong only to taxon "%s", but belongs to "%s"', $productName, $taxonName, $taxon->getName()));
     }
 
-    /**
-     * @Then the :productName product should have no taxons
-     */
+    #[Then('the :productName product should have no taxons')]
     public function theProductShouldHaveNoTaxons(string $productName): void
     {
         $product = $this->getProductByName($productName);
