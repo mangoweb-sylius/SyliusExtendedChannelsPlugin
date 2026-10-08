@@ -117,7 +117,8 @@ jobs:
 
             -   name: Test with prefer-lowest dependencies
                 run: |
-                    docker compose exec --no-TTY php rm -fr vendor composer.lock
+                    # Behat 4 (prefer-dist) and Behat 3 (prefer-lowest) parse tags differently but share the Gherkin cache
+                    docker compose exec --no-TTY php rm -fr vendor composer.lock /tmp/behat_gherkin_cache
                     docker compose exec --no-TTY php composer update --no-interaction --prefer-lowest
                     docker compose exec --no-TTY php bash -c 'vendor/bin/bdi detect drivers'
                     docker compose exec --no-TTY php bash -c '
